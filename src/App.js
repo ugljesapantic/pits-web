@@ -13,13 +13,15 @@ const AppWrapper = styled.div`
 
 const AppTitle = styled.h1`
   margin-bottom: 3rem;
+  max-width: 80vw;
+  text-align: center;
 `
 
 class App extends Component {
   render() {
     return (
       <AppWrapper className="App">
-        <AppTitle>Welcome to Personal Issue tracking System</AppTitle>
+        <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
         <Button primary size='massive'>SIGN UP</Button>
       </AppWrapper>
     );
