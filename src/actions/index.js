@@ -11,17 +11,17 @@ export const userLoggedOut = () => ({
 })
 
 export const login = credentials => dispatch => api.user.login(credentials).then(user => {
-    localStorage.portfolioManagerJWT = user.token;
+    localStorage.pitsJWT = user.token;
     dispatch(userLoggedIn(user));
 })
 
 export const logout = () => dispatch => {
-    localStorage.removeItem('portfolioManagerJWT');
+    localStorage.removeItem('pitsJWT');
     dispatch(userLoggedOut());
 }
 
 export const confirm = token => dispatch => api.user.confirm(token).then(user => {
-    localStorage.portfolioManagerJWT = user.token;
+    localStorage.pitsJWT = user.token;
     dispatch(userLoggedIn(user));
 })
 
@@ -32,7 +32,7 @@ export const validateToken = (token) => () => api.user.validateToken(token);
 export const resetPassword = (data) => () => api.user.resetPassword(data);
 
 export const signup = credentials => dispatch => api.user.signup(credentials).then(user => {
-    localStorage.portfolioManagerJWT = user.token;
+    localStorage.pitsJWT = user.token;
     dispatch(userLoggedIn(user));
 })
 

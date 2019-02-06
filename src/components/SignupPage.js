@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button, Form, Message } from "semantic-ui-react";
 import Validator from "validator";
 import styled from 'styled-components';
 import { blackGradientBackground } from './../styles/styles';
+import {connect} from 'react-redux';
+import { signup } from './../actions/index';
 
 const FormWrapper = styled.div`
     display: flex;
@@ -30,6 +32,8 @@ class SignupPage extends Component {
         errors: {},
     };
 
+    submit = (data) => this.props.signup(data).then(() => this.props.history.push('/dashboard'))
+
     onChange = e => this.setState({data : {...this.state.data, [e.target.name] : e.target.value}});
 
     onSubmit = () => {
@@ -38,7 +42,7 @@ class SignupPage extends Component {
         if (Object.keys(errors).length === 0) {
             this.setState({loading: true})
             this.props.submit(this.state.data)
-            .catch(error => this.setState({errors: error.response.data.errors, loading: false}));
+            .catch(error => this.setState({errors: {global: error}, loading: false}));
         }
     }
 
@@ -92,8 +96,11 @@ class SignupPage extends Component {
     }
 }
 
-// SignupPage.propTypes = {
-//     submit: PropTypes.func.isRequired,
-// };
+SignupPage.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func,
+    }).isRequired,
+    submit: PropTypes.func.isRequired,
+}
 
-export default SignupPage;
+export default connect(null, {submit: signup})(SignupPage);
