@@ -18,7 +18,7 @@ const TopNavigation = ({logout, isAuthenticated}) => {
 
     const guestMenu = () => (<Menu {...menuOptions} pointing>
         <Menu.Item as={Link} to="/">Home</Menu.Item>
-        <Menu.Item position="right" as={Link} to="/login">Login</Menu.Item>
+        <Menu.Item as={Link} to="/login" position="right">Login</Menu.Item>
         <Menu.Item as={Link} to="/signup">Sign Up</Menu.Item>
     </Menu>)
 
