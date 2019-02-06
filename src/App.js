@@ -1,28 +1,17 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
 import styled from 'styled-components';
 import TopNavigation from './components/TopNavigation';
 import { Sticky } from 'semantic-ui-react';
-
-import { blackGradientBackground } from './styles/styles.js'
+import GuestRoute from './components/routes/GuestRoute';
+import HomePage from './components/HomePage';
+import { PropTypes } from 'prop-types';
+import SignupPage from './components/SignupPage';
 
 const AppWrapper = styled.div`
   position: relative;
-`
-
-const AppMain = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  ${blackGradientBackground};
-`
-
-const AppTitle = styled.h1`
-  margin-bottom: 3rem;
-  max-width: 80vw;
-  text-align: center;
 `
 
 class App extends Component {
@@ -30,29 +19,34 @@ class App extends Component {
   state = {};
   handleContextRef = contextRef => this.setState({ contextRef });
 
-
   render() {
     const { contextRef } = this.state;
+    const location = this.props.location;
     return (
       <AppWrapper ref={this.handleContextRef} className="App">
         <Sticky context={contextRef} >
           <TopNavigation isAuthenticated={false}></TopNavigation>
         </Sticky>
-        {/* <GuestRoute location={location} path="/login" exact component={LoginPage} />
-        <GuestRoute location={location} path="/signup" exact component={SignupPage} /> */}
-        <AppMain>
-          <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
-          <Button primary size='huge'>SIGN UP</Button>
-        </AppMain>
-        <div style={{height: '200vh', backgroundColor: 'lightgreen'}}>
-          Landing page 2
-        </div>
-        <div style={{height: '200vh', backgroundColor: 'cyan'}}>
-          Landing page 3
-        </div>
+        {/* <GuestRoute location={location} path="/login" exact component={LoginPage} /> */}
+        <GuestRoute location={location} path="/signup" exact component={SignupPage} />
+        <GuestRoute location={location} path="/" exact component={HomePage} />
+        {/* <GuestRoute location={location} path="/confirmation/:token" exact component={ConfirmationPage} />
+        <GuestRoute location={location} path="/login" exact component={LoginPage} />
+        <GuestRoute location={location} path="/signup" exact component={SignupPage} />
+        <GuestRoute location={location} path="/reset-password/:token" exact component={ResetPasswordPage} />
+        <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} />
+        <UserRoute location={location} path="/dashboard" exact component={DashboardPage} /> */}
+
       </AppWrapper>
     );
   }
 }
+
+App.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+}
+
 
 export default App;
