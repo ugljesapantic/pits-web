@@ -19,8 +19,9 @@ const AppTitle = styled.h1`
 `
 
 /* TODO remove hardcoded divs */
-const HomePage =  () =>
+const HomePage =  ({location}) =>
 <React.Fragment>
+{console.log(location)}
   <AppMain>
     <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
     <Button primary size='huge'>SIGN UP</Button>
