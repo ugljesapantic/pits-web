@@ -33,7 +33,7 @@ export const resetPassword = (data) => () => api.user.resetPassword(data);
 
 export const signup = credentials => dispatch => api.user.signup(credentials).then(user => {
     localStorage.pitsJWT = user.token;
-    dispatch(userLoggedIn(user));
+    dispatch(userLoggedIn(user.token));
 })
 
 

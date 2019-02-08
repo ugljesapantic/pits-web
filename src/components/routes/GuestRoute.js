@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 const GuestRoute = ({component: Component, isAuthenticated, ...rest}) => (
-    <Route {...rest} render={props => !isAuthenticated?  <Component {...props} /> : <Redirect to="/dashboard" />} /> 
+    <Route {...rest} render={props => !isAuthenticated ? <Component {...props} /> : <Redirect to="/dashboard" />} /> 
   )
 
 GuestRoute.propTypes = {
@@ -12,9 +12,10 @@ GuestRoute.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
 }
 
+// TODO get rid of the function keyword
 function mapStateToProps(state) {
     return {
-        isAuthenticated : !!state.user.token
+        isAuthenticated : state.user.auth
     }
 }
 

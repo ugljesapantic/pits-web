@@ -9,6 +9,10 @@ import SignupPage from './components/SignupPage';
 import UserRoute from './components/routes/UserRoute';
 import DashboardPage from './components/DashboardPage';
 import LoginPage from './components/LoginPage';
+import { connect } from 'react-redux';
+import jwt from 'jwt-decode'
+import moment from 'moment';
+import { userLoggedIn } from './actions/index';
 
 const AppWrapper = styled.div`
   position: relative;
@@ -22,13 +26,24 @@ class App extends Component {
   state = {};
   handleContextRef = contextRef => this.setState({ contextRef });
 
+  constructor(props) {
+    super(props)
+    let token = localStorage.pitsJWT;
+    if(token) {
+      let expirationDate = moment(jwt(token).exp*1000);
+      if (moment().isBefore(expirationDate)) {       
+        this.props.login(token);
+      } 
+    }
+  }
+
   render() {
     const { contextRef } = this.state;
     const location = this.props.location;
     return (
       <AppWrapper ref={this.handleContextRef} className="App">
         <Sticky context={contextRef} >
-          <TopNavigation isAuthenticated={false}></TopNavigation>
+          <TopNavigation isAuthenticated={this.props.isAuthenticated}></TopNavigation>
         </Sticky>
         <GuestRoute location={location} path="/login" exact component={LoginPage} />
         <GuestRoute location={location} path="/signup" exact component={SignupPage} />
@@ -49,7 +64,20 @@ App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 }
 
+function mapStateToProps(state) {
+  return {
+      isAuthenticated : state.user.auth
+  }
+}
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    login: token => {
+      dispatch(userLoggedIn(token))
+    }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

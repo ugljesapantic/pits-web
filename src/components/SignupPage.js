@@ -31,9 +31,7 @@ class SignupPage extends Component {
         loading : false,
         errors: {},
     };
-
-    submit = (data) => this.props.signup(data).then(() => this.props.history.push('/dashboard'))
-
+    
     onChange = e => this.setState({data : {...this.state.data, [e.target.name] : e.target.value}});
 
     onSubmit = () => {
