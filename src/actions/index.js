@@ -1,9 +1,9 @@
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from "../types";
 import api from "../api";
 
-export const userLoggedIn = user => ({
+export const userLoggedIn = token => ({
     type: USER_LOGGED_IN,
-    user,
+    token,
 })
 
 export const userLoggedOut = () => ({
@@ -12,7 +12,7 @@ export const userLoggedOut = () => ({
 
 export const login = credentials => dispatch => api.user.login(credentials).then(user => {
     localStorage.pitsJWT = user.token;
-    dispatch(userLoggedIn(user));
+    dispatch(userLoggedIn(user.token));
 })
 
 export const logout = () => dispatch => {
@@ -22,7 +22,7 @@ export const logout = () => dispatch => {
 
 export const confirm = token => dispatch => api.user.confirm(token).then(user => {
     localStorage.pitsJWT = user.token;
-    dispatch(userLoggedIn(user));
+    dispatch(userLoggedIn(user.token));
 })
 
 export const resetPasswordRequest = ({email}) => () => api.user.resetPasswordRequest(email);
