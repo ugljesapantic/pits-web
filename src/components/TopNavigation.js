@@ -13,7 +13,7 @@ const TopNavigation = ({logout, isAuthenticated}) => {
 
     const userMenu = () => (<Menu {...menuOptions} pointing>
         <Menu.Item  as={Link} to="/dashboard">Dashboard</Menu.Item>
-        <Menu.Item  position="right" onClick={() => logout()}>Logout</Menu.Item>
+        <Menu.Item  position="right" onClick={logout}>Logout</Menu.Item>
     </Menu>)
 
     const guestMenu = () => (<Menu {...menuOptions} pointing>
@@ -27,6 +27,7 @@ const TopNavigation = ({logout, isAuthenticated}) => {
 
 TopNavigation.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
+    logout: PropTypes.func.isRequired
 }
 
 export default TopNavigation;

@@ -12,7 +12,7 @@ import LoginPage from './components/LoginPage';
 import { connect } from 'react-redux';
 import jwt from 'jwt-decode'
 import moment from 'moment';
-import { userLoggedIn } from './actions/index';
+import { userLoggedIn, userLoggedOut } from './actions/index';
 
 const AppWrapper = styled.div`
   position: relative;
@@ -41,9 +41,9 @@ class App extends Component {
     const { contextRef } = this.state;
     const location = this.props.location;
     return (
-      <AppWrapper ref={this.handleContextRef} className="App">
+      <AppWrapper ref={this.handleContextRef}>
         <Sticky context={contextRef} >
-          <TopNavigation isAuthenticated={this.props.isAuthenticated}></TopNavigation>
+          <TopNavigation isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
         </Sticky>
         <GuestRoute location={location} path="/login" exact component={LoginPage} />
         <GuestRoute location={location} path="/signup" exact component={SignupPage} />
@@ -77,7 +77,8 @@ const mapDispatchToProps = dispatch => {
   return {
     login: token => {
       dispatch(userLoggedIn(token))
-    }
+    },
+    logout: () => dispatch(userLoggedOut())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
