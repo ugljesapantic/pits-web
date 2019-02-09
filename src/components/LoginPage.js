@@ -16,7 +16,7 @@ const FormWrapper = styled.div`
     height: auto;
     ${props => !props.loading && blackGradientBackground };
 
-    .sign-up-form {
+    .login-form {
         width: 300px;
         text-align: center;
     }
@@ -32,8 +32,6 @@ class LoginPage extends Component {
         errors: {},
     };
 
-    submit = (data) => this.props.signin(data).then(() => this.props.history.push('/dashboard'))
-
     onChange = e => this.setState({data : {...this.state.data, [e.target.name] : e.target.value}});
 
     onSubmit = () => {
@@ -42,7 +40,7 @@ class LoginPage extends Component {
         if (Object.keys(errors).length === 0) {
             this.setState({loading: true})
             this.props.submit(this.state.data)
-            .catch(error => this.setState({errors: {global: error}, loading: false}));
+            .catch(res => this.setState({errors: {global: res.response.data}, loading: false}));
         }
     }
 
@@ -61,7 +59,7 @@ class LoginPage extends Component {
         return (
             <FormWrapper loading={loading}>
                 {/* Todo, maybe make it a styled component instead of classname */}
-                <Form className="sign-up-form" inverted onSubmit={this.onSubmit} loading={loading} noValidate>
+                <Form className="login-form" inverted onSubmit={this.onSubmit} loading={loading} noValidate>
                     { errors.global && 
                     <Message negative>
                         <Message.Header>Something went wrong</Message.Header>

@@ -40,7 +40,7 @@ class SignupPage extends Component {
         if (Object.keys(errors).length === 0) {
             this.setState({loading: true})
             this.props.submit(this.state.data)
-            .catch(error => this.setState({errors: {global: error}, loading: false}));
+            .catch(res => this.setState({errors: {global: res.response.data}, loading: false}));
         }
     }
 
