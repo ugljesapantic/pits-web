@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import jwt from 'jwt-decode'
 import moment from 'moment';
 import { userLoggedIn, userLoggedOut } from './actions/index';
+import ClipboardPage from './components/ClipboardPage';
 
 const AppWrapper = styled.div`
   position: relative;
@@ -54,6 +55,7 @@ class App extends Component {
         <GuestRoute location={location} path="/reset-password/:token" exact component={ResetPasswordPage} />
         <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} /> */}
         <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
+        <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
 
       </AppWrapper>
     );

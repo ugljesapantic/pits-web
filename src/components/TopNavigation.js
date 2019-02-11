@@ -13,6 +13,7 @@ const TopNavigation = ({logout, isAuthenticated}) => {
 
     const userMenu = () => (<Menu {...menuOptions} pointing>
         <Menu.Item  as={Link} to="/dashboard">Dashboard</Menu.Item>
+        <Menu.Item  as={Link} to="/clipboard">Clipboard</Menu.Item>
         <Menu.Item  position="right" onClick={logout}>Logout</Menu.Item>
     </Menu>)
 
