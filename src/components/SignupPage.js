@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Button, Form, Message } from "semantic-ui-react";
 import Validator from "validator";
 import styled from 'styled-components';
-import { blackGradientBackground } from './../styles/styles';
 import {connect} from 'react-redux';
 import { signup } from './../actions/index';
 
@@ -14,7 +13,6 @@ const FormWrapper = styled.div`
     justify-content: center;
     flex: 1;
     height: auto;
-    ${props => !props.loading && blackGradientBackground };
 
     .sign-up-form {
         width: 300px;
@@ -59,7 +57,7 @@ class SignupPage extends Component {
         return (
             <FormWrapper loading={loading}>
                 {/* Todo, maybe make it a styled component instead of classname */}
-                <Form className="sign-up-form" inverted onSubmit={this.onSubmit} loading={loading} noValidate>
+                <Form className="sign-up-form" onSubmit={this.onSubmit} loading={loading} noValidate>
                     { errors.global && 
                     <Message negative>
                         <Message.Header>Something went wrong</Message.Header>

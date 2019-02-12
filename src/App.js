@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import TopNavigation from './components/TopNavigation';
-import { Sticky } from 'semantic-ui-react';
 import GuestRoute from './components/routes/GuestRoute';
 import HomePage from './components/HomePage';
 import { PropTypes } from 'prop-types';
@@ -13,19 +12,21 @@ import { connect } from 'react-redux';
 import jwt from 'jwt-decode'
 import moment from 'moment';
 import { userLoggedIn, logout } from './actions';
-import ClipboardPage from './components/ClipboardPage';
+import ClipboardPage from './components/clipboard/ClipboardPage';
 
 const AppWrapper = styled.div`
+  padding-top: 5em;
+  height: 100vh;
+`
+
+const ContentWrapper = styled.div`
+  
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 `
 
 class App extends Component {
-
-  state = {};
-  handleContextRef = contextRef => this.setState({ contextRef });
 
   constructor(props) {
     super(props)
@@ -39,24 +40,22 @@ class App extends Component {
   }
 
   render() {
-    const { contextRef } = this.state;
     const location = this.props.location;
     return (
       <AppWrapper ref={this.handleContextRef}>
-        <Sticky context={contextRef} >
-          <TopNavigation isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
-        </Sticky>
-        <GuestRoute location={location} path="/login" exact component={LoginPage} />
-        <GuestRoute location={location} path="/signup" exact component={SignupPage} />
-        <GuestRoute location={location} path="/" exact component={HomePage} />
-        {/* <GuestRoute location={location} path="/confirmation/:token" exact component={ConfirmationPage} />
-        <GuestRoute location={location} path="/login" exact component={LoginPage} />
-        <GuestRoute location={location} path="/signup" exact component={SignupPage} />
-        <GuestRoute location={location} path="/reset-password/:token" exact component={ResetPasswordPage} />
-        <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} /> */}
-        <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
-        <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
-
+        <TopNavigation isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
+        <ContentWrapper className="ui container">
+          <GuestRoute location={location} path="/login" exact component={LoginPage} />
+          <GuestRoute location={location} path="/signup" exact component={SignupPage} />
+          <GuestRoute location={location} path="/" exact component={HomePage} />
+          {/* <GuestRoute location={location} path="/confirmation/:token" exact component={ConfirmationPage} />
+          <GuestRoute location={location} path="/login" exact component={LoginPage} />
+          <GuestRoute location={location} path="/signup" exact component={SignupPage} />
+          <GuestRoute location={location} path="/reset-password/:token" exact component={ResetPasswordPage} />
+          <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} /> */}
+          <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
+          <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
+        </ContentWrapper>
       </AppWrapper>
     );
   }

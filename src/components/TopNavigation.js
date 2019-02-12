@@ -3,12 +3,13 @@ import { Menu, Segment } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types'
+import styled from 'styled-components';
 
 const TopNavigation = ({logout, isAuthenticated}) => {
 
     const menuOptions = {
         size: 'large',
-        inverted: true
+        fixed: 'top'
     }
 
     const userMenu = () => (<Menu {...menuOptions} pointing>
@@ -23,7 +24,7 @@ const TopNavigation = ({logout, isAuthenticated}) => {
         <Menu.Item as={Link} to="/signup">Sign Up</Menu.Item>
     </Menu>)
 
-    return <Segment basic inverted> {isAuthenticated ? userMenu() : guestMenu()}</Segment>;
+    return isAuthenticated ? userMenu() : guestMenu();
 }
 
 TopNavigation.propTypes = {
