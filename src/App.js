@@ -12,7 +12,7 @@ import LoginPage from './components/LoginPage';
 import { connect } from 'react-redux';
 import jwt from 'jwt-decode'
 import moment from 'moment';
-import { userLoggedIn, userLoggedOut } from './actions/index';
+import { userLoggedIn, logout } from './actions';
 import ClipboardPage from './components/ClipboardPage';
 
 const AppWrapper = styled.div`
@@ -32,7 +32,7 @@ class App extends Component {
     let token = localStorage.pitsJWT;
     if(token) {
       let expirationDate = moment(jwt(token).exp*1000);
-      if (moment().isBefore(expirationDate)) {       
+      if (moment().isBefore(expirationDate)) {     
         this.props.login(token);
       } 
     }
@@ -80,7 +80,7 @@ const mapDispatchToProps = dispatch => {
     login: token => {
       dispatch(userLoggedIn(token))
     },
-    logout: () => dispatch(userLoggedOut())
+    logout: () => dispatch(logout())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);
