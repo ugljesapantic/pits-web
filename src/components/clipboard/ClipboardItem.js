@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { Segment, Card , Label} from 'semantic-ui-react'
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 
+// TODO get rid of all of them
 const CardWrapper = styled(Card)`
     &&& .card-content {
         padding: 0.5em 1em;
@@ -10,6 +11,17 @@ const CardWrapper = styled(Card)`
 
     &&& .segment {
         padding: 0.5em 1em;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dcddde;
+        }
+
+        &.copied {
+            background-color: #21ba45;
+        }
+
+        transition: background-color 0.3s;
     }
 
     &&& .segment-group {
@@ -35,25 +47,43 @@ line-height: 1.5em;
     margin-right: 1em;
 `
 
-const ClipboardItem = ({clipboard}) => {
-  return (
-    <CardWrapper fluid color='black' raised>
-      <CardHeader>
-          <CardTitle>{clipboard.title}</CardTitle>
-          {clipboard.labels.map((label) => <Label key={label.color} color={label.color} horizontal>{label.title}</Label>)}
-      </CardHeader>
-      <Card.Content className="card-content">
-        <Segment.Group className="segment-group">
-            {clipboard.items.map(item => 
-            <Segment key={item._id} secondary className="segment">
-                <Label size="small" attached="top right">{item.title}</Label>
-                <span>{item.value}</span>
-            </Segment>
-            )}
-        </Segment.Group>
-      </Card.Content>
-    </CardWrapper>
-  )
+class ClipboardItem extends PureComponent {
+    state = {};
+
+    copy(str, e) {
+        const el = document.createElement('textarea');
+        el.value = str;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        e.target.classList.toggle('copied');
+        setTimeout((el) => el.classList.toggle('copied'), 200, e.target);
+    }
+
+  render() {
+      return (
+        <CardWrapper fluid color='black' raised>
+          <CardHeader>
+              <CardTitle>{this.props.clipboard.title}</CardTitle>
+              {this.props.clipboard.labels.map((label) => <Label key={label.color} color={label.color} horizontal>{label.title}</Label>)}
+          </CardHeader>
+          <Card.Content className="card-content">
+            <Segment.Group className="segment-group">
+                {this.props.clipboard.items.map(item => 
+                <Segment onClick={(e) => this.copy( item.value, e)} key={item._id} secondary className="segment">
+                    <Label size="small" attached="top right">{item.title}</Label>
+                    <span>{item.value}</span>
+                </Segment>
+                )}
+            </Segment.Group>
+          </Card.Content>
+        </CardWrapper>
+      )
+  }
 }
 
 ClipboardItem.propTypes = {
@@ -67,7 +97,7 @@ ClipboardItem.propTypes = {
             title: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
         })),
-    })
+    }),
 }
 
 export default ClipboardItem

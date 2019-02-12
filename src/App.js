@@ -16,6 +16,7 @@ import ClipboardPage from './components/clipboard/ClipboardPage';
 
 const AppWrapper = styled.div`
   padding-top: 5em;
+  padding-bottom: 2em;
   height: 100vh;
 `
 

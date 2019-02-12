@@ -12,7 +12,7 @@ class ClipboardPage extends Component {
     render() {
         return (
             <div>
-                {this.props.clipboards.map((clipboard) => <ClipboardItem key={clipboard._id} clipboard={clipboard}/>)}
+                {this.props.clipboards.map((clipboard) => <ClipboardItem key={clipboard._id} copy={this.copy} clipboard={clipboard}/>)}
             </div>
         );
     }
