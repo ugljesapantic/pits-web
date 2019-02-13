@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
-import { Segment, Card , Label} from 'semantic-ui-react'
+import { Segment, Card , Label, Icon} from 'semantic-ui-react'
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
-
 // TODO get rid of all of them
 const CardWrapper = styled(Card)`
     &&& .card-content {
@@ -42,13 +41,21 @@ const CardHeader = styled.div`
 
 const CardTitle = styled.div`
 font-weight: bold;
-line-height: 1.5em;
+line-height: 2em;
     font-size: 1em;
     margin-right: 1em;
 `
 
+const CardAction = styled(Icon)`
+    &&&.ml-auto {
+        margin-left: auto;
+    }
+`
+
 class ClipboardItem extends PureComponent {
-    state = {};
+    state = {
+        hovering: false
+    };
 
     copy(str, e) {
         const el = document.createElement('textarea');
@@ -64,12 +71,25 @@ class ClipboardItem extends PureComponent {
         setTimeout((el) => el.classList.toggle('copied'), 200, e.target);
     }
 
+    handleMouseHover() {
+        this.setState(prev => ({
+            hovering: !prev.hovering
+        }));
+    }
+
   render() {
+      const showActions = this.state.hovering;
       return (
-        <CardWrapper fluid color='black' raised>
+        <CardWrapper fluid color='black' raised  
+        onMouseEnter={() => this.handleMouseHover()}
+        onMouseLeave={() => this.handleMouseHover()}>
           <CardHeader>
               <CardTitle>{this.props.clipboard.title}</CardTitle>
               {this.props.clipboard.labels.map((label) => <Label key={label.color} color={label.color} horizontal>{label.title}</Label>)}
+              {showActions && <React.Fragment>
+                <CardAction onClick={this.props.edit} link className="ml-auto" circular name="edit"/>
+                <CardAction link circular name="remove"/>
+              </React.Fragment>}
           </CardHeader>
           <Card.Content className="card-content">
             <Segment.Group className="segment-group">
@@ -98,6 +118,7 @@ ClipboardItem.propTypes = {
             value: PropTypes.string.isRequired,
         })),
     }),
+    edit: PropTypes.func.isRequired
 }
 
 export default ClipboardItem
