@@ -85,9 +85,11 @@ class ClipboardItem extends PureComponent {
         onMouseLeave={() => this.handleMouseHover()}>
           <CardHeader>
               <CardTitle>{this.props.clipboard.title}</CardTitle>
-              {this.props.clipboard.labels.map((label) => <Label key={label.color} color={label.color} horizontal>{label.title}</Label>)}
+              {this.props.labels
+                .filter(l => this.props.clipboard.labels.includes(l._id))
+                .map(l => <Label key={l.color} color={l.color} horizontal>{l.title}</Label>)}
               {showActions && <React.Fragment>
-                <CardAction onClick={this.props.edit} link className="ml-auto" circular name="edit"/>
+                <CardAction onClick={() => this.props.edit(this.props.clipboard)} link className="ml-auto" circular name="edit"/>
                 <CardAction link circular name="remove"/>
               </React.Fragment>}
           </CardHeader>
@@ -109,16 +111,17 @@ class ClipboardItem extends PureComponent {
 ClipboardItem.propTypes = {
     clipboard: PropTypes.shape({
         title: PropTypes.string.isRequired,
-        labels: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            color: PropTypes.string.isRequired,
-        })),
+        labels: PropTypes.arrayOf(PropTypes.string.isRequired),
         items: PropTypes.arrayOf(PropTypes.shape({
             title: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
         })),
     }),
-    edit: PropTypes.func.isRequired
+    edit: PropTypes.func.isRequired,
+    labels: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        color: PropTypes.string.isRequired,
+    }))
 }
 
 export default ClipboardItem

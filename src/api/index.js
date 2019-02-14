@@ -7,5 +7,6 @@ export default {
     }, 
     clipboard: {
         loadAll: () => http.get('/clipboards').then(res => res.data),
+        loadAllLabels: () => http.get('/clipboard-labels').then(res => res.data),
     }
 }
