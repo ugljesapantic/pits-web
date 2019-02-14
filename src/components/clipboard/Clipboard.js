@@ -52,7 +52,7 @@ const CardAction = styled(Icon)`
     }
 `
 
-class ClipboardItem extends PureComponent {
+class Clipboard extends PureComponent {
     state = {
         hovering: false
     };
@@ -108,7 +108,7 @@ class ClipboardItem extends PureComponent {
   }
 }
 
-ClipboardItem.propTypes = {
+Clipboard.propTypes = {
     clipboard: PropTypes.shape({
         title: PropTypes.string.isRequired,
         labels: PropTypes.arrayOf(PropTypes.string.isRequired),
@@ -124,4 +124,4 @@ ClipboardItem.propTypes = {
     }))
 }
 
-export default ClipboardItem
+export default Clipboard

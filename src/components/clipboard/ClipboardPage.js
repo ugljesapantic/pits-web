@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadAll, loadAllLabels } from '../../actions';
-import ClipboardItem from './ClipboardItem';
+import Clipboard from './Clipboard';
 import EditClipboard from './EditClipboard';
 
 class ClipboardPage extends Component {
@@ -55,7 +55,7 @@ class ClipboardPage extends Component {
         return (
             <div>
                 {this.props.clipboards.map((clipboard) => 
-                <ClipboardItem 
+                <Clipboard 
                 edit={this.edit.bind(this)}
                 key={clipboard._id}
                 clipboard={clipboard}
