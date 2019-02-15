@@ -73,10 +73,11 @@ class ClipboardItem extends Component {
           editing={editing}/>
         </Value>
         <Actions>
+          {/* Disablre actions when saving */}
           {!editing ? 
           <React.Fragment>
             <Icon onClick={() => this.setState({editing: true})} link circular name="edit"/>
-            <Icon link circular name="remove"/>
+            <Icon link circular name="trash"/>
           </React.Fragment> : <React.Fragment>
             <Icon onClick={() => this.saveChanges()} link circular name="check"/>
             <Icon link circular name="remove"/>
