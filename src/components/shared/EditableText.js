@@ -26,38 +26,31 @@ const TextValue = styled.div`
     border-radius: 0.3rem;
 
     &:hover {
-        ${(props) => props.empty ? 'background-color: cyan' : 'background-color: lightgray'}
+      /* TODO make this light gray something else */
+        background-color: 'lightgray';
         cursor: pointer;
     }
      
     ${(props) => props.empty && 'background-color: cyan'}
 `
-export default class ClickableInput extends PureComponent {
+// TODO Change into func
+export default class EditableText extends PureComponent {
   static propTypes = {
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
-  }
-
-  state = {
-      editing: false
-  }
-
-  startEditing() {
-    this.setState({editing: true});
-  }
-
-  onBlur() {
-      this.setState({editing: false})
+    editing: PropTypes.bool.isRequired,
+    autoFocus: PropTypes.bool,
+    disabled: PropTypes.bool,
   }
 
   render() {
-      const {editing} = this.state;
+    // TODO destructur props
     return (
       <ClickableInputWrapper>
-        {!editing && <TextValue empty={!this.props.value} onClick={this.startEditing.bind(this)}>{this.props.value}</TextValue>}
-        {editing && <TextInput 
-        onBlur={this.onBlur.bind(this)} 
-        autoFocus 
+        {!this.props.editing && <TextValue>{this.props.value}</TextValue>}
+        {this.props.editing && <TextInput 
+        autoFocus={this.props.autoFocus} 
+        disabled={this.props.disabled}
         value={this.props.value}
         onChange={(_, data) => this.props.onChange(data.value)} />}
       </ClickableInputWrapper>

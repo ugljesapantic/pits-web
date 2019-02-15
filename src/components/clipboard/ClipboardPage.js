@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadAll, loadAllLabels } from '../../actions';
 import Clipboard from './Clipboard';
-import EditClipboard from './EditClipboard';
 
 class ClipboardPage extends Component {
 
@@ -61,7 +60,7 @@ class ClipboardPage extends Component {
                 clipboard={clipboard}
                 labels={this.props.labels}/>
                 )}
-                {editing && <EditClipboard 
+                {/* {editing && <EditClipboard 
                 clipboard={editing}
                 save={this.save.bind(this)}
                 cancel={this.cancel.bind(this)}
@@ -70,7 +69,7 @@ class ClipboardPage extends Component {
                 onLabelChange={this.onLabelChange.bind(this)}
                 selectedLabels={editing.labels}
                 labels={this.props.labels}
-                />}
+                />} */}
             </div>
         );
     }

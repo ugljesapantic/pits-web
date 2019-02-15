@@ -8,5 +8,6 @@ export default {
     clipboard: {
         loadAll: () => http.get('/clipboards').then(res => res.data),
         loadAllLabels: () => http.get('/clipboard-labels').then(res => res.data),
+        updateItem: (id, itemId, body) => http.patch(`/clipboards/${id}/items/${itemId}`, body).then(res => res.data)
     }
 }
