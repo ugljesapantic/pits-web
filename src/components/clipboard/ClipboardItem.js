@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import EditableText from '../shared/EditableText';
 import { Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { updateItem } from '../../actions';
+import { updateItem, removeItem } from '../../actions';
 
 
 const Wrapper = styled.div`
@@ -55,13 +55,17 @@ class ClipboardItem extends Component {
   }
   
   cancelChanges() {
-    
     this.setState({
       editing: false,
       title: this.props.item.title,
       value: this.props.item.value,
       dirty: false
     })
+  }
+
+  remove() {
+    // todo maybe props should not be named like removeItem, but only delete, since they are called from perspective of item?
+    this.props.removeItem(this.props.id, this.props.item._id);
   }
   render() {
     const {editing, title, value, updating} = this.state;
@@ -91,7 +95,7 @@ class ClipboardItem extends Component {
           {!editing ? 
           <React.Fragment>
             <Icon onClick={() => this.setState({editing: true})} link circular name="edit"/>
-            <Icon link circular name="trash"/>
+            <Icon onClick={() => this.remove()} link circular name="trash"/>
           </React.Fragment> : <React.Fragment>
             <Icon onClick={() => this.saveChanges()} link circular name="check"/>
             <Icon onClick={() => this.cancelChanges()} link circular name="remove"/>
@@ -114,7 +118,8 @@ ClipboardItem.propTypes = {
 // maybe this component can be clean, and i should pass this via props
 const mapDispatchToProps = dispatch => {
   return {
-    updateItem: (id, itemId, item) => dispatch(updateItem(id, itemId, item))
+    updateItem: (id, itemId, item) => dispatch(updateItem(id, itemId, item)),
+    removeItem: (id, itemId) => dispatch(removeItem(id, itemId))
   }
 }
 

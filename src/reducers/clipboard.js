@@ -2,7 +2,8 @@ import {
   CLIPBOARD_LOADED_ALL,
    CLIPBOARD_LOADED_ALL_LABELS,
    CLIPBOARD_ITEM_UPDATED,
-   CLIPBOARD_ITEM_ADDED } from '../types';
+   CLIPBOARD_ITEM_ADDED,
+  CLIPBOARD_ITEM_REMOVED } from '../types';
 
 const initialState = {
   clipboards: [],
@@ -33,6 +34,14 @@ export default (state = initialState, action) => {
     return {...state, clipboards: state.clipboards.map(clipboard => 
         clipboard._id === action.id ? 
         {...clipboard, items: [...clipboard.items, action.item]} 
+        : clipboard
+      )}
+
+      // TODO consider using 
+  case CLIPBOARD_ITEM_REMOVED:
+    return {...state, clipboards: state.clipboards.map(clipboard => 
+        clipboard._id === action.id ? 
+        {...clipboard, items: clipboard.items.filter(i => i._id !== action.itemId)} 
         : clipboard
       )}
 
