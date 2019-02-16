@@ -46,7 +46,7 @@ class ClipboardItem extends Component {
       this.setState({updating: true})
       this.props.updateItem(this.props.id, this.props.item._id, {
         value: this.state.value,
-        title: this.state.value
+        title: this.state.title
       }).then(_=> this.setState({editing: false, updating: false}))
     } else {
       this.setState({editing: false})
@@ -62,6 +62,7 @@ class ClipboardItem extends Component {
           onChange={(v) => this.setState({title: v, dirty: true})}
           disabled={updating}
           value={title}
+          displayValue={this.props.item.title}
           editing={editing}/>
         </Title>
         <Value>
@@ -70,10 +71,11 @@ class ClipboardItem extends Component {
           autoFocus
           disabled={updating}
           value={value}
+          displayValue={this.props.item.value}
           editing={editing}/>
         </Value>
         <Actions>
-          {/* Disablre actions when saving */}
+          {/* TODO Disablre actions when saving and add hover over shit*/}
           {!editing ? 
           <React.Fragment>
             <Icon onClick={() => this.setState({editing: true})} link circular name="edit"/>

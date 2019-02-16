@@ -37,6 +37,7 @@ const TextValue = styled.div`
 export default class EditableText extends PureComponent {
   static propTypes = {
     value: PropTypes.string.isRequired,
+    displayValue: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     editing: PropTypes.bool.isRequired,
     autoFocus: PropTypes.bool,
@@ -47,7 +48,7 @@ export default class EditableText extends PureComponent {
     // TODO destructur props
     return (
       <ClickableInputWrapper>
-        {!this.props.editing && <TextValue>{this.props.value}</TextValue>}
+        {!this.props.editing && <TextValue>{this.props.displayValue}</TextValue>}
         {this.props.editing && <TextInput 
         autoFocus={this.props.autoFocus} 
         disabled={this.props.disabled}

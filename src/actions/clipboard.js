@@ -11,9 +11,10 @@ export const clipboardLabelsLoadedAll = labels => ({
     labels,
 })
 
-export const itemUpdated = item => ({
+export const itemUpdated = (item, id) => ({
     type: CLIPBOARD_ITEM_UPDATED,
     item,
+    id
 })
 
 export const loadAll = () => dispatch => api.clipboard.loadAll().then(clipboards => {
@@ -25,8 +26,8 @@ export const loadAllLabels = () => dispatch => api.clipboard.loadAllLabels().the
 })
 
 // maybe make them the same, updateItem method + updatedItem action
-export const updateItem = (id, itemId, body) => dispatch => api.clipboard.updateItem(id, itemId, body).then(labels => {
-    dispatch(itemUpdated(labels));
+export const updateItem = (id, itemId, body) => dispatch => api.clipboard.updateItem(id, itemId, body).then(item => {
+    dispatch(itemUpdated(item, id));
 })
 
 
