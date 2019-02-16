@@ -34,14 +34,15 @@ class ClipboardItem extends Component {
 
   // Some could say its an anti pattern
   state = {
-    editing: false,
-    title: this.props.item.title,
-    value: this.props.item.value,
+    editing: false || (!this.props.item.title && !this.props.item.title),
+    title: this.props.item.title || '',
+    value: this.props.item.value || '',
     dirty: false,
     updating: false
   }
 
   saveChanges() {
+    // todo if saving empty item, delete it
     if (this.state.dirty) {
       this.setState({updating: true})
       this.props.updateItem(this.props.id, this.props.item._id, {
@@ -53,6 +54,15 @@ class ClipboardItem extends Component {
     }
   }
   
+  cancelChanges() {
+    
+    this.setState({
+      editing: false,
+      title: this.props.item.title,
+      value: this.props.item.value,
+      dirty: false
+    })
+  }
   render() {
     const {editing, title, value, updating} = this.state;
     return (
@@ -76,13 +86,15 @@ class ClipboardItem extends Component {
         </Value>
         <Actions>
           {/* TODO Disablre actions when saving and add hover over shit*/}
+          {/* TODO should not be possible to cancel empty item */}
+          {/* TODO disable save unless dirty */}
           {!editing ? 
           <React.Fragment>
             <Icon onClick={() => this.setState({editing: true})} link circular name="edit"/>
             <Icon link circular name="trash"/>
           </React.Fragment> : <React.Fragment>
             <Icon onClick={() => this.saveChanges()} link circular name="check"/>
-            <Icon link circular name="remove"/>
+            <Icon onClick={() => this.cancelChanges()} link circular name="remove"/>
           </React.Fragment>}
         </Actions>
       </Wrapper>

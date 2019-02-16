@@ -69,6 +69,12 @@ class Clipboard extends PureComponent {
         }));
     }
 
+    addItem() {
+        this.props.addItem(this.props.clipboard._id).then((x) => {
+            console.log('added');
+        })
+    }
+
   render() {
       return (
         <CardWrapper fluid color='black' raised>
@@ -82,6 +88,8 @@ class Clipboard extends PureComponent {
           {this.props.clipboard.items.map(item => 
             <ClipboardItem key={item._id} item={item} id={this.props.clipboard._id}/>
           )}
+          {/* todo Should not be possible to add if there is at least one emptty */}
+          <button onClick={this.addItem.bind(this)}>Add item</button>
           
             {/* <Segment.Group className="segment-group">
                 {this.props.clipboard.items.map(item => 
@@ -110,7 +118,8 @@ Clipboard.propTypes = {
     labels: PropTypes.arrayOf(PropTypes.shape({
         title: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,
-    }))
+    })),
+    addItem: PropTypes.func.isRequired,
 }
 
 export default Clipboard

@@ -1,4 +1,9 @@
-import { CLIPBOARD_LOADED_ALL, CLIPBOARD_LOADED_ALL_LABELS, CLIPBOARD_ITEM_UPDATED } from "../types";
+import { 
+    CLIPBOARD_LOADED_ALL,
+    CLIPBOARD_LOADED_ALL_LABELS,
+    CLIPBOARD_ITEM_UPDATED,
+    CLIPBOARD_ITEM_ADDED
+ } from "../types";
 import api from "../api";
 
 export const clipboardLoadedAll = clipboards => ({
@@ -17,6 +22,12 @@ export const itemUpdated = (item, id) => ({
     id
 })
 
+export const itemAdded = (item, id) => ({
+    type: CLIPBOARD_ITEM_ADDED,
+    item,
+    id
+})
+
 export const loadAll = () => dispatch => api.clipboard.loadAll().then(clipboards => {
     dispatch(clipboardLoadedAll(clipboards));
 })
@@ -29,5 +40,7 @@ export const loadAllLabels = () => dispatch => api.clipboard.loadAllLabels().the
 export const updateItem = (id, itemId, body) => dispatch => api.clipboard.updateItem(id, itemId, body).then(item => {
     dispatch(itemUpdated(item, id));
 })
+
+export const addItem = (id) => dispatch => api.clipboard.addItem(id).then(item => dispatch(itemAdded(item, id)))
 
 

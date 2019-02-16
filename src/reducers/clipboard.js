@@ -1,4 +1,8 @@
-import { CLIPBOARD_LOADED_ALL, CLIPBOARD_LOADED_ALL_LABELS, CLIPBOARD_ITEM_UPDATED } from '../types';
+import {
+  CLIPBOARD_LOADED_ALL,
+   CLIPBOARD_LOADED_ALL_LABELS,
+   CLIPBOARD_ITEM_UPDATED,
+   CLIPBOARD_ITEM_ADDED } from '../types';
 
 const initialState = {
   clipboards: [],
@@ -22,6 +26,13 @@ export default (state = initialState, action) => {
           item._id === action.item._id ?
           {...item, ...action.item} 
           : item)} 
+        : clipboard
+      )}
+
+  case CLIPBOARD_ITEM_ADDED:
+    return {...state, clipboards: state.clipboards.map(clipboard => 
+        clipboard._id === action.id ? 
+        {...clipboard, items: [...clipboard.items, action.item]} 
         : clipboard
       )}
 
