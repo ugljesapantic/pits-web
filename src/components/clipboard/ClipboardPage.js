@@ -2,42 +2,32 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { loadAll, loadAllLabels, addItem } from '../../actions';
 import Clipboard from './Clipboard';
+import Labels from './Labels';
 
 class ClipboardPage extends Component {
 
     state = {
-        editing: null
+        labels: {}
     }
 
     componentDidMount() {
         this.props.loadAll();
-        this.props.loadAllLabels();
+        this.props.loadAllLabels().then(() => {
+            // After initial load, make them all active in the state
+            const labels = {}
+            this.props.labels.forEach((l) => labels[l._id] = true);
+            this.setState({
+                labels
+            })
+        });
     }
 
     edit(clipboard) {
         this.setState({editing: clipboard});
     }
 
-    save() {
-        // but do something
-        this.setState({editing: null})
-    }
-
-    cancel() {
-        this.setState({editing: null})
-    }
-
     onTitleChange(value) {
         this.setState((prev) => ({editing: {...prev.editing, title: value}}))
-    }
-
-    onItemChange(id, update) {
-        this.setState((prev) => ({
-            editing: {
-                ...prev.editing,
-                items: prev.editing.items.map((item) => item._id !== id ? item : {...item, ...update})
-            }
-        }))
     }
 
     onLabelChange(_, update) {
@@ -47,12 +37,19 @@ class ClipboardPage extends Component {
                 labels: [...update.value]
             }
         }))
+    } 
+
+    toggleLabelFilter(labelId) {
+        this.setState({labels: {...this.state.labels, [labelId]: !this.state.labels[labelId]}})
     }
 
     render() {
-        const {editing} = this.state;
+
         return (
             <div>
+                <Labels 
+                labels={this.props.labels.map(l => ({...l, active: this.state.labels[l._id]}))}
+                toggle={this.toggleLabelFilter.bind(this)}/>
                 {this.props.clipboards.map((clipboard) => 
                 <Clipboard 
                 edit={this.edit.bind(this)}
@@ -88,9 +85,7 @@ function mapStateToProps(state) {
       loadAll: () => {
         dispatch(loadAll())
       },
-      loadAllLabels: () => {
-        dispatch(loadAllLabels())
-      },
+      loadAllLabels: () => dispatch(loadAllLabels()),
       addItem: (id) => dispatch(addItem(id))
     }
   }
