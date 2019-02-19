@@ -26,17 +26,13 @@ class ClipboardPage extends Component {
         this.setState({labels: {...this.state.labels, [labelId]: !this.state.labels[labelId]}})
     }
 
-    addLabel(label) {
-        this.props.addLabel(label)
-    }
-
     render() {
 
         return (
             <div>
                 <Labels 
                 labels={this.props.labels.map(l => ({...l, active: this.state.labels[l._id]}))}
-                addLabel={this.addLabel.bind(this)}
+                addLabel={this.props.addLabel.bind(this)}
                 toggle={this.toggleLabelFilter.bind(this)}/>
                 {this.props.clipboards.map((clipboard) => 
                 <Clipboard 
@@ -45,16 +41,6 @@ class ClipboardPage extends Component {
                 addItem={this.props.addItem}
                 labels={this.props.labels}/>
                 )}
-                {/* {editing && <EditClipboard 
-                clipboard={editing}
-                save={this.save.bind(this)}
-                cancel={this.cancel.bind(this)}
-                onTitleChange={this.onTitleChange.bind(this)}
-                onItemChange={this.onItemChange.bind(this)}
-                onLabelChange={this.onLabelChange.bind(this)}
-                selectedLabels={editing.labels}
-                labels={this.props.labels}
-                />} */}
             </div>
         );
     }

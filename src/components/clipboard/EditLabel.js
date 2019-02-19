@@ -15,10 +15,15 @@ function EditLabel({submit}) {
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('black');
+  // add saving state
 
   const handleKeyPress = (e) => {
     if(e.key === 'Enter') {
-        submit({color, title});
+        submit({color, title}).then(() => {
+          setEditing(false);
+          setTitle('');
+          setColor('black');
+        });
     }
   }
   
