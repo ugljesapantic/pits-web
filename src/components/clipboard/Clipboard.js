@@ -114,7 +114,6 @@ Clipboard.propTypes = {
             value: PropTypes.string.isRequired,
         })),
     }),
-    edit: PropTypes.func.isRequired,
     labels: PropTypes.arrayOf(PropTypes.shape({
         title: PropTypes.string.isRequired,
         color: PropTypes.string.isRequired,

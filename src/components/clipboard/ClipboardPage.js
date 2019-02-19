@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAll, loadAllLabels, addItem } from '../../actions';
+import { loadAll, loadAllLabels, addItem, addLabel } from '../../actions';
 import Clipboard from './Clipboard';
 import Labels from './Labels';
 
@@ -22,25 +22,12 @@ class ClipboardPage extends Component {
         });
     }
 
-    edit(clipboard) {
-        this.setState({editing: clipboard});
-    }
-
-    onTitleChange(value) {
-        this.setState((prev) => ({editing: {...prev.editing, title: value}}))
-    }
-
-    onLabelChange(_, update) {
-        this.setState((prev) => ({
-            editing: {
-                ...prev.editing,
-                labels: [...update.value]
-            }
-        }))
-    } 
-
     toggleLabelFilter(labelId) {
         this.setState({labels: {...this.state.labels, [labelId]: !this.state.labels[labelId]}})
+    }
+
+    addLabel(label) {
+        this.props.addLabel(label)
     }
 
     render() {
@@ -49,10 +36,10 @@ class ClipboardPage extends Component {
             <div>
                 <Labels 
                 labels={this.props.labels.map(l => ({...l, active: this.state.labels[l._id]}))}
+                addLabel={this.addLabel.bind(this)}
                 toggle={this.toggleLabelFilter.bind(this)}/>
                 {this.props.clipboards.map((clipboard) => 
                 <Clipboard 
-                edit={this.edit.bind(this)}
                 key={clipboard._id}
                 clipboard={clipboard}
                 addItem={this.props.addItem}
@@ -86,7 +73,8 @@ function mapStateToProps(state) {
         dispatch(loadAll())
       },
       loadAllLabels: () => dispatch(loadAllLabels()),
-      addItem: (id) => dispatch(addItem(id))
+      addItem: (id) => dispatch(addItem(id)),
+      addLabel: (body) => dispatch(addLabel(body))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);

@@ -3,7 +3,8 @@ import {
     CLIPBOARD_LOADED_ALL_LABELS,
     CLIPBOARD_ITEM_UPDATED,
     CLIPBOARD_ITEM_ADDED,
-    CLIPBOARD_ITEM_REMOVED
+    CLIPBOARD_ITEM_REMOVED,
+    CLIPBOARD_LABEL_ADDED
  } from "../types";
 import api from "../api";
 
@@ -36,6 +37,11 @@ export const itemAdded = (item, id) => ({
     id
 })
 
+export const labelAdded = (label) => ({
+    type: CLIPBOARD_LABEL_ADDED,
+    label
+})
+
 export const loadAll = () => dispatch => api.clipboard.loadAll().then(clipboards => {
     dispatch(clipboardLoadedAll(clipboards));
 })
@@ -54,5 +60,7 @@ export const removeItem = (id, itemId) => dispatch => api.clipboard.removeItem(i
 })
 
 export const addItem = (id) => dispatch => api.clipboard.addItem(id).then(item => dispatch(itemAdded(item, id)))
+
+export const addLabel = (body) => dispatch => api.clipboard.addLabel(body).then(label => dispatch(labelAdded(label)))
 
 

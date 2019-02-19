@@ -3,7 +3,8 @@ import {
    CLIPBOARD_LOADED_ALL_LABELS,
    CLIPBOARD_ITEM_UPDATED,
    CLIPBOARD_ITEM_ADDED,
-  CLIPBOARD_ITEM_REMOVED } from '../types';
+  CLIPBOARD_ITEM_REMOVED,
+  CLIPBOARD_LABEL_ADDED } from '../types';
 
 const initialState = {
   clipboards: [],
@@ -12,6 +13,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+  case CLIPBOARD_LABEL_ADDED:
+    return {...state, labels: [...state.labels, action.label]};
      
   case CLIPBOARD_LOADED_ALL:
     return {...state, clipboards: [...action.clipboards]};
