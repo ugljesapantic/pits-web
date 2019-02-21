@@ -72,7 +72,7 @@ class Clipboard extends PureComponent {
 
     addItem() {
         this.props.addItem(this.props.clipboard._id).then((x) => {
-            console.log('added');
+            
         })
     }
 
@@ -84,7 +84,6 @@ class Clipboard extends PureComponent {
       return (
         <CardWrapper fluid color='black' raised>
           <CardHeader>
-              {console.log(this.props.clipboard)}
           <ClickableEditableText
           value={this.props.clipboard.title}
           save={this.onTitleChange.bind(this)}
