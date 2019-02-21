@@ -9,10 +9,6 @@ import { updateItem, removeItem } from '../../actions';
 
 const Wrapper = styled.div`
     display: flex;
-
-    > div {
-      padding: 0 0.5rem;
-    }
 `
 
 const Title = styled.div`
@@ -77,6 +73,7 @@ class ClipboardItem extends Component {
           disabled={updating}
           value={title}
           displayValue={this.props.item.title}
+          submit={this.saveChanges.bind(this)}
           editing={editing}/>
         </Title>
         <Value>
@@ -86,6 +83,7 @@ class ClipboardItem extends Component {
           disabled={updating}
           value={value}
           displayValue={this.props.item.value}
+          submit={this.saveChanges.bind(this)}
           editing={editing}/>
         </Value>
         <Actions>

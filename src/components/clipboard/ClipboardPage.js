@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAll, loadAllLabels, addItem, addLabel, removeLabel } from '../../actions';
+import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update } from '../../actions';
 import Clipboard from './Clipboard';
 import Labels from './Labels';
 
@@ -40,6 +40,7 @@ class ClipboardPage extends Component {
                 key={clipboard._id}
                 clipboard={clipboard}
                 addItem={this.props.addItem}
+                update={this.props.update}
                 labels={this.props.labels}/>
                 )}
             </div>
@@ -62,7 +63,8 @@ function mapStateToProps(state) {
       loadAllLabels: () => dispatch(loadAllLabels()),
       addItem: (id) => dispatch(addItem(id)),
       addLabel: (body) => dispatch(addLabel(body)),
-      removeLabel: (id) => dispatch(removeLabel(id))
+      removeLabel: (id) => dispatch(removeLabel(id)),
+      update: (id, body) => dispatch(update(id, body))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);

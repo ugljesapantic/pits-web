@@ -3,6 +3,7 @@ import { Segment, Card , Label, Icon} from 'semantic-ui-react'
 import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
 import ClipboardItem from './ClipboardItem';
+import ClickableEditableText from './../shared/ClickableEditableText';
 // TODO get rid of all of them
 const CardWrapper = styled(Card)`
     &&& .card-content {
@@ -75,11 +76,19 @@ class Clipboard extends PureComponent {
         })
     }
 
+    onTitleChange(title) {
+        return this.props.update(this.props.clipboard._id, {title})
+    }
+
   render() {
       return (
         <CardWrapper fluid color='black' raised>
           <CardHeader>
-              <CardTitle>{this.props.clipboard.title}</CardTitle>
+              {console.log(this.props.clipboard)}
+          <ClickableEditableText
+          value={this.props.clipboard.title}
+          save={this.onTitleChange.bind(this)}
+           />
               {this.props.labels
                 .filter(l => this.props.clipboard.labels.includes(l._id))
                 .map(l => <Label key={l.color} color={l.color} horizontal>{l.title}</Label>)}
@@ -119,6 +128,7 @@ Clipboard.propTypes = {
         color: PropTypes.string.isRequired,
     })),
     addItem: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired,
 }
 
 export default Clipboard

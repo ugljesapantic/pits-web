@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Input } from 'semantic-ui-react'
 import styled  from 'styled-components';
@@ -6,7 +6,6 @@ import styled  from 'styled-components';
 const ClickableInputWrapper = styled.div`
     display: inline-flex;
     min-width: 15rem;
-    height: 2.75rem;
     align-items: center;
     width: 100%;
 `
@@ -24,6 +23,7 @@ const TextValue = styled.div`
     height: 2.4rem;
     line-height: 2.4rem;
     border-radius: 0.3rem;
+    padding: 0 0.5rem;
 
     &:hover {
       /* TODO make this light gray something else */
@@ -33,28 +33,42 @@ const TextValue = styled.div`
      
     ${(props) => props.empty && 'background-color: cyan'}
 `
-// TODO Change into func
-export default class EditableText extends PureComponent {
-  static propTypes = {
-    value: PropTypes.string.isRequired,
-    displayValue: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    editing: PropTypes.bool.isRequired,
-    autoFocus: PropTypes.bool,
-    disabled: PropTypes.bool,
+
+
+export default function EditableText(props) {
+  const onKeyPress = (e) => {
+    switch(e.keyCode) {
+      case 13:
+        props.submit();
+        break;
+      case 27:
+        props.cancel();
+        break;
+      default:
+        break;
+    }
   }
 
-  render() {
-    // TODO destructur props
-    return (
-      <ClickableInputWrapper>
-        {!this.props.editing && <TextValue>{this.props.displayValue}</TextValue>}
-        {this.props.editing && <TextInput 
-        autoFocus={this.props.autoFocus} 
-        disabled={this.props.disabled}
-        value={this.props.value}
-        onChange={(_, data) => this.props.onChange(data.value)} />}
+  return (
+    <ClickableInputWrapper>
+        {!props.editing && <TextValue>{props.displayValue}</TextValue>}
+        {props.editing && <TextInput 
+        autoFocus={props.autoFocus} 
+        disabled={props.disabled}
+        value={props.value}
+        onKeyDown={(e) => onKeyPress(e)}
+        onChange={(_, data) => props.onChange(data.value)} />}
       </ClickableInputWrapper>
-    )
-  }
+  )
 }
+
+EditableText.propTypes = {
+  value: PropTypes.string.isRequired,
+  displayValue: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  autoFocus: PropTypes.bool,
+  disabled: PropTypes.bool,
+  submit: PropTypes.func.isRequired,
+}
+

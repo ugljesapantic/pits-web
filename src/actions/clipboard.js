@@ -1,4 +1,5 @@
 import { 
+    CLIPBOARD_UPDATED,
     CLIPBOARD_LOADED_ALL,
     CLIPBOARD_LOADED_ALL_LABELS,
     CLIPBOARD_ITEM_UPDATED,
@@ -12,6 +13,11 @@ import api from "../api";
 export const clipboardLoadedAll = clipboards => ({
     type: CLIPBOARD_LOADED_ALL,
     clipboards,
+})
+
+export const clipboardUpdated = clipboard => ({
+    type: CLIPBOARD_UPDATED,
+    clipboard,
 })
 
 export const clipboardLabelsLoadedAll = labels => ({
@@ -70,5 +76,7 @@ export const addItem = (id) => dispatch => api.clipboard.addItem(id).then(item =
 export const addLabel = (body) => dispatch => api.clipboard.addLabel(body).then(label => dispatch(labelAdded(label)))
 
 export const removeLabel = (id) => dispatch => api.clipboard.removeLabel(id).then(() => dispatch(labelRemoved(id)))
+
+export const update = (id, body) => dispatch => api.clipboard.update(id, body).then(clipboard => dispatch(clipboardUpdated(clipboard)))
 
 
