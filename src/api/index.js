@@ -12,5 +12,6 @@ export default {
         addItem: (id) => http.post(`/clipboards/${id}/items`).then(res => res.data),
         removeItem: (id, itemId) => http.delete(`/clipboards/${id}/items/${itemId}`).then(res => res.data),
         addLabel: (body) => http.post(`/clipboard-labels`, body).then(res => res.data),
+        removeLabel: (id) => http.delete(`/clipboard-labels/${id}`).then(res => res.data),
     }
 }

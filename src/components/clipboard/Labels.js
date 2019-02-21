@@ -13,6 +13,12 @@ const LabelsWrapper = styled.div`
 // HUEHUE FUNC
 export default class Labels extends Component {
 
+    deleteLabel(e, id) {
+        e.stopPropagation();
+        this.props.removeLabel(id);
+        // Add async
+    }
+
   render() {
     return (
         //   todo icons in general should have hover 
@@ -23,7 +29,8 @@ export default class Labels extends Component {
             onClick={() => this.props.toggle(label._id)}
             as="a"
             className={!label.active && 'inactive'}
-            color={label.color}>{label.title}<Icon name='close' /></Label>
+            color={label.color}>{label.title}
+            <Icon name='close' onClick={(e) => this.deleteLabel(e, label._id)} /></Label>
             ))}
             <EditLabel submit={this.props.addLabel}/>
         </LabelsWrapper>
