@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update, create } from '../../actions';
+import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update, create, remove } from '../../actions';
 import Clipboard from './Clipboard';
 import Labels from './Labels';
 import AddInput from './../shared/AddInput';
@@ -42,6 +42,7 @@ class ClipboardPage extends Component {
                     clipboard={clipboard}
                     addItem={this.props.addItem}
                     update={this.props.update}
+                    remove={this.props.remove}
                     labels={this.props.labels}/>
                 )}
                 <AddInput submit={(title) => this.props.create({title})} />
@@ -67,7 +68,8 @@ function mapStateToProps(state) {
       addLabel: (body) => dispatch(addLabel(body)),
       removeLabel: (id) => dispatch(removeLabel(id)),
       update: (id, body) => dispatch(update(id, body)),
-      create: (body) => dispatch(create(body))
+      create: (body) => dispatch(create(body)),
+      remove: (id) => dispatch(remove(id))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);

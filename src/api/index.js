@@ -9,6 +9,7 @@ export default {
         loadAll: () => http.get('/clipboards').then(res => res.data),
         loadAllLabels: () => http.get('/clipboard-labels').then(res => res.data),
         update: (id, body) => http.patch(`/clipboards/${id}`, body).then(res => res.data),
+        remove: (id) => http.delete(`/clipboards/${id}`).then(res => res.data),
         create: (body) => http.post(`/clipboards`, body).then(res => res.data),
         updateItem: (id, itemId, body) => http.patch(`/clipboards/${id}/items/${itemId}`, body).then(res => res.data),
         addItem: (id) => http.post(`/clipboards/${id}/items`).then(res => res.data),

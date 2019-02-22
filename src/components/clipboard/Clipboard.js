@@ -48,6 +48,14 @@ line-height: 2em;
     margin-right: 1em;
 `
 
+const LabelsWrapper = styled.div`
+    
+`;
+
+const ClipboardActions = styled.div`
+    margin-left: auto;
+`
+
 class Clipboard extends PureComponent {
 
     copy(str, e) {
@@ -84,13 +92,17 @@ class Clipboard extends PureComponent {
       return (
         <CardWrapper fluid color='black' raised>
           <CardHeader>
-          <ClickableEditableText
-          value={this.props.clipboard.title}
-          save={this.onTitleChange.bind(this)}
-           />
-              {this.props.labels
-                .filter(l => this.props.clipboard.labels.includes(l._id))
-                .map(l => <Label key={l.color} color={l.color} horizontal>{l.title}</Label>)}
+            <ClickableEditableText
+            value={this.props.clipboard.title}
+            save={this.onTitleChange.bind(this)}/>
+            <LabelsWrapper>
+                {this.props.labels
+                    .filter(l => this.props.clipboard.labels.includes(l._id))
+                    .map(l => <Label key={l.color} color={l.color} horizontal>{l.title}</Label>)}
+            </LabelsWrapper>
+            <ClipboardActions>
+                <Icon onClick={this.props.remove.bind(this, this.props.clipboard._id)} link circular name="trash"/>
+            </ClipboardActions>
           </CardHeader>
           <Card.Content className="card-content">
           {this.props.clipboard.items.map(item => 
@@ -98,15 +110,6 @@ class Clipboard extends PureComponent {
           )}
           {/* todo Should not be possible to add if there is at least one emptty */}
           <button onClick={this.addItem.bind(this)}>Add item</button>
-          
-            {/* <Segment.Group className="segment-group">
-                {this.props.clipboard.items.map(item => 
-                <Segment onClick={(e) => this.copy( item.value, e)} key={item._id} secondary className="segment">
-                    <Label size="small" attached="top right">{item.title}</Label>
-                    <span>{item.value}</span>
-                </Segment>
-                )}
-            </Segment.Group> */}
           </Card.Content>
         </CardWrapper>
       )
@@ -128,6 +131,7 @@ Clipboard.propTypes = {
     })),
     addItem: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
+    remove: PropTypes.func.isRequired,
 }
 
 export default Clipboard

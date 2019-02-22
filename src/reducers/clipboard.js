@@ -7,7 +7,8 @@ import {
   CLIPBOARD_LABEL_ADDED,
 CLIPBOARD_LABEL_REMOVED,
 CLIPBOARD_UPDATED,
-CLIPBOARD_CREATED} from '../types';
+CLIPBOARD_CREATED,
+CLIPBOARD_REMOVED} from '../types';
 
 const initialState = {
   clipboards: [],
@@ -23,6 +24,12 @@ export default (state = initialState, action) => {
         {...action.clipboard} 
         : clipboard
       )}
+
+  case CLIPBOARD_REMOVED:
+  return {
+    ...state,
+    clipboards: state.clipboards.filter(c => c._id !== action.id)
+  }
 
   case CLIPBOARD_CREATED:
     return {...state, clipboards: [...state.clipboards, action.clipboard]}
