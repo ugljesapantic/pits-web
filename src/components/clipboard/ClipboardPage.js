@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update } from '../../actions';
+import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update, create } from '../../actions';
 import Clipboard from './Clipboard';
 import Labels from './Labels';
+import AddInput from './../shared/AddInput';
 
 class ClipboardPage extends Component {
 
@@ -36,13 +37,14 @@ class ClipboardPage extends Component {
                 removeLabel={this.props.removeLabel.bind(this)}
                 toggle={this.toggleLabelFilter.bind(this)}/>
                 {this.props.clipboards.map((clipboard) => 
-                <Clipboard 
-                key={clipboard._id}
-                clipboard={clipboard}
-                addItem={this.props.addItem}
-                update={this.props.update}
-                labels={this.props.labels}/>
+                    <Clipboard 
+                    key={clipboard._id}
+                    clipboard={clipboard}
+                    addItem={this.props.addItem}
+                    update={this.props.update}
+                    labels={this.props.labels}/>
                 )}
+                <AddInput submit={(title) => this.props.create({title})} />
             </div>
         );
     }
@@ -64,7 +66,8 @@ function mapStateToProps(state) {
       addItem: (id) => dispatch(addItem(id)),
       addLabel: (body) => dispatch(addLabel(body)),
       removeLabel: (id) => dispatch(removeLabel(id)),
-      update: (id, body) => dispatch(update(id, body))
+      update: (id, body) => dispatch(update(id, body)),
+      create: (body) => dispatch(create(body))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);
