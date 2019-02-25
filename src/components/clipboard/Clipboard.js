@@ -8,21 +8,15 @@ import ClickableEditableText from './../shared/ClickableEditableText';
 const CardWrapper = styled(Card)`
     &&& .card-content {
         padding: 0.5em 1em;
+
+        & > div {
+            margin: 0.1em 0;
+        }
     }
 
     &&& .segment {
         padding: 0.5em 1em;
         cursor: pointer;
-
-        &:hover {
-            background-color: #dcddde;
-        }
-
-        &.copied {
-            background-color: #21ba45;
-        }
-
-        transition: background-color 0.3s;
     }
 
     &&& .segment-group {
@@ -62,20 +56,6 @@ class Clipboard extends PureComponent {
         editingLabels: false,
         labels: this.props.clipboard.labels,
         saving: false
-    }
-
-    copy(str, e) {
-        const el = document.createElement('textarea');
-        el.value = str;
-        el.setAttribute('readonly', '');
-        el.style.position = 'absolute';
-        el.style.left = '-9999px';
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        e.target.classList.toggle('copied');
-        setTimeout((el) => el.classList.toggle('copied'), 200, e.target);
     }
 
     handleMouseHover() {

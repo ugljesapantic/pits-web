@@ -18,16 +18,26 @@ const Wrapper = styled.div`
 export default function AddInput(props) {
     let [active, setActive] = useState(false)
     let [value, setValue] = useState('');
+    let [saving, setSaving] = useState(false);
+
+    const save = () => {
+      if (value) {
+        setSaving(true);
+        props.submit(value).then(() => {
+          setActive(false);
+          setValue('');
+          setSaving(false);
+        })
+      } else {
+        setActive(false);
+        setValue('');
+      }
+    }
 
     const onKeyDown = (e) => {
         switch(e.keyCode) {
           case 13:
-            if (value) {
-              props.submit(value).then(() => {
-                setActive(false);
-                setValue('');
-              })
-            }
+            save()
             break;
           case 27:
             setActive(false);
@@ -42,6 +52,8 @@ export default function AddInput(props) {
   return (
     <Wrapper>
         {active && <Input 
+        onBlur={save}
+        disabled={saving}
         onChange={(_, data) => setValue(data.value)}
         onKeyDown={(e) => onKeyDown(e)}
         value={value}

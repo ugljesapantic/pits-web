@@ -30,8 +30,6 @@ const TextValue = styled.div`
         background-color: 'lightgray';
         cursor: pointer;
     }
-     
-    ${(props) => props.empty && 'background-color: cyan'}
 `
 
 
@@ -51,7 +49,7 @@ export default function EditableText(props) {
 
   return (
     <ClickableInputWrapper>
-        {!props.editing && <TextValue>{props.displayValue}</TextValue>}
+        {!props.editing  && <TextValue>{props.displayValue}</TextValue>}
         {props.editing && <TextInput 
         autoFocus={props.autoFocus} 
         disabled={props.disabled}
@@ -63,8 +61,8 @@ export default function EditableText(props) {
 }
 
 EditableText.propTypes = {
-  value: PropTypes.string.isRequired,
-  displayValue: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  displayValue: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   editing: PropTypes.bool.isRequired,
   autoFocus: PropTypes.bool,

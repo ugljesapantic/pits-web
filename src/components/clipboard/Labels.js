@@ -28,7 +28,7 @@ export default class Labels extends Component {
             key={label._id}
             onClick={() => this.props.toggle(label._id)}
             as="a"
-            className={!label.active && 'inactive'}
+            className={!label.active ? 'inactive' : 'active'}
             color={label.color}>{label.title}
             <Icon name='close' onClick={(e) => this.deleteLabel(e, label._id)} /></Label>
             ))}

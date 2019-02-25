@@ -9,6 +9,7 @@ import { updateItem, removeItem } from '../../actions';
 
 const Wrapper = styled.div`
     display: flex;
+    height: 2.4rem;
 `
 
 const Title = styled.div`
@@ -17,6 +18,13 @@ const Title = styled.div`
 
 const Value = styled.div`
   flex: 1;
+  background-color: lightgray;
+  border-radius: 0.3em;
+    .copied {
+      background-color: white;
+    }
+    
+    transition: background-color 0.3s;
 `;
 
 const Actions = styled.div`
@@ -30,7 +38,7 @@ class ClipboardItem extends Component {
 
   // Some could say its an anti pattern
   state = {
-    editing: false || (!this.props.item.title && !this.props.item.title),
+    editing: false,
     title: this.props.item.title || '',
     value: this.props.item.value || '',
     dirty: false,
@@ -46,9 +54,23 @@ class ClipboardItem extends Component {
         title: this.state.title
       }).then(_=> this.setState({editing: false, updating: false}))
     } else {
-      this.setState({editing: false})
+      this.cancelChanges();
     }
   }
+
+  copy(str, e) {
+    const el = document.createElement('textarea');
+    el.value = str;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    e.target.classList.toggle('copied');
+    setTimeout((el) => el.classList.toggle('copied'), 200, e.target);
+}
   
   cancelChanges() {
     this.setState({
@@ -59,6 +81,17 @@ class ClipboardItem extends Component {
     })
   }
 
+  onBlur(e) {
+    const currentTarget = e.currentTarget;
+
+    // dont do this at home
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+          this.saveChanges();
+      }
+    }, 0);
+  }
+
   remove() {
     // todo maybe props should not be named like removeItem, but only delete, since they are called from perspective of item?
     this.props.removeItem(this.props.id, this.props.item._id);
@@ -66,23 +99,23 @@ class ClipboardItem extends Component {
   render() {
     const {editing, title, value, updating} = this.state;
     return (
-      <Wrapper>
+      <Wrapper onBlur={this.onBlur.bind(this)}>
         <Title>
           <EditableText 
           onChange={(v) => this.setState({title: v, dirty: true})}
           disabled={updating}
-          value={title}
-          displayValue={this.props.item.title}
+          value={title || ''}
+          displayValue={this.props.item.title || ''}
           submit={this.saveChanges.bind(this)}
           editing={editing}/>
         </Title>
-        <Value>
+        <Value onClick={e => {if (!editing) this.copy(value, e)}}>
           <EditableText
           onChange={(v) => this.setState({value: v, dirty: true})}
-          autoFocus
           disabled={updating}
-          value={value}
-          displayValue={this.props.item.value}
+          autoFocus
+          value={value || ''}
+          displayValue={this.props.item.value || ''}
           submit={this.saveChanges.bind(this)}
           editing={editing}/>
         </Value>
@@ -107,9 +140,9 @@ class ClipboardItem extends Component {
 // todo static method inside class body ?
 ClipboardItem.propTypes = {
   item: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
+    title: PropTypes.string,
+    value: PropTypes.string,
+    id: PropTypes.number,
   }),
 }
 
