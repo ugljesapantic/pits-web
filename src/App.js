@@ -13,18 +13,15 @@ import jwt from 'jwt-decode'
 import moment from 'moment';
 import { userLoggedIn, logout } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
+import { main } from './styles/layout';
 
 const AppWrapper = styled.div`
-  padding-top: 5em;
-  padding-bottom: 2em;
   height: 100vh;
 `
 
 const ContentWrapper = styled.div`
-  
+  ${main};
   position: relative;
-  display: flex;
-  flex-direction: column;
 `
 
 class App extends Component {
@@ -45,7 +42,7 @@ class App extends Component {
     return (
       <AppWrapper ref={this.handleContextRef}>
         <TopNavigation isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
-        <ContentWrapper className="ui container">
+        <ContentWrapper className="container">
           <GuestRoute location={location} path="/login" exact component={LoginPage} />
           <GuestRoute location={location} path="/signup" exact component={SignupPage} />
           <GuestRoute location={location} path="/" exact component={HomePage} />

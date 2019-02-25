@@ -5,6 +5,7 @@ import Validator from "validator";
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import { login } from '../actions';
+import {fullScreen} from '../styles/layout';
 
 const FormWrapper = styled.div`
     display: flex;
@@ -12,7 +13,7 @@ const FormWrapper = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
-    height: auto;
+    ${fullScreen};
 
     .login-form {
         width: 300px;

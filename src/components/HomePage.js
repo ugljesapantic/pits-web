@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
+import { fullScreen } from '../styles/layout';
 
 const AppMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${fullScreen};
 `
 
 const AppTitle = styled.h1`
@@ -17,11 +19,10 @@ const AppTitle = styled.h1`
 
 /* TODO remove hardcoded divs */
 const HomePage =  ({location}) =>
-<React.Fragment>
+
   <AppMain>
     <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
     <Button primary size='huge'>SIGN UP</Button>
   </AppMain>
-</React.Fragment>
 
 export default HomePage;
