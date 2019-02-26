@@ -73,4 +73,4 @@ function mapStateToProps(state) {
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);
-  
+//   TODO add prop types

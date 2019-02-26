@@ -37,3 +37,14 @@ export default class Labels extends Component {
       )
   }
 }
+
+Labels.propTypes = {
+    toggle: PropTypes.func.isRequired,
+    addLabel: PropTypes.func.isRequired,
+    // labels: PropTypes.arrayOf(
+    //     PropTypes.shape({
+          
+    //     }),
+    // ).isRequired,
+    removeLabel: PropTypes.func.isRequired,
+}

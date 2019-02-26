@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Icon, Sticky, Input } from 'semantic-ui-react';
+import { Icon, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`

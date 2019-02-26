@@ -35,12 +35,12 @@ const CardHeader = styled.div`
     
 `
 
-const CardTitle = styled.div`
-font-weight: bold;
-line-height: 2em;
-    font-size: 1em;
-    margin-right: 1em;
-`
+// const CardTitle = styled.div`
+// font-weight: bold;
+// line-height: 2em;
+//     font-size: 1em;
+//     margin-right: 1em;
+// `
 
 const LabelsWrapper = styled.div`
     
@@ -135,8 +135,8 @@ Clipboard.propTypes = {
         title: PropTypes.string.isRequired,
         labels: PropTypes.arrayOf(PropTypes.string.isRequired),
         items: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            value: PropTypes.string.isRequired,
+            title: PropTypes.string,
+            value: PropTypes.string,
         })),
     }),
     labels: PropTypes.arrayOf(PropTypes.shape({
