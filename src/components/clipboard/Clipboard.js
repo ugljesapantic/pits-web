@@ -109,6 +109,7 @@ class Clipboard extends PureComponent {
                     .filter(l => this.props.clipboard.labels.includes(l._id))
                     .map(l => <Label key={l._id} color={l.color} horizontal>{l.title}</Label>)
                     }
+                    {/* todo when a lot of labels show first few... */}
                     {/* todo show tooltip like manage labels */}
             <Icon onClick={() => this.setState({editingLabels: true})} link circular name="edit"/>
             </LabelsWrapper>

@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
-import { Input, Button, Label, Icon } from 'semantic-ui-react';
+import { Input, Label, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import ColorPicker from '../shared/ColorPicker';
 
 const EditLabelWrapper = styled.div`
     position: relative;
+    display: inline-block;
 `;
 
-// const 
+const LabelInputWrapper = styled.div`
+  background-color: lightgray;
+  padding: 0.3em;
+  border-radius: 0.3em;
+  line-height: normal;
 
+  input {
+    height: 2.4em;
+  }
+`;
 
 function EditLabel({submit}) {
   const [editing, setEditing] = useState(false)
@@ -51,13 +60,11 @@ function EditLabel({submit}) {
   return (
     <EditLabelWrapper>
      {editing ?
-     <React.Fragment>
-         <Label>
-            <ColorPicker color={color} colorPicked={(c) => setColor(c)} trigger={<Icon inverted bordered link circular name="paint brush"/>}/>
-            <Input disabled={saving} onBlur={save} onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
-         </Label>
-     </React.Fragment> : 
-     <Button onClick={() => setEditing(true)}>Add label</Button>
+        <LabelInputWrapper>
+          <ColorPicker color={color} colorPicked={(c) => setColor(c)} trigger={<Icon inverted bordered link circular name="paint brush"/>}/>
+          <Input disabled={saving}  onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
+        </LabelInputWrapper> : 
+     <Icon circular link name="add" onClick={() => setEditing(true)} />
      }
     </EditLabelWrapper>
   )

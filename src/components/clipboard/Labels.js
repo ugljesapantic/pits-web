@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import EditLabel from './EditLabel';
 
 const LabelsWrapper = styled.div`
+    line-height: 3em;
     .inactive {
         opacity: 0.3;
     }
