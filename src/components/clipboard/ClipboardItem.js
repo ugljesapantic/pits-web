@@ -82,14 +82,21 @@ class ClipboardItem extends Component {
   }
 
   onBlur(e) {
-    const currentTarget = e.currentTarget;
-
-    // dont do this at home
+  
     setTimeout(() => {
-      if (!currentTarget.contains(document.activeElement)) {
+      if (!this.el.contains(document.activeElement)) {
           this.saveChanges();
       }
+      
     }, 0);
+  }
+
+  setRef(el) {
+    this.el = el;
+  }
+
+  edit() {
+    this.setState({editing: true})
   }
 
   remove() {
@@ -99,7 +106,7 @@ class ClipboardItem extends Component {
   render() {
     const {editing, title, value, updating} = this.state;
     return (
-      <Wrapper onBlur={this.onBlur.bind(this)}>
+      <Wrapper onBlur={this.onBlur.bind(this)} ref={this.setRef.bind(this)}>
         <Title>
           <EditableText 
           onChange={(v) => this.setState({title: v, dirty: true})}
@@ -107,16 +114,19 @@ class ClipboardItem extends Component {
           value={title || ''}
           displayValue={this.props.item.title || ''}
           submit={this.saveChanges.bind(this)}
+          cancel={this.cancelChanges.bind(this)}
           editing={editing}/>
         </Title>
         <Value onClick={e => {if (!editing) this.copy(value, e)}}>
           <EditableText
+           
           onChange={(v) => this.setState({value: v, dirty: true})}
           disabled={updating}
           autoFocus
           value={value || ''}
           displayValue={this.props.item.value || ''}
           submit={this.saveChanges.bind(this)}
+          cancel={this.cancelChanges.bind(this)}  
           editing={editing}/>
         </Value>
         <Actions>
@@ -125,11 +135,11 @@ class ClipboardItem extends Component {
           {/* TODO disable save unless dirty */}
           {!editing ? 
           <React.Fragment>
-            <Icon onClick={() => this.setState({editing: true})} link circular name="edit"/>
+            <Icon onClick={this.edit.bind(this)} link circular name="edit"/>
             <Icon onClick={() => this.remove()} link circular name="trash"/>
           </React.Fragment> : <React.Fragment>
-            <Icon onClick={() => this.saveChanges()} link circular name="check"/>
-            <Icon onClick={() => this.cancelChanges()} link circular name="remove"/>
+            <Icon tabIndex={1} onClick={() => this.saveChanges()} link circular name="check"/>
+            <Icon tabIndex={2} onClick={() => this.cancelChanges()} link circular name="remove"/>
           </React.Fragment>}
         </Actions>
       </Wrapper>
