@@ -65,7 +65,7 @@ class Clipboard extends PureComponent {
     }
 
     addItem() {
-        this.props.addItem(this.props.clipboard._id).then((x) => {
+        this.props.addItem(this.props.clipboard._id).then(() => {
             
         })
     }
@@ -115,6 +115,7 @@ class Clipboard extends PureComponent {
         }
         {/* todo SHOW TOOLTIP */}
             <ClipboardActions>
+                <Icon link circular name="add" onClick={this.addItem.bind(this)}/>
                 <Icon onClick={this.props.remove.bind(this, this.props.clipboard._id)} link circular name="trash"/>
             </ClipboardActions>
           </CardHeader>
@@ -123,7 +124,6 @@ class Clipboard extends PureComponent {
             <ClipboardItem key={item._id} item={item} id={this.props.clipboard._id}/>
           )}
           {/* todo Should not be possible to add if there is at least one emptty */}
-          <button onClick={this.addItem.bind(this)}>Add item</button>
           </Card.Content>
         </CardWrapper>
       )

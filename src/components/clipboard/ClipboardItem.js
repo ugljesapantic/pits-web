@@ -38,7 +38,7 @@ class ClipboardItem extends Component {
 
   // Some could say its an anti pattern
   state = {
-    editing: false,
+    editing: !this.props.item.title && !this.props.item.value,
     title: this.props.item.title || '',
     value: this.props.item.value || '',
     dirty: false,
@@ -46,7 +46,9 @@ class ClipboardItem extends Component {
   }
 
   saveChanges() {
-    // todo if saving empty item, delete it
+    if (!this.state.title && !this.state.value) {
+      return this.remove();
+    }
     if (this.state.dirty) {
       this.setState({updating: true})
       this.props.updateItem(this.props.id, this.props.item._id, {
