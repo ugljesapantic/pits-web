@@ -42,7 +42,7 @@ class App extends Component {
     return (
       <AppWrapper ref={this.handleContextRef}>
         <TopNavigation isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
-        <ContentWrapper className="container">
+        <ContentWrapper className="ui container">
           <GuestRoute location={location} path="/login" exact component={LoginPage} />
           <GuestRoute location={location} path="/signup" exact component={SignupPage} />
           <GuestRoute location={location} path="/" exact component={HomePage} />

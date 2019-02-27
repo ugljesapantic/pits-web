@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Input, Label, Icon } from 'semantic-ui-react';
+import { Input, Icon } from 'semantic-ui-react';
 import styled from 'styled-components';
 
 import ColorPicker from '../shared/ColorPicker';
 
 const EditLabelWrapper = styled.div`
     position: relative;
-    display: inline-block;
+    display: ${(props) => props.editing ? 'block' : 'inline-block'} ;
+    ${(props) => props.editing && 'width: 16.2em'}
 `;
 
 const LabelInputWrapper = styled.div`
@@ -58,11 +59,11 @@ function EditLabel({submit}) {
   }
   
   return (
-    <EditLabelWrapper>
+    <EditLabelWrapper editing={editing}>
      {editing ?
         <LabelInputWrapper>
           <ColorPicker color={color} colorPicked={(c) => setColor(c)} trigger={<Icon inverted bordered link circular name="paint brush"/>}/>
-          <Input disabled={saving}  onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
+          <Input onBlur={save} disabled={saving}  onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
         </LabelInputWrapper> : 
      <Icon circular link name="add" onClick={() => setEditing(true)} />
      }

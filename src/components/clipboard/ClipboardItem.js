@@ -8,8 +8,12 @@ import { updateItem, removeItem } from '../../actions';
 
 
 const Wrapper = styled.div`
-    display: flex;
-    height: 2.4rem;
+    display: grid;
+    grid-template-columns: auto 4.5em;
+    border: 1px solid lightgray;
+    border-radius: 0.4em;
+    margin-top: 0.3em;
+    /* height: 2.4rem; */
 `
 
 const Title = styled.div`
@@ -17,9 +21,10 @@ const Title = styled.div`
 `
 
 const Value = styled.div`
-  flex: 1;
+  grid-column: 1/-1;
   background-color: lightgray;
-  border-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
     .copied {
       background-color: white;
     }
@@ -119,18 +124,6 @@ class ClipboardItem extends Component {
           cancel={this.cancelChanges.bind(this)}
           editing={editing}/>
         </Title>
-        <Value onClick={e => {if (!editing) this.copy(value, e)}}>
-          <EditableText
-           
-          onChange={(v) => this.setState({value: v, dirty: true})}
-          disabled={updating}
-          autoFocus
-          value={value || ''}
-          displayValue={this.props.item.value || ''}
-          submit={this.saveChanges.bind(this)}
-          cancel={this.cancelChanges.bind(this)}  
-          editing={editing}/>
-        </Value>
         <Actions>
           {/* TODO Disablre actions when saving and add hover over shit*/}
           {/* TODO should not be possible to cancel empty item */}
@@ -144,6 +137,18 @@ class ClipboardItem extends Component {
             <Icon tabIndex={2} onClick={() => this.cancelChanges()} link circular name="remove"/>
           </React.Fragment>}
         </Actions>
+        <Value onClick={e => {if (!editing) this.copy(value, e)}}>
+          <EditableText
+           
+          onChange={(v) => this.setState({value: v, dirty: true})}
+          disabled={updating}
+          autoFocus
+          value={value || ''}
+          displayValue={this.props.item.value || ''}
+          submit={this.saveChanges.bind(this)}
+          cancel={this.cancelChanges.bind(this)}  
+          editing={editing}/>
+        </Value>
       </Wrapper>
     )
   }

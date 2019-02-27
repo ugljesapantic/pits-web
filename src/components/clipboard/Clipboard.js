@@ -5,34 +5,17 @@ import styled from 'styled-components';
 import ClipboardItem from './ClipboardItem';
 import ClickableEditableText from './../shared/ClickableEditableText';
 // TODO get rid of all of them
-const CardWrapper = styled(Card)`
-    &&& .card-content {
-        padding: 0.5em 1em;
-
-        & > div {
-            margin: 0.1em 0;
-        }
-    }
-
-    &&& .segment {
-        padding: 0.5em 1em;
-        cursor: pointer;
-    }
-
-    &&& .segment-group {
-        margin: 0.2em 0.2em;
-    }
-
-    &&&.title {
-        display: inline-block;
-    }
+const CardWrapper = styled.div`
+    box-shadow : 0 0 0 1px #d4d4d5, 0 2px 0 0 #1b1c1d, 0 1px 3px 0 #d4d4d5;
+    padding: 0.3em;
+    margin-top: 0.5em;
 `
 
 const CardHeader = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 5em;
+    row-gap: 0.1em;
     align-items: center;
-    padding: 0.25em 1em;
-    
 `
 
 // const CardTitle = styled.div`
@@ -43,7 +26,7 @@ const CardHeader = styled.div`
 // `
 
 const LabelsWrapper = styled.div`
-    
+    line-height: 2em;
 `;
 
 const ClipboardActions = styled.div`
@@ -94,6 +77,11 @@ class Clipboard extends PureComponent {
             <ClickableEditableText
             value={this.props.clipboard.title}
             save={this.onTitleChange.bind(this)}/>
+            {/* todo SHOW TOOLTIP */}
+            <ClipboardActions>
+                <Icon link circular name="add" onClick={this.addItem.bind(this)}/>
+                <Icon onClick={this.props.remove.bind(this, this.props.clipboard._id)} link circular name="trash"/>
+            </ClipboardActions>
             {this.state.editingLabels ? 
             <Dropdown 
             defaultOpen={true}
@@ -111,21 +99,16 @@ class Clipboard extends PureComponent {
                     }
                     {/* todo when a lot of labels show first few... */}
                     {/* todo show tooltip like manage labels */}
-            <Icon onClick={() => this.setState({editingLabels: true})} link circular name="edit"/>
+                <Icon onClick={() => this.setState({editingLabels: true})} link circular name="edit"/>
             </LabelsWrapper>
         }
-        {/* todo SHOW TOOLTIP */}
-            <ClipboardActions>
-                <Icon link circular name="add" onClick={this.addItem.bind(this)}/>
-                <Icon onClick={this.props.remove.bind(this, this.props.clipboard._id)} link circular name="trash"/>
-            </ClipboardActions>
           </CardHeader>
-          <Card.Content className="card-content">
+          <div>
           {this.props.clipboard.items.map(item => 
             <ClipboardItem key={item._id} item={item} id={this.props.clipboard._id}/>
           )}
           {/* todo Should not be possible to add if there is at least one emptty */}
-          </Card.Content>
+          </div>
         </CardWrapper>
       )
   }

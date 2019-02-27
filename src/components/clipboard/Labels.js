@@ -1,42 +1,44 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon, Label } from 'semantic-ui-react';
 import styled from 'styled-components';
 import EditLabel from './EditLabel';
+import useResponsive from '../../utils/responsive';
 
 const LabelsWrapper = styled.div`
-    line-height: 3em;
+    line-height: 2em;
     .inactive {
         opacity: 0.3;
     }
 `;
 
-// HUEHUE FUNC
-export default class Labels extends Component {
+export default function Labels(props) {
 
-    deleteLabel(e, id) {
+    const responsive = useResponsive();
+
+    const deleteLabel = (e, id) => {
         e.stopPropagation();
-        this.props.removeLabel(id);
+        props.removeLabel(id);
         // Add async
     }
 
-  render() {
     return (
         //   todo icons in general should have hover 
         <LabelsWrapper>
-            {this.props.labels.map(label => (
+            {props.labels.map(label => (
             <Label
             key={label._id}
-            onClick={() => this.props.toggle(label._id)}
+            onClick={() => props.toggle(label._id)}
             as="a"
+            size={responsive.mobile ? 'small' : 'medium'}
             className={!label.active ? 'inactive' : 'active'}
             color={label.color}>{label.title}
-            <Icon name='close' onClick={(e) => this.deleteLabel(e, label._id)} /></Label>
+            <Icon name='close' onClick={(e) => deleteLabel(e, label._id)} /></Label>
             ))}
-            <EditLabel submit={this.props.addLabel}/>
+            <EditLabel submit={props.addLabel}/>
         </LabelsWrapper>
-      )
-  }
+        )
+
 }
 
 Labels.propTypes = {
