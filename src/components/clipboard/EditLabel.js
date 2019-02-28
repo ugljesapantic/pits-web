@@ -26,6 +26,7 @@ function EditLabel({submit}) {
   const [title, setTitle] = useState('');
   const [color, setColor] = useState('black');
   const [saving, setSaving] = useState(false);
+  let wrapper = React.createRef();
   // add saving state
 
   const save = () => {
@@ -57,13 +58,24 @@ function EditLabel({submit}) {
         break;
     }  
   }
+
+  // todo could be reusable
+  const onBlur = () =>  {
+
+    setTimeout(() => {
+      if (!wrapper.current.contains(document.activeElement)) {
+          save();
+      }
+    }, 0);
+  }
   
+  // todo pattern with tabindex ref and onblur timeout
   return (
-    <EditLabelWrapper editing={editing}>
+    <EditLabelWrapper tabIndex={1} editing={editing} ref={wrapper}>
      {editing ?
         <LabelInputWrapper>
           <ColorPicker color={color} colorPicked={(c) => setColor(c)} trigger={<Icon inverted bordered link circular name="paint brush"/>}/>
-          <Input onBlur={save} disabled={saving}  onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
+          <Input onBlur={onBlur} disabled={saving}  onKeyDown={handleKeyPress} autoFocus value={title} onChange={(e) => setTitle(e.target.value)}/>
         </LabelInputWrapper> : 
      <Icon circular link name="add" onClick={() => setEditing(true)} />
      }

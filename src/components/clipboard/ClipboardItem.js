@@ -88,7 +88,7 @@ class ClipboardItem extends Component {
     })
   }
 
-  onBlur(e) {
+  onBlur() {
   
     setTimeout(() => {
       if (!this.el.contains(document.activeElement)) {
