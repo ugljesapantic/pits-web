@@ -13,14 +13,20 @@ class ClipboardPage extends Component {
 
     componentDidMount() {
         this.props.loadAll();
-        this.props.loadAllLabels().then(() => {
-            // After initial load, make them all active in the state
+        this.props.loadAllLabels();
+    }
+    
+    componentDidUpdate(props) {
+        if(props.labels.length !== Object.keys(this.state.labels).length) {
             const labels = {}
-            this.props.labels.forEach((l) => labels[l._id] = true);
+            this.props.labels.forEach((l) => {
+                const existing = this.state.labels[l._id];
+                labels[l._id] = existing === undefined ? true : existing
+            });
             this.setState({
                 labels
             })
-        });
+        }
     }
 
     toggleLabelFilter(labelId) {
@@ -28,6 +34,9 @@ class ClipboardPage extends Component {
     }
 
     render() {
+        const labels = this.state.labels;
+        const activeLabels = Object.keys(labels)
+        .filter(l => labels[l]);
 
         return (
             <div>
@@ -36,7 +45,9 @@ class ClipboardPage extends Component {
                 addLabel={this.props.addLabel.bind(this)}
                 removeLabel={this.props.removeLabel.bind(this)}
                 toggle={this.toggleLabelFilter.bind(this)}/>
-                {this.props.clipboards.map((clipboard) => 
+                {this.props.clipboards
+                .filter(c => c.labels.some(id => activeLabels.includes(id)))
+                .map(clipboard => 
                     <Clipboard 
                     key={clipboard._id}
                     clipboard={clipboard}
