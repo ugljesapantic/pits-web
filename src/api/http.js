@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-    // TODO, generic, non hardcoded
+
 const http = axios.create ({
-    baseURL: 'http://localhost:3000',
+    baseURL: process.env.REACT_APP_API,
     headers: {'Content-Type': 'application/json'},
 });
 

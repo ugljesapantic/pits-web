@@ -17,7 +17,7 @@ class ClipboardPage extends Component {
     }
     
     componentDidUpdate(props) {
-        if(props.labels.length !== Object.keys(this.state.labels).length) {
+        if(props.labels.length !== this.props.labels.length) {
             const labels = {}
             this.props.labels.forEach((l) => {
                 const existing = this.state.labels[l._id];
@@ -46,7 +46,7 @@ class ClipboardPage extends Component {
                 removeLabel={this.props.removeLabel.bind(this)}
                 toggle={this.toggleLabelFilter.bind(this)}/>
                 {this.props.clipboards
-                .filter(c => c.labels.some(id => activeLabels.includes(id)))
+                .filter(c => !c.labels.length || c.labels.some(id => activeLabels.includes(id)))
                 .map(clipboard => 
                     <Clipboard 
                     key={clipboard._id}
