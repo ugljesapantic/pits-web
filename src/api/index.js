@@ -16,5 +16,13 @@ export default {
         removeItem: (id, itemId) => http.delete(`/clipboards/${id}/items/${itemId}`).then(res => res.data),
         addLabel: (body) => http.post(`/clipboard-labels`, body).then(res => res.data),
         removeLabel: (id) => http.delete(`/clipboard-labels/${id}`).then(res => res.data),
+    }, shoppingList: {
+        loadAll: () => http.get('/shopping-lists').then(res => res.data),
+        update: (id, body) => http.patch(`/shopping-lists/${id}`, body).then(res => res.data),
+        remove: (id) => http.delete(`/shopping-lists/${id}`).then(res => res.data),
+        create: (body) => http.post(`/shopping-lists`, body).then(res => res.data),
+        updateItem: (id, itemId, body) => http.patch(`/shopping-lists/${id}/items/${itemId}`, body).then(res => res.data),
+        addItem: (id) => http.post(`/shopping-lists/${id}/items`).then(res => res.data),
+        removeItem: (id, itemId) => http.delete(`/shopping-lists/${id}/items/${itemId}`).then(res => res.data),
     }
 }

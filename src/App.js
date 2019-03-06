@@ -14,6 +14,7 @@ import moment from 'moment';
 import { userLoggedIn, logout } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
 import { main } from './styles/layout';
+import ShoppingListPage from './components/shopping-list/ShoppingListPage';
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -53,6 +54,7 @@ class App extends Component {
           <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} /> */}
           <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
           <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
+          <UserRoute location={location} path="/shopping-list" exact component={ShoppingListPage} />
         </ContentWrapper>
       </AppWrapper>
     );

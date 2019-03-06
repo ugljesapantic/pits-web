@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import EditableText from '../shared/EditableText';
 import { Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { updateItem, removeItem } from '../../actions';
+import { updateClipboardItem, removeClipboardItem } from '../../actions';
 
 
 const Wrapper = styled.div`
@@ -166,8 +166,8 @@ ClipboardItem.propTypes = {
 // maybe this component can be clean, and i should pass this via props
 const mapDispatchToProps = dispatch => {
   return {
-    updateItem: (id, itemId, item) => dispatch(updateItem(id, itemId, item)),
-    removeItem: (id, itemId) => dispatch(removeItem(id, itemId))
+    updateItem: (id, itemId, item) => dispatch(updateClipboardItem(id, itemId, item)),
+    removeItem: (id, itemId) => dispatch(removeClipboardItem(id, itemId))
   }
 }
 

@@ -66,31 +66,31 @@ export const labelRemoved = (id) => ({
     id
 })
 
-export const loadAll = () => dispatch => api.clipboard.loadAll().then(clipboards => {
+export const loadAllClipboards = () => dispatch => api.clipboard.loadAll().then(clipboards => {
     dispatch(clipboardLoadedAll(clipboards));
 })
 
-export const loadAllLabels = () => dispatch => api.clipboard.loadAllLabels().then(labels => {
+export const loadAllClipboardLabels = () => dispatch => api.clipboard.loadAllLabels().then(labels => {
     dispatch(clipboardLabelsLoadedAll(labels));
 })
 
 // maybe make them the same, updateItem method + updatedItem action
-export const updateItem = (id, itemId, body) => dispatch => api.clipboard.updateItem(id, itemId, body).then(item => {
+export const updateClipboardItem = (id, itemId, body) => dispatch => api.clipboard.updateItem(id, itemId, body).then(item => {
     dispatch(itemUpdated(item, id));
 })
 
-export const removeItem = (id, itemId) => dispatch => api.clipboard.removeItem(id, itemId).then(() => {
+export const removeClipboardItem = (id, itemId) => dispatch => api.clipboard.removeItem(id, itemId).then(() => {
     dispatch(itemRemoved(id, itemId));
 })
 
-export const addItem = (id) => dispatch => api.clipboard.addItem(id).then(item => dispatch(itemAdded(item, id)))
+export const addClipboardItem = (id) => dispatch => api.clipboard.addItem(id).then(item => dispatch(itemAdded(item, id)))
 
-export const addLabel = (body) => dispatch => api.clipboard.addLabel(body).then(label => dispatch(labelAdded(label)))
+export const addClipboardLabel = (body) => dispatch => api.clipboard.addLabel(body).then(label => dispatch(labelAdded(label)))
 
-export const removeLabel = (id) => dispatch => api.clipboard.removeLabel(id).then(() => dispatch(labelRemoved(id)))
+export const removeClipboardLabel = (id) => dispatch => api.clipboard.removeLabel(id).then(() => dispatch(labelRemoved(id)))
 
-export const update = (id, body) => dispatch => api.clipboard.update(id, body).then(clipboard => dispatch(clipboardUpdated(clipboard)))
+export const updateClipboard = (id, body) => dispatch => api.clipboard.update(id, body).then(clipboard => dispatch(clipboardUpdated(clipboard)))
 
-export const create = (body) => dispatch => api.clipboard.create(body).then(clipboard => dispatch(clipboardCreated(clipboard)))
+export const createClipboard = (body) => dispatch => api.clipboard.create(body).then(clipboard => dispatch(clipboardCreated(clipboard)))
 
-export const remove = (id) => dispatch => api.clipboard.remove(id).then(() => dispatch(clipboardRemoved(id)))
+export const removeClipboard = (id) => dispatch => api.clipboard.remove(id).then(() => dispatch(clipboardRemoved(id)))

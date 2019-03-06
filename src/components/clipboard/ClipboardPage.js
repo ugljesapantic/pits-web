@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAll, loadAllLabels, addItem, addLabel, removeLabel, update, create, remove } from '../../actions';
+import { loadAllClipboards, loadAllClipboardLabels, addClipboardItem, addClipboardLabel, removeClipboardLabel, updateClipboard, createClipboard, removeClipboard } from '../../actions';
 import Clipboard from './Clipboard';
 import Labels from './Labels';
 import AddInput from './../shared/AddInput';
@@ -72,15 +72,15 @@ function mapStateToProps(state) {
   const mapDispatchToProps = dispatch => {
     return {
       loadAll: () => {
-        dispatch(loadAll())
+        dispatch(loadAllClipboards())
       },
-      loadAllLabels: () => dispatch(loadAllLabels()),
-      addItem: (id) => dispatch(addItem(id)),
-      addLabel: (body) => dispatch(addLabel(body)),
-      removeLabel: (id) => dispatch(removeLabel(id)),
-      update: (id, body) => dispatch(update(id, body)),
-      create: (body) => dispatch(create(body)),
-      remove: (id) => dispatch(remove(id))
+      loadAllLabels: () => dispatch(loadAllClipboardLabels()),
+      addItem: (id) => dispatch(addClipboardItem(id)),
+      addLabel: (body) => dispatch(addClipboardLabel(body)),
+      removeLabel: (id) => dispatch(removeClipboardLabel(id)),
+      update: (id, body) => dispatch(updateClipboard(id, body)),
+      create: (body) => dispatch(createClipboard(body)),
+      remove: (id) => dispatch(removeClipboard(id))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(ClipboardPage);
