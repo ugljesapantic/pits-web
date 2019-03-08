@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 import Input from '../shared/Input';
+import ShoppingListItem from './ShoppingListItem';
 
 const Wrapper = styled.div`
     background: #FFF;
@@ -44,13 +45,13 @@ function ShoppingList(props) {
   return (
     <Wrapper>
       <Head>
-          <Title>{props.shoppingList.title}</Title>
+      <Title>{props.shoppingList.title}</Title>
           <OnlineToggle className={(props.shoppingList.online && 'online')}>online</OnlineToggle>
           <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
       </Head>
       <Body>
           {props.shoppingList.items.map(item => 
-            <div key={item._id}>{item.title}</div>
+            <ShoppingListItem title={item.title} key={item._id}/>
             )}
           <Input placeholder={'Add item'} save={title => props.addItem(title)}/>
       </Body>
