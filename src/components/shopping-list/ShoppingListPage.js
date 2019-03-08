@@ -22,7 +22,7 @@ class ShoppingListPage extends Component {
                     <ShoppingList
                     key={shoppingList._id}
                     shoppingList={shoppingList}
-                    addItem={this.props.addItem}
+                    addItem={title => this.props.addItem(shoppingList._id, title)}
                     update={this.props.update}
                     remove={this.props.remove}
                     labels={this.props.labels}/>
@@ -43,7 +43,7 @@ function mapStateToProps(state) {
   const mapDispatchToProps = dispatch => {
     return {
       loadAll: () => dispatch(shoppingListLoadAll()),
-      addItem: (id) => dispatch(shoppingListAddItem(id)),
+      addItem: (id, title) => dispatch(shoppingListAddItem(id, title)),
       update: (id, body) => dispatch(shoppingListUpdate(id, body)),
       create: (body) => dispatch(shoppingListCreate(body)),
       remove: (id) => dispatch(shoppingListRemove(id))

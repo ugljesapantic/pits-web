@@ -13,6 +13,8 @@ const Menu = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
+    background-color: white;
+    box-shadow: 0 1px 0px rgba(0,0,0,0.03), 0 1px 1px rgba(0,0,0,0.05);
 `;
 
 const MenuItem = styled.div`

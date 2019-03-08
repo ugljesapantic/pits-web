@@ -18,11 +18,16 @@ import ShoppingListPage from './components/shopping-list/ShoppingListPage';
 
 const AppWrapper = styled.div`
   height: 100vh;
+  background-color: #EBECED;
 `
 
 const ContentWrapper = styled.div`
   ${main};
   position: relative;
+  /* width: 40em; */
+  margin-left: 1em;
+  margin-right: 1em;
+  max-width: 200em;
 `
 
 class App extends Component {
@@ -43,7 +48,7 @@ class App extends Component {
     return (
       <AppWrapper ref={this.handleContextRef}>
         <TopNavigation history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
-        <ContentWrapper className="ui container">
+        <ContentWrapper>
           <GuestRoute location={location} path="/login" exact component={LoginPage} />
           <GuestRoute location={location} path="/signup" exact component={SignupPage} />
           <GuestRoute location={location} path="/" exact component={HomePage} />

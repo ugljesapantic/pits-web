@@ -61,7 +61,7 @@ export const shoppingListRemoveItem = (id, itemId) => dispatch => api.shoppingLi
     dispatch(itemRemoved(id, itemId));
 })
 
-export const shoppingListAddItem = (id) => dispatch => api.shoppingList.addItem(id).then(item => dispatch(itemAdded(item, id)))
+export const shoppingListAddItem = (id, title) => dispatch => api.shoppingList.addItem(id, title).then(item => dispatch(itemAdded(item, id)))
 
 export const shoppingListUpdate = (id, body) => dispatch => api.shoppingList.update(id, body).then(shoppingList => dispatch(updated(shoppingList)))
 

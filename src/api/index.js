@@ -22,7 +22,7 @@ export default {
         remove: (id) => http.delete(`/shopping-lists/${id}`).then(res => res.data),
         create: (body) => http.post(`/shopping-lists`, body).then(res => res.data),
         updateItem: (id, itemId, body) => http.patch(`/shopping-lists/${id}/items/${itemId}`, body).then(res => res.data),
-        addItem: (id) => http.post(`/shopping-lists/${id}/items`).then(res => res.data),
+        addItem: (id, title) => http.post(`/shopping-lists/${id}/items`, {title}).then(res => res.data),
         removeItem: (id, itemId) => http.delete(`/shopping-lists/${id}/items/${itemId}`).then(res => res.data),
     }
 }

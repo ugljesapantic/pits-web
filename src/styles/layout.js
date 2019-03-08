@@ -1,7 +1,7 @@
 import {css} from 'styled-components';
 
 const mainPadding = {
-    top: '5em',
+    top: '4em',
     bottom: '3em'
 }
 
