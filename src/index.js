@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
+// TODO get rid of
 import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';

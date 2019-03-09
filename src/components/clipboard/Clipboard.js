@@ -7,26 +7,26 @@ import ClickableEditableText from './../shared/ClickableEditableText';
 // TODO get rid of all of them
 const CardWrapper = styled.div`
     box-shadow : 0 0 0 1px #d4d4d5, 0 2px 0 0 #1b1c1d, 0 1px 3px 0 #d4d4d5;
-    padding: 0.3em;
-    margin-top: 0.5em;
+    padding: 0.3rem;
+    margin-top: 0.5rem;
 `
 
 const CardHeader = styled.div`
     display: grid;
-    grid-template-columns: auto 5em;
-    row-gap: 0.1em;
+    grid-template-columns: auto 5rem;
+    row-gap: 0.1rem;
     align-items: center;
 `
 
 // const CardTitle = styled.div`
 // font-weight: bold;
-// line-height: 2em;
-//     font-size: 1em;
-//     margin-right: 1em;
+// line-height: 2rem;
+//     font-size: 1rem;
+//     margin-right: 1rem;
 // `
 
 const LabelsWrapper = styled.div`
-    line-height: 2em;
+    line-height: 2rem;
 `;
 
 const ClipboardActions = styled.div`

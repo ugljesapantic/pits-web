@@ -6,7 +6,7 @@ import EditLabel from './EditLabel';
 import useResponsive from '../../utils/responsive';
 
 const LabelsWrapper = styled.div`
-    line-height: 2em;
+    line-height: 2rem;
     .inactive {
         opacity: 0.3;
     }

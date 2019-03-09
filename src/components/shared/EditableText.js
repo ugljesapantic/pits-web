@@ -23,8 +23,8 @@ const TextValue = styled.div`
     height: 2.4rem;
     line-height: 2.4rem;
     /* not so happy with copy paste */
-    border-bottom-left-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
+    border-bottom-left-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
     padding: 0 0.5rem;
 
     &:hover {

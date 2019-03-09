@@ -12,12 +12,12 @@ const EditLabelWrapper = styled.div`
 
 const LabelInputWrapper = styled.div`
   background-color: lightgray;
-  padding: 0.3em;
-  border-radius: 0.3em;
+  padding: 0.3rem;
+  border-radius: 0.3rem;
   line-height: normal;
 
   input {
-    height: 2.4em;
+    height: 2.4rem;
   }
 `;
 

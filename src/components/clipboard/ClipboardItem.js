@@ -9,10 +9,10 @@ import { updateClipboardItem, removeClipboardItem } from '../../actions';
 
 const Wrapper = styled.div`
     display: grid;
-    grid-template-columns: auto 4.5em;
+    grid-template-columns: auto 4.5rem;
     border: 1px solid lightgray;
-    border-radius: 0.4em;
-    margin-top: 0.3em;
+    border-radius: 0.4rem;
+    margin-top: 0.3rem;
     /* height: 2.4rem; */
 `
 
@@ -23,8 +23,8 @@ const Title = styled.div`
 const Value = styled.div`
   grid-column: 1/-1;
   background-color: lightgray;
-  border-bottom-left-radius: 0.3em;
-  border-bottom-right-radius: 0.3em;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
     .copied {
       background-color: white;
     }

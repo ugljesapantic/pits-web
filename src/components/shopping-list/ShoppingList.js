@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const Head = styled.div`
     display: flex;
     align-items: center;
-    padding: 0.5em 1em;
+    padding: 0.5em 1rem;
 `;
 
 const Body = styled.div`
@@ -28,12 +28,12 @@ const Title = styled.div`
 `;
 
 const OnlineToggle = styled.div`
-    margin-left: 1em;
+    margin-left: 1rem;
     font-weight: bold;
     cursor: pointer;
     background-color: #e8e8e8;
     border-radius: 10%;
-    padding: 0.2em 0.4em;
+    padding: 0.2em 0.4rem;
 `;
 
 const DeleteIcon = styled(FaTrash)`
@@ -45,9 +45,10 @@ function ShoppingList(props) {
   return (
     <Wrapper>
       <Head>
-      <Title>{props.shoppingList.title}</Title>
-          <OnlineToggle className={(props.shoppingList.online && 'online')}>online</OnlineToggle>
-          <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
+        <Input plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
+        {/* <Title>{props.shoppingList.title}</Title> */}
+        <OnlineToggle className={(props.shoppingList.online && 'online')}>online</OnlineToggle>
+        <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
       </Head>
       <Body>
           {props.shoppingList.items.map(item => 
