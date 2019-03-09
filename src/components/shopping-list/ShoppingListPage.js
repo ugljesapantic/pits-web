@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddInput from './../shared/AddInput';
-import { shoppingListLoadAll, shoppingListUpdate, shoppingListRemove,  shoppingListAddItem, shoppingListCreate } from '../../actions/shopping-list';
+import { shoppingListLoadAll, shoppingListUpdateItem, shoppingListUpdate, shoppingListRemove,  shoppingListAddItem, shoppingListCreate } from '../../actions/shopping-list';
 import ShoppingList from './ShoppingList';
 
 class ShoppingListPage extends Component {
@@ -22,7 +22,8 @@ class ShoppingListPage extends Component {
                     <ShoppingList
                     key={shoppingList._id}
                     shoppingList={shoppingList}
-                    addItem={title => this.props.addItem(shoppingList._id, title)}
+                    addItem={this.props.addItem}
+                    updateItem={this.props.updateItem}
                     update={this.props.update}
                     remove={this.props.remove}
                     labels={this.props.labels}/>
@@ -44,6 +45,7 @@ function mapStateToProps(state) {
     return {
       loadAll: () => dispatch(shoppingListLoadAll()),
       addItem: (id, title) => dispatch(shoppingListAddItem(id, title)),
+      updateItem: (id, itemId, body) => dispatch(shoppingListUpdateItem(id, itemId, body)),
       update: (id, body) => dispatch(shoppingListUpdate(id, body)),
       create: (body) => dispatch(shoppingListCreate(body)),
       remove: (id) => dispatch(shoppingListRemove(id))

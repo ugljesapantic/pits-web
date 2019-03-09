@@ -16,16 +16,22 @@ const Wrapper = styled.div`
 const Head = styled.div`
     display: flex;
     align-items: center;
-    padding: 0.5em 1rem;
+    padding-right: 1rem;
 `;
 
 const Body = styled.div`
     border-top: 1px solid #f5f5f5;
+    padding: 0.3rem 1rem;
 `;
 
-const Title = styled.div`
+const Title = styled(Input)`
     font-weight: bold;
+    margin: 0.3rem 1rem;
 `;
+
+const ListInput = styled(Input)`
+    margin: 0.3rem  0;
+    `
 
 const OnlineToggle = styled.div`
     margin-left: 1rem;
@@ -45,16 +51,20 @@ function ShoppingList(props) {
   return (
     <Wrapper>
       <Head>
-        <Input plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
+        <Title plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
         {/* <Title>{props.shoppingList.title}</Title> */}
         <OnlineToggle className={(props.shoppingList.online && 'online')}>online</OnlineToggle>
         <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
       </Head>
       <Body>
           {props.shoppingList.items.map(item => 
-            <ShoppingListItem title={item.title} key={item._id}/>
+            <ShoppingListItem 
+            update={props.updateItem}
+            item={item}
+            listId={props.shoppingList._id}
+            key={item._id}/>
             )}
-          <Input placeholder={'Add item'} save={title => props.addItem(title)}/>
+          <ListInput placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
       </Body>
     </Wrapper>
   )

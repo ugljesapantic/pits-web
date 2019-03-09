@@ -2,12 +2,17 @@ import React, {useState, useEffect} from 'react'
 import styled, {css} from 'styled-components';
 import { handleKeyPress } from './../../utils/keyboard-handler';
 
+// TODO inputs that can be edited should have different black color
 const inputStyle = css`
-    padding: 0 1rem;
-    margin: 0.5rem 1rem;
-    height: 2.5rem;
+    /* margin: 0.5rem 1rem; */
+    line-height: 1.5;
     border-radius: 3px;
-    width: ${props => props.inline ? 'auto' : 'calc(100% - 2rem)'};
+    width: 100%;
+    padding:  ${props => props.small ? '0.2rem 0.3rem' : '0.5rem 1rem'};
+`
+
+const Wrapper = styled.div`
+    display: ${props => props.inline ? 'inline-block' : 'block'};
 `
 
 const InputWrapper = styled.input`
@@ -23,12 +28,11 @@ const InputWrapper = styled.input`
     }
 `;
 
+// TODO different color when in focus
 // TODO proper placeholder color
 const InputPlaceholder = styled.div`
     cursor: pointer;
-    display: inline-block;
-    line-height: 2.5rem;
-    background: ${props => props.plain ? 'transparet' : '#eff0f1'};
+    background: ${props => props.plain ? 'transparent' : '#eff0f1'};
     ${inputStyle};
 
     ${props => props.placeholder && 'color: #AAA'};
@@ -66,24 +70,27 @@ function Input(props) {
     }
 
   return (
-    <React.Fragment>
+    <Wrapper
+    className={props.className}
+    inline={props.inline}
+    small={props.small}>
         {active ? <InputWrapper
         value={value}
         // onBlur={save}
         disabled={updating}
-        inline={props.inline}
         autoFocus
+        small={props.small}
         onKeyDown={e => handleKeyPress(e, save, cancel)}
         onChange={e => setValue(e.target.value)}
         /> : 
         <InputPlaceholder
         plain={props.plain}
-        inline={props.inline}
-        placeholder={Boolean(props.placeholder)}
+        small={props.small}
+        placeholder={props.placeholder}
         onClick={() => setActive(true)}>
             {props.value || props.placeholder}
         </InputPlaceholder>}
-    </React.Fragment>
+    </Wrapper>
   )
 }
 
