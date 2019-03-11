@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
-import { Icon, Input } from 'semantic-ui-react';
 import styled from 'styled-components';
+
+import Input from '../shared/Input';
+
+import { FaPlus } from 'react-icons/fa';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -15,54 +18,27 @@ const Wrapper = styled.div`
   }
 `;
 
+const Toggler = styled(FaPlus)`
+  transition: transform 0.3s;
+
+  &.active {
+    transform: rotate(45deg);
+  }
+
+  cursor: pointer;
+  border-radius: 50%;
+`;
+
 export default function AddInput(props) {
     let [active, setActive] = useState(false)
-    let [value, setValue] = useState('');
-    let [saving, setSaving] = useState(false);
-
-    const save = () => {
-      if (value) {
-        setSaving(true);
-        props.submit(value).then(() => {
-          setActive(false);
-          setValue('');
-          setSaving(false);
-        })
-      } else {
-        setActive(false);
-        setValue('');
-      }
-    }
-
-    const onKeyDown = (e) => {
-        switch(e.keyCode) {
-          case 13:
-            save()
-            break;
-          case 27:
-            setActive(false);
-            setValue('');
-            break;
-          default:
-            break;
-        }
-      }
-
-    //   todo press enter to save popup
+ 
   return (
     <Wrapper>
         {active && <Input 
-        onBlur={save}
-        disabled={saving}
-        onChange={(_, data) => setValue(data.value)}
-        onKeyDown={(e) => onKeyDown(e)}
-        value={value}
-        autoFocus/>}
-        {!active && <Icon  size="big" name="add circle" onClick={() => setActive(true)} />}
-        {active && <Icon size="big" name="times circle" onClick={() => {
-            setActive(false);
-            setValue('');
-        }} />}
+        save={props.submit}
+        saved={() => setActive(false)}
+        inline bordered/>}
+        <Toggler className={active && 'active'} size="32" onClick={() => setActive(!active)} />
     </Wrapper>
   )
 }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import styled, {css} from 'styled-components';
 import { handleKeyPress } from './../../utils/keyboard-handler';
 
@@ -12,7 +12,12 @@ const inputStyle = css`
 `
 
 const Wrapper = styled.div`
+    ${props => props.bordered && `
+        border: 1px solid black;
+        border-radius: 3px;
+    `}
     display: ${props => props.inline ? 'inline-block' : 'block'};
+    ${props => props.inline && 'width: 12rem'};
 `
 
 const InputWrapper = styled.input`
@@ -42,15 +47,11 @@ const InputPlaceholder = styled.div`
 // TODO add possibility of automated input
 function Input(props) {
     const [value, setValue] = useState(props.value || '');
-    const [active, setActive] = useState(false);
+    const [active, setActive] = useState(!props.placeholder && !props.value);
     const [updating, setUpdating] = useState(false);
 
-    useEffect(() => {
-        setValue(props.value || '');
-    }, [props.value])
-
     const save = () => {
-        if (props.value !== value || !value) {
+        if ((props.value && (props.value !== value)) || (!props.value && value)) {
             setUpdating(true);
             props.save(value).then(() => close());
         } else {
@@ -59,9 +60,11 @@ function Input(props) {
     }
 
     const close = () => {
+        console.log('why do you execute ffs?')
         if (!props.value) setValue('');
         setActive(false);
         setUpdating(false);
+        if (props.saved) props.saved();
     }
 
     const cancel = () => {
@@ -73,10 +76,11 @@ function Input(props) {
     <Wrapper
     className={props.className}
     inline={props.inline}
+    bordered={props.bordered}
     small={props.small}>
         {active ? <InputWrapper
         value={value}
-        // onBlur={save}
+        onBlur={save}
         disabled={updating}
         autoFocus
         small={props.small}

@@ -34,12 +34,16 @@ const ListInput = styled(Input)`
     `
 
 const OnlineToggle = styled.div`
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     font-weight: bold;
     cursor: pointer;
     background-color: #e8e8e8;
     border-radius: 10%;
     padding: 0.2em 0.4rem;
+
+    &:not(.online) {
+        opacity: 0.5;
+    }
 `;
 
 const DeleteIcon = styled(FaTrash)`
@@ -53,7 +57,9 @@ function ShoppingList(props) {
       <Head>
         <Title plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
         {/* <Title>{props.shoppingList.title}</Title> */}
-        <OnlineToggle className={(props.shoppingList.online && 'online')}>online</OnlineToggle>
+        <OnlineToggle
+            className={(props.shoppingList.online && 'online')}
+            onClick={() => props.update(props.shoppingList._id, {online: !props.shoppingList.online})}>online</OnlineToggle>
         <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
       </Head>
       <Body>
