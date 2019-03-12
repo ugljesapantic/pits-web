@@ -60,11 +60,10 @@ function Input(props) {
     }
 
     const close = () => {
-        console.log('why do you execute ffs?')
         if (!props.value) setValue('');
         setActive(false);
         setUpdating(false);
-        if (props.saved) props.saved();
+        if (props.closed) props.closed();
     }
 
     const cancel = () => {

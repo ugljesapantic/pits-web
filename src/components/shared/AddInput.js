@@ -36,7 +36,9 @@ export default function AddInput(props) {
     <Wrapper>
         {active && <Input 
         save={props.submit}
-        saved={() => setActive(false)}
+        closed={() => {
+          setActive(false);
+        }}
         inline bordered/>}
         <Toggler className={active && 'active'} size="32" onClick={() => setActive(!active)} />
     </Wrapper>
