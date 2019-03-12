@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 import Input from '../shared/Input';
 import ShoppingListItem from './ShoppingListItem';
+import { UXContext } from './../../App';
 
 const Wrapper = styled.div`
     background: #FFF;
@@ -52,11 +53,12 @@ const DeleteIcon = styled(FaTrash)`
 `;
 
 function ShoppingList(props) {
+    const ux = useContext(UXContext);
+    console.log(ux);
   return (
     <Wrapper>
       <Head>
         <Title plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
-        {/* <Title>{props.shoppingList.title}</Title> */}
         <OnlineToggle
             className={(props.shoppingList.online && 'online')}
             onClick={() => props.update(props.shoppingList._id, {online: !props.shoppingList.online})}>online</OnlineToggle>

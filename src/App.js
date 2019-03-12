@@ -17,20 +17,27 @@ import { main } from './styles/layout';
 import ShoppingListPage from './components/shopping-list/ShoppingListPage';
 
 const AppWrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   background-color: #EBECED;
 `
 
 const ContentWrapper = styled.div`
   ${main};
   position: relative;
-  /* width: 40em; */
   margin-left: 1em;
   margin-right: 1em;
   max-width: 200em;
 `
 
+export const UXContext = React.createContext({});
+
 class App extends Component {
+
+  state = {
+    ux: {
+      isTouch: 'ontouchstart' in document.documentElement
+    }
+  }
 
   constructor(props) {
     super(props)
@@ -46,22 +53,19 @@ class App extends Component {
   render() {
     const location = this.props.location;
     return (
-      <AppWrapper ref={this.handleContextRef}>
-        <TopNavigation history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
-        <ContentWrapper>
-          <GuestRoute location={location} path="/login" exact component={LoginPage} />
-          <GuestRoute location={location} path="/signup" exact component={SignupPage} />
-          <GuestRoute location={location} path="/" exact component={HomePage} />
-          {/* <GuestRoute location={location} path="/confirmation/:token" exact component={ConfirmationPage} />
-          <GuestRoute location={location} path="/login" exact component={LoginPage} />
-          <GuestRoute location={location} path="/signup" exact component={SignupPage} />
-          <GuestRoute location={location} path="/reset-password/:token" exact component={ResetPasswordPage} />
-          <GuestRoute location={location} path="/forgot-password" exact component={ForgotPasswordPage} /> */}
-          <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
-          <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
-          <UserRoute location={location} path="/shopping-list" exact component={ShoppingListPage} />
-        </ContentWrapper>
-      </AppWrapper>
+      <UXContext.Provider value={this.state.ux}>
+        <AppWrapper ref={this.handleContextRef}>
+          <TopNavigation history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
+          <ContentWrapper>
+            <GuestRoute location={location} path="/login" exact component={LoginPage} />
+            <GuestRoute location={location} path="/signup" exact component={SignupPage} />
+            <GuestRoute location={location} path="/" exact component={HomePage} />
+            <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
+            <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
+            <UserRoute location={location} path="/shopping-list" exact component={ShoppingListPage} />
+          </ContentWrapper>
+        </AppWrapper>
+      </UXContext.Provider>
     );
   }
 }
