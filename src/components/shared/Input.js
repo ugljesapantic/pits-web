@@ -63,7 +63,8 @@ function Input(props) {
         if (!props.value) setValue('');
         setActive(false);
         setUpdating(false);
-        if (props.closed) props.closed();
+        // TODO darkness my old friend
+        if (props.closed) setTimeout(() => props.closed());
     }
 
     const cancel = () => {

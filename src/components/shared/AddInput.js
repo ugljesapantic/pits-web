@@ -30,17 +30,21 @@ const Toggler = styled(FaPlus)`
 `;
 
 export default function AddInput(props) {
-    let [active, setActive] = useState(false)
+    let [active, setActive] = useState(false);
+
+    const toggle = () => {
+      setActive(!active);
+    }
  
   return (
     <Wrapper>
         {active && <Input 
         save={props.submit}
         closed={() => {
-          setActive(false);
+          setActive(false)
         }}
         inline bordered/>}
-        <Toggler className={active && 'active'} size="32" onClick={() => setActive(!active)} />
+        <Toggler className={active ? 'active' : null} size="32" onClick={toggle} />
     </Wrapper>
   )
 }
