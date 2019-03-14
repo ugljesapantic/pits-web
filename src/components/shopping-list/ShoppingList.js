@@ -52,6 +52,7 @@ const DeleteIcon = styled(FaTrash)`
     margin-left: auto;
 `;
 
+
 function ShoppingList(props) {
     const ux = useContext(UXContext);
     console.log(ux);
@@ -65,8 +66,17 @@ function ShoppingList(props) {
         <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
       </Head>
       <Body>
-          {props.shoppingList.items.map(item => 
+          {props.shoppingList.items.filter(item => item.ordered && !item.purchased).map(item => 
             <ShoppingListItem 
+            remove={props.removeItem}
+            update={props.updateItem}
+            item={item}
+            listId={props.shoppingList._id}
+            key={item._id}/>
+            )}
+            {props.shoppingList.items.filter(item => !item.ordered && !item.purchased).map(item => 
+            <ShoppingListItem 
+            remove={props.removeItem}
             update={props.updateItem}
             item={item}
             listId={props.shoppingList._id}
