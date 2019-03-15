@@ -131,7 +131,7 @@ export default function ShoppingListItem(props) {
   }
 
   return (
-    <Wrapper >
+    <Wrapper>
       {touching && <Action style={getACtionStyle()}>{getActionText()}</Action>}
       {!updating && <InputWrapper
       ordered={props.item.ordered}
