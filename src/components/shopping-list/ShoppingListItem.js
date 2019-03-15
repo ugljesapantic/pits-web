@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import Input from '../shared/Input';
 
 import styled, {css} from 'styled-components';
+import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
 
 const Wrapper = styled.div`
   margin: 0.3rem 0;
@@ -11,6 +12,14 @@ const Wrapper = styled.div`
   border-radius: 3px;
   position: relative;
   overflow: hidden;
+
+  &:hover {
+    box-shadow: 1px 1px 1px 1px gray;
+
+    .hover-actions {
+      visibility: visible;
+    }
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -31,6 +40,21 @@ const Action = styled.div`
   top: 0;
   left: 0;
 `
+
+const HoverActions = styled.div`
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  top: 0;
+
+  & > * {
+    cursor: pointer;
+    margin: 0 0.5rem;
+  }
+`;
 
 //  props.updateItem(props.shoppingList._id, {title})
 export default function ShoppingListItem(props) {
@@ -96,7 +120,7 @@ export default function ShoppingListItem(props) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper >
       {touching && <Action style={getACtionStyle()}>{getActionText()}</Action>}
       {!updating && <InputWrapper
       ordered={props.item.ordered}
@@ -114,6 +138,15 @@ export default function ShoppingListItem(props) {
         plain
         value={props.item.title}
         save={title => props.update(props.listId, props.item._id, {title})}/>
+      <HoverActions className="hover-actions">
+        {!props.item.ordered ? [
+          <FaShoppingCart onClick={() => order(true)}/>,
+          <FaTrash onClick={remove}/>
+        ] : [
+          <FaCheck onClick={purchase}/>,
+          <FaTimes onClick={() => order(false)}/>
+        ]}
+      </HoverActions>
       </InputWrapper>}
     </Wrapper>
   )

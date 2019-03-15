@@ -5,7 +5,7 @@ import { handleKeyPress } from './../../utils/keyboard-handler';
 // TODO inputs that can be edited should have different black color
 const inputStyle = css`
     /* margin: 0.5rem 1rem; */
-    line-height: 1.5;
+    line-height: 2rem;
     border-radius: 3px;
     width: 100%;
     padding:  ${props => props.small ? '0.2rem 0.3rem' : '0.5rem 1rem'};
