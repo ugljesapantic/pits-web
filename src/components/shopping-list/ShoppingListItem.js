@@ -76,20 +76,27 @@ export default function ShoppingListItem(props) {
   const onTouchEnd = (e) => {
     setTouching(false);
     const swipeDiff = e.changedTouches[0].clientX - startPosition;
-    if (!props.item.ordered) {
+    if (!props.online) {
       if (swipeDiff > 150) {
         remove();
       } else if (swipeDiff < -150) {
-        order(true);
-      }
-    } else {
-      if (swipeDiff > 150) {
-        order(false);
-      } else if (swipeDiff < -150) {
         purchase();
       }
+    } else {
+      if (!props.item.ordered) {
+        if (swipeDiff > 150) {
+          remove();
+        } else if (swipeDiff < -150) {
+          order(true);
+        }
+      } else {
+        if (swipeDiff > 150) {
+          order(false);
+        } else if (swipeDiff < -150) {
+          purchase();
+        }
+      }
     }
-    
   }
 
   const order = (ordered) => {
@@ -108,10 +115,14 @@ export default function ShoppingListItem(props) {
   }
 
   const getActionText = () => {
-    if (!props.item.ordered) { 
-      return position > 0 ? 'delete' : 'order'
+    if (!props.online) {
+       return position > 0 ? 'delete' : 'purchase'
     } else {
-      return position > 0 ? 'not arrived' : 'arrived'
+      if (!props.item.ordered) { 
+        return position > 0 ? 'delete' : 'order'
+      } else {
+        return position > 0 ? 'not arrived' : 'arrived'
+      }
     }
   }
 
@@ -139,13 +150,17 @@ export default function ShoppingListItem(props) {
         value={props.item.title}
         save={title => props.update(props.listId, props.item._id, {title})}/>
       <HoverActions className="hover-actions">
-        {!props.item.ordered ? [
-          <FaShoppingCart onClick={() => order(true)}/>,
+        {!props.online ? <React.Fragment>
+          <FaShoppingCart onClick={purchase}/>
           <FaTrash onClick={remove}/>
-        ] : [
-          <FaCheck onClick={purchase}/>,
+        </React.Fragment> :
+          !props.item.ordered ? <React.Fragment>
+          <FaShoppingCart onClick={() => order(true)}/>
+          <FaTrash onClick={remove}/>
+        </React.Fragment>: <React.Fragment>
+          <FaCheck onClick={purchase}/>
           <FaTimes onClick={() => order(false)}/>
-        ]}
+        </React.Fragment>}
       </HoverActions>
       </InputWrapper>}
     </Wrapper>

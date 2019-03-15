@@ -72,6 +72,7 @@ function ShoppingList(props) {
             update={props.updateItem}
             item={item}
             listId={props.shoppingList._id}
+            online={props.shoppingList.online}
             key={item._id}/>
             )}
             {props.shoppingList.items.filter(item => !item.ordered && !item.purchased).map(item => 
@@ -80,6 +81,7 @@ function ShoppingList(props) {
             update={props.updateItem}
             item={item}
             listId={props.shoppingList._id}
+            online={props.shoppingList.online}
             key={item._id}/>
             )}
           <ListInput placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
