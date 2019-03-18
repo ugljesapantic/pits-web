@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
-import Input from '../shared/Input';
+import AsyncInput from '../shared/AsyncInput';
 import ShoppingListItem from './ShoppingListItem';
 import { UXContext } from './../../App';
 
@@ -25,12 +25,12 @@ const Body = styled.div`
     padding: 0.3rem 1rem;
 `;
 
-const Title = styled(Input)`
+const Title = styled(AsyncInput)`
     font-weight: bold;
     margin: 0.3rem 1rem;
 `;
 
-const ListInput = styled(Input)`
+const ListAsyncInput = styled(AsyncInput)`
     margin: 0.3rem  0;
     `
 
@@ -84,7 +84,7 @@ function ShoppingList(props) {
             online={props.shoppingList.online}
             key={item._id}/>
             )}
-          <ListInput placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
+          <ListAsyncInput placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
       </Body>
     </Wrapper>
   )

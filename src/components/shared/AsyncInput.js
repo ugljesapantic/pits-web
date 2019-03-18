@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled, {css} from 'styled-components';
-import { handleKeyPress } from './../../utils/keyboard-handler';
+import { handleKeyPress } from '../../utils/keyboard-handler';
 
 // TODO inputs that can be edited should have different black color
 const inputStyle = css`
@@ -37,6 +37,7 @@ const InputWrapper = styled.input`
 // TODO proper placeholder color
 const InputPlaceholder = styled.div`
     cursor: pointer;
+    height: 3rem;
     background: ${props => props.plain ? 'transparent' : '#eff0f1'};
     ${inputStyle};
 
@@ -45,7 +46,7 @@ const InputPlaceholder = styled.div`
 
 // TODO rename to async input
 // TODO add possibility of automated input
-function Input(props) {
+function AsyncInput(props) {
     const [value, setValue] = useState(props.value || '');
     const [active, setActive] = useState(!props.placeholder && !props.value);
     const [updating, setUpdating] = useState(false);
@@ -98,4 +99,4 @@ function Input(props) {
   )
 }
 
-export default Input
+export default AsyncInput

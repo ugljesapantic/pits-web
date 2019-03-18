@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import Input from '../shared/Input';
+import AsyncInput from '../shared/AsyncInput';
 
 import styled, {css} from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
@@ -144,7 +144,7 @@ export default function ShoppingListItem(props) {
       onTouchMove={onTouchMove} 
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}>
-        <Input
+        <AsyncInput
         small
         plain
         value={props.item.title}

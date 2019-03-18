@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components';
 
-import Input from '../shared/Input';
+import AsyncInput from './AsyncInput';
 
 import { FaPlus } from 'react-icons/fa';
 
@@ -38,7 +38,7 @@ export default function AddInput(props) {
  
   return (
     <Wrapper>
-        {active && <Input 
+        {active && <AsyncInput 
         save={props.submit}
         closed={() => {
           setActive(false)
