@@ -147,6 +147,7 @@ export default function ShoppingListItem(props) {
         <AsyncInput
         small
         plain
+        blur
         value={props.item.title}
         save={title => props.update(props.listId, props.item._id, {title})}/>
       <HoverActions className="hover-actions">

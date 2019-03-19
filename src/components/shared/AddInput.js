@@ -38,7 +38,7 @@ export default function AddInput(props) {
  
   return (
     <Wrapper>
-        {active && <AsyncInput 
+        {active && <AsyncInput
         save={props.submit}
         closed={() => {
           setActive(false)

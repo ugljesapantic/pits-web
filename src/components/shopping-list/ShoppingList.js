@@ -60,7 +60,7 @@ function ShoppingList(props) {
   return (
     <Wrapper>
       <Head>
-        <Title plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
+        <Title blur plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
         <OnlineToggle
             className={(props.shoppingList.online && 'online')}
             onClick={() => props.update(props.shoppingList._id, {online: !props.shoppingList.online})}>online</OnlineToggle>
@@ -85,7 +85,7 @@ function ShoppingList(props) {
             online={props.shoppingList.online}
             key={item._id}/>
             )}
-          <ListAsyncInput placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
+          <ListAsyncInput blur placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
       </Body>
     </Wrapper>
   )

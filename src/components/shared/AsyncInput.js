@@ -13,9 +13,10 @@ const inputStyle = css`
 
 const Wrapper = styled.div`
     ${props => props.bordered && `
-        border: 1px solid black;
+        box-shadow: 0px 0px 2px 2px darkgrey;
         border-radius: 3px;
     `}
+    margin-right: 1rem;
     display: ${props => props.inline ? 'inline-block' : 'block'};
     ${props => props.inline && 'min-width: 12rem'};
 `
@@ -64,7 +65,7 @@ function AsyncInput(props) {
         setActive(false);
         setUpdating(false);
         // TODO darkness my old friend
-        if (props.closed) setTimeout(() => props.closed());
+        if (props.closed) props.closed();
     }
 
     const cancel = () => {
@@ -80,7 +81,7 @@ function AsyncInput(props) {
     small={props.small}>
         {active ? <InputWrapper
         value={value}
-        onBlur={save}
+        onBlur={props.blur && save}
         disabled={updating}
         autoFocus
         small={props.small}
