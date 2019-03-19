@@ -35,12 +35,13 @@ const ListAsyncInput = styled(AsyncInput)`
     `
 
 const OnlineToggle = styled.div`
-    margin-left: 0.5rem;
+    margin: 0 0.5rem;
     font-weight: bold;
     cursor: pointer;
     background-color: #e8e8e8;
     border-radius: 10%;
     padding: 0.2em 0.4rem;
+
 
     &:not(.online) {
         opacity: 0.5;

@@ -17,7 +17,7 @@ const Wrapper = styled.div`
         border-radius: 3px;
     `}
     display: ${props => props.inline ? 'inline-block' : 'block'};
-    ${props => props.inline && 'width: 12rem'};
+    ${props => props.inline && 'min-width: 12rem'};
 `
 
 const InputWrapper = styled.input`
@@ -37,7 +37,6 @@ const InputWrapper = styled.input`
 // TODO proper placeholder color
 const InputPlaceholder = styled.div`
     cursor: pointer;
-    height: 3rem;
     background: ${props => props.plain ? 'transparent' : '#eff0f1'};
     ${inputStyle};
 
