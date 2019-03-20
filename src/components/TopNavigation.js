@@ -65,7 +65,8 @@ const TopNavigation = ({logout, isAuthenticated, history}) => {
     const isMobile = windowWidth < 768;
 
     const goTo = (page) => {
-        history.push(page)
+        history.push(page);
+        setActive(false);
     }
 
     const userPages = () => <React.Fragment>

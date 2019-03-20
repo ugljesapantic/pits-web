@@ -83,7 +83,7 @@ export const removeClipboardItem = (id, itemId) => dispatch => api.clipboard.rem
     dispatch(itemRemoved(id, itemId));
 })
 
-export const addClipboardItem = (id) => dispatch => api.clipboard.addItem(id).then(item => dispatch(itemAdded(item, id)))
+export const addClipboardItem = (id, title) => dispatch => api.clipboard.addItem(id, title).then(item => dispatch(itemAdded(item, id)))
 
 export const addClipboardLabel = (body) => dispatch => api.clipboard.addLabel(body).then(label => dispatch(labelAdded(label)))
 

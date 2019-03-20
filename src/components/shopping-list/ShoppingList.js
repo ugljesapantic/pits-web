@@ -1,29 +1,13 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import styled from 'styled-components';
 import { FaTrash } from 'react-icons/fa';
 import AsyncInput from '../shared/AsyncInput';
 import ShoppingListItem from './ShoppingListItem';
-import { UXContext } from './../../App';
 
-const Wrapper = styled.div`
-    background: #FFF;
-    border-radius: 5px;
-    box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.03), 0 0px 0px 1px rgba(0, 0, 0, 0.01);
-    margin: 1em 0;
-`;
+import Card from '../shared/Card';
 
-const Head = styled.div`
-    display: flex;
-    align-items: center;
-    padding-right: 1rem;
-`;
-
-const Body = styled.div`
-    border-top: 1px solid #f5f5f5;
-    padding: 0.3rem 1rem;
-`;
 
 const Title = styled(AsyncInput)`
     font-weight: bold;
@@ -55,18 +39,16 @@ const DeleteIcon = styled(FaTrash)`
 
 
 function ShoppingList(props) {
-    const ux = useContext(UXContext);
-    console.log(ux);
   return (
-    <Wrapper>
-      <Head>
+    <Card>
+      <Card.Head>
         <Title blur plain inline value={props.shoppingList.title} save={title => props.update(props.shoppingList._id, {title})}/>
         <OnlineToggle
             className={(props.shoppingList.online && 'online')}
             onClick={() => props.update(props.shoppingList._id, {online: !props.shoppingList.online})}>online</OnlineToggle>
         <DeleteIcon  onClick={() => props.remove(props.shoppingList._id)}/>
-      </Head>
-      <Body>
+      </Card.Head>
+      <Card.Body>
           {props.shoppingList.items.filter(item => item.ordered && !item.purchased).map(item => 
             <ShoppingListItem 
             remove={props.removeItem}
@@ -86,8 +68,8 @@ function ShoppingList(props) {
             key={item._id}/>
             )}
           <ListAsyncInput blur placeholder={'Add item'} save={title => props.addItem(props.shoppingList._id, title)}/>
-      </Body>
-    </Wrapper>
+      </Card.Body>
+    </Card>
   )
 }
 

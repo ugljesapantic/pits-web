@@ -6,8 +6,6 @@ import ShoppingList from './ShoppingList';
 
 class ShoppingListPage extends Component {
 
-    state = {
-    }
 
     componentDidMount() {
         this.props.loadAll();
