@@ -16,9 +16,7 @@ const Wrapper = styled.div`
         box-shadow: 0px 0px 2px 2px darkgrey;
         border-radius: 3px;
     `}
-    margin-right: 1rem;
     display: ${props => props.inline ? 'inline-block' : 'block'};
-    ${props => props.inline && 'min-width: 12rem'};
 `
 
 const InputWrapper = styled.input`

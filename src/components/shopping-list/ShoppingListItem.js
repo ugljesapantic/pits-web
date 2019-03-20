@@ -3,6 +3,7 @@ import AsyncInput from '../shared/AsyncInput';
 
 import styled, {css} from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
+import Swipeable from './../shared/Swipeable';
 
 const Wrapper = styled.div`
   margin: 0.3rem 0;
@@ -22,24 +23,6 @@ const Wrapper = styled.div`
   }
 `;
 
-const InputWrapper = styled.div`
-  height: 2rem;
-  z-index: 3;
-  background-color: ${props => props.ordered ? 'lightgray' : 'white'};
-`
-
-
-const Action = styled.div`
-  width: 100%;
-  position: absolute;
-  height: 100%;
-  color: white;
-  font-weight: bold;
-  line-height: 2rem;
-  padding: 0 1rem;
-  top: 0;
-  left: 0;
-`
 
 const HoverActions = styled.div`
   visibility: hidden;
@@ -56,45 +39,25 @@ const HoverActions = styled.div`
   }
 `;
 
+const AsyncInputWrapper = styled(AsyncInput)`
+  z-index: 3;
+  border-radius: 3px;
+  background-color: ${props => props.ordered ? 'lightgray' : 'white'};
+`;
+
 //  props.updateItem(props.shoppingList._id, {title})
 export default function ShoppingListItem(props) {
-  const [position, setPosition] = useState();
-  const [startPosition, setStartPosition] = useState()
-  const [touching, setTouching] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const onTouchMove = (e) => {
-    setPosition(e.targetTouches[0].clientX - startPosition);
-  }
-
-  const onTouchStart = (e) => {
-    setStartPosition(e.targetTouches[0].clientX);
-    setPosition(e.currentTarget.getBoundingClientRect().x);
-    setTouching(true);
-  }
-
-  const onTouchEnd = (e) => {
-    setTouching(false);
-    const swipeDiff = e.changedTouches[0].clientX - startPosition;
+ 
+  const getSwipeActions = () => {
     if (!props.online) {
-      if (swipeDiff > 150) {
-        remove();
-      } else if (swipeDiff < -150) {
-        purchase();
-      }
+      return {left: purchase, right: remove}
     } else {
       if (!props.item.ordered) {
-        if (swipeDiff > 150) {
-          remove();
-        } else if (swipeDiff < -150) {
-          order(true);
-        }
+        return {left: order.bind(null, true), right: remove}
       } else {
-        if (swipeDiff > 150) {
-          order(false);
-        } else if (swipeDiff < -150) {
-          purchase();
-        }
+        return {left: purchase, right: order.bind(null, false)}
       }
     }
   }
@@ -116,38 +79,31 @@ export default function ShoppingListItem(props) {
 
   const getActionText = () => {
     if (!props.online) {
-       return position > 0 ? 'delete' : 'purchase'
+       return {left: 'delete' , right: 'purchase'}
     } else {
       if (!props.item.ordered) { 
-        return position > 0 ? 'delete' : 'order'
+        return {left: 'delete' , right: 'order'}
       } else {
-        return position > 0 ? 'not arrived' : 'arrived'
+        return {left: 'not arrived' , right: 'arrived'}
       }
     }
   }
 
-  const getACtionStyle = () => {
-    return position > 0 ? {backgroundColor: 'red'} : {backgroundColor: 'green', textAlign: 'right'}
+  const swipeOptions = () => {
+    return {
+      actionText: getActionText(),
+      actions: getSwipeActions(),
+      updating: updating
+    }
   }
 
   return (
-    <Wrapper>
-      {touching && <Action style={getACtionStyle()}>{getActionText()}</Action>}
-      {!updating && <InputWrapper
-      ordered={props.item.ordered}
-      style={touching ? {
-        position: 'fixed', 
-        left: position,
-        width: '100%',
-        boxShadow: '1px 1px 1px 1px gray'
-      } : {}}
-      onTouchMove={onTouchMove} 
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}>
-        <AsyncInput
+    <Swipeable {...swipeOptions()}>
+       <AsyncInputWrapper
         small
         plain
         blur
+        ordered={props.item.ordered}
         value={props.item.title}
         save={title => props.update(props.listId, props.item._id, {title})}/>
       <HoverActions className="hover-actions">
@@ -163,7 +119,6 @@ export default function ShoppingListItem(props) {
           <FaTimes onClick={() => order(false)}/>
         </React.Fragment>}
       </HoverActions>
-      </InputWrapper>}
-    </Wrapper>
+    </Swipeable>
   )
 }
