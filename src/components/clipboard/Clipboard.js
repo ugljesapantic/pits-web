@@ -22,7 +22,6 @@ const ListAsyncInput = styled(AsyncInput)`
 `
 
 function Clipboard (props) {
-    console.log(props)
     return (
     <Card>
         <Card.Head>

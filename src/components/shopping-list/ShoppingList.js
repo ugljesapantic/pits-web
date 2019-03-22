@@ -38,7 +38,6 @@ const DeleteIcon = styled(FaTrash)`
 
 
 function ShoppingList(props) {
-    console.log('lallalalalalal')
 
   return (
     <Card>
