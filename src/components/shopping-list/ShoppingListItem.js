@@ -5,25 +5,6 @@ import styled, {css} from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
 import Swipeable from './../shared/Swipeable';
 
-const Wrapper = styled.div`
-  margin: 0.3rem 0;
-  height: 2rem;
-  z-index: 1;
-  /* TODO do something about border radius thing */
-  border-radius: 3px;
-  position: relative;
-  overflow: hidden;
-
-  &:hover {
-    box-shadow: 1px 1px 1px 1px gray;
-
-    .hover-actions {
-      visibility: visible;
-    }
-  }
-`;
-
-
 const HoverActions = styled.div`
   visibility: hidden;
   position: absolute;

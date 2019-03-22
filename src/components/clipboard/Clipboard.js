@@ -22,7 +22,7 @@ const ListAsyncInput = styled(AsyncInput)`
 `
 
 function Clipboard (props) {
-
+    console.log(props)
     return (
     <Card>
         <Card.Head>
@@ -30,15 +30,14 @@ function Clipboard (props) {
         <DeleteIcon  onClick={() => props.remove(props.clipboard._id)}/>
         </Card.Head>
         <Card.Body>
-            {/* {props.clipboard.items.map(item => 
+            {props.clipboard.items.map(item => 
                 <ClipboardItem 
                 remove={props.removeItem}
                 update={props.updateItem}
                 item={item}
-                listId={props.clipboard._id}
-                online={props.clipboard.online}
+                clipboardId={props.clipboard._id}
                 key={item._id}/>
-            )} */}
+            )}
             <ListAsyncInput blur placeholder={'Add item'} save={title => props.addItem(props.clipboard._id, title)}/>
         </Card.Body>
     </Card>

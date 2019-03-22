@@ -39,6 +39,8 @@ const DeleteIcon = styled(FaTrash)`
 
 
 function ShoppingList(props) {
+    console.log('lallalalalalal')
+
   return (
     <Card>
       <Card.Head>
@@ -77,5 +79,5 @@ ShoppingList.propTypes = {
 
 }
 
-export default ShoppingList
+export default React.memo(ShoppingList)
 

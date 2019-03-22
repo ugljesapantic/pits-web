@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loadAllClipboards, addClipboardItem, updateClipboard, createClipboard, removeClipboard } from '../../actions';
+import { loadAllClipboards, addClipboardItem, updateClipboard, createClipboard, removeClipboard, updateClipboardItem, removeClipboardItem } from '../../actions';
 import Clipboard from './Clipboard';
 import AddInput from './../shared/AddInput';
 
@@ -20,6 +20,8 @@ class ClipboardPage extends Component {
                     key={clipboard._id}
                     clipboard={clipboard}
                     addItem={this.props.addItem}
+                    updateItem={this.props.updateItem}
+                    removeItem={this.props.removeItem}
                     update={this.props.update}
                     remove={this.props.remove}/>
                 )}
@@ -41,6 +43,8 @@ function mapStateToProps(state) {
         dispatch(loadAllClipboards())
       },
       addItem: (id, title) => dispatch(addClipboardItem(id, title)),
+      updateItem: (id, itemId, body) => dispatch(updateClipboardItem(id, itemId, body)),
+      removeItem: (id, itemId) => dispatch(removeClipboardItem(id, itemId)),
       update: (id, body) => dispatch(updateClipboard(id, body)),
       create: (body) => dispatch(createClipboard(body)),
       remove: (id) => dispatch(removeClipboard(id))
