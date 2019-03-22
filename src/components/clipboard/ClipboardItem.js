@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react'
+import React, {useState} from 'react'
 import AsyncInput from '../shared/AsyncInput';
 
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import { FaCopy, FaTrash } from 'react-icons/fa';
 import Swipeable from './../shared/Swipeable';
 
@@ -29,7 +29,6 @@ const AsyncInputWrapper = styled(AsyncInput)`
 //  props.updateItem(props.Clipboard._id, {title})
 export default function ClipboardItem(props) {
   const [updating, setUpdating] = useState(false);
-  const el = useRef(null)
 
 const copy = () => {
     if (navigator.clipboard) {
@@ -45,9 +44,6 @@ const copy = () => {
         document.execCommand('copy');
         document.body.removeChild(el);
     }
-    console.log(el)
-    // e.target.classList.toggle('copied');
-    // setTimeout((el) => el.classList.toggle('copied'), 200, e.target);
 }
 
   const remove = () => {

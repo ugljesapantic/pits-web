@@ -1,8 +1,6 @@
 import React, {useState} from 'react'
-import AsyncInput from '../shared/AsyncInput';
 
-import styled, {css} from 'styled-components';
-import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   margin: 0.3rem 0;

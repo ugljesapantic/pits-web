@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import AsyncInput from '../shared/AsyncInput';
 
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
 import Swipeable from './../shared/Swipeable';
 
