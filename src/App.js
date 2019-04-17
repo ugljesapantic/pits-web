@@ -15,6 +15,7 @@ import { userLoggedIn, logout } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
 import { main } from './styles/layout';
 import ShoppingListPage from './components/shopping-list/ShoppingListPage';
+import { DairyPage } from './components/dairy/DairyPage';
 
 const AppWrapper = styled.div`
   min-height: 100vh;
@@ -63,6 +64,7 @@ class App extends Component {
             <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
             <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
             <UserRoute location={location} path="/shopping-list" exact component={ShoppingListPage} />
+            <UserRoute location={location} path="/dairy" exact component={DairyPage} />
           </ContentWrapper>
         </AppWrapper>
       </UXContext.Provider>

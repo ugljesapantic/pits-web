@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 
 const UserRoute = ({component: Component, isAuthenticated, ...rest}) => (
-    <Route {...rest} render={props => isAuthenticated ?  <Component {...props} /> : <Redirect to="/" />} /> 
+    <Route {...rest} render={props => isAuthenticated ?  <Component {...props} /> : <Redirect to="/dairy" />} /> 
   )
 
 UserRoute.propTypes = {

@@ -73,6 +73,7 @@ const TopNavigation = ({logout, isAuthenticated, history}) => {
         <MenuItem isMobile onClick={() => goTo('dashboard')}>Dashboard</MenuItem>
         <MenuItem isMobile onClick={() => goTo('clipboard')}>Clipboard</MenuItem>
         <MenuItem isMobile onClick={() => goTo('shopping-list')}>Shopping List</MenuItem>
+        <MenuItem isMobile onClick={() => goTo('dairy')}>Dairy</MenuItem>
     </React.Fragment>
 
     const sideMenu = (active) => 
