@@ -63,7 +63,7 @@ export class DairyPage extends Component {
               )}
             <ListAsyncInput 
               placeholder={'Add'}
-              save={(content) => this.props.create({content})}
+              save={(content) => this.props.create({content, date: this.state.date})}
             />
           </Card.Body>
         </Card>
