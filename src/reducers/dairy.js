@@ -2,7 +2,8 @@ import {
     DAIRY_LOADED_ALL,
     DAIRY_UPDATED,
     DAIRY_CREATED,
-    DAIRY_REMOVED
+    DAIRY_REMOVED,
+    DAIRY_LOAD
 } from '../types';
   
 export default (state = [], action) => {
@@ -10,7 +11,7 @@ export default (state = [], action) => {
   
     case DAIRY_UPDATED:
         return [...state.map(dairy => 
-        dairy._id === action.dairy._id ? {...action.dairy} : dairy
+            dairy._id === action.dairy._id ? {...action.dairy} : dairy
         )]
     
     case DAIRY_REMOVED:
@@ -19,9 +20,11 @@ export default (state = [], action) => {
     case DAIRY_CREATED:
         return [...state, action.dairy]
 
+    case DAIRY_LOAD:
+        return [];
+
     case DAIRY_LOADED_ALL:
-        return [...action.dairys];
-    
+        return [...action.dairies];
     
     default:
         return state

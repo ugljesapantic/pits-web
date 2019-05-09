@@ -24,7 +24,7 @@ export default {
         removeItem: (id, itemId) => http.delete(`/shopping-lists/${id}/items/${itemId}`).then(res => res.data),
     },
     dairy: {
-        loadAll: () => http.get('/dairies').then(res => res.data),
+        loadAll: (date) => http.get(`/dairies?date=${date}`).then(res => res.data),
         update: (id, body) => http.patch(`/dairies/${id}`, body).then(res => res.data),
         remove: (id) => http.delete(`/dairies/${id}`).then(res => res.data),
         create: (body) => http.post(`/dairies`, body).then(res => res.data),

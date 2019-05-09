@@ -33,12 +33,12 @@ export default function ShoppingListItem(props) {
  
   const getSwipeActions = () => {
     if (!props.online) {
-      return {left: purchase, right: remove}
+      return {right: purchase, left: remove}
     } else {
       if (!props.item.ordered) {
-        return {left: order.bind(null, true), right: remove}
+        return {right: order.bind(null, true), left: remove}
       } else {
-        return {left: purchase, right: order.bind(null, false)}
+        return {right: purchase, left: order.bind(null, false)}
       }
     }
   }

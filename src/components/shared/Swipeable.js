@@ -58,9 +58,9 @@ export default function Swipeable(props) {
     setTouching(false);
     const swipeDiff = e.changedTouches[0].clientX - startPosition;
     if (swipeDiff > 150) {
-        props.actions.left();
+      props.actions.right && props.actions.right();
     } else if (swipeDiff < -150) {
-        props.actions.right();
+      props.actions.left && props.actions.left();
     }
   }
 
@@ -70,7 +70,7 @@ export default function Swipeable(props) {
 
   const getACtionStyle = () => {
     //   TODO modify colors
-    return position > 0 ? {backgroundColor: 'green'} : {backgroundColor: 'red', textAlign: 'right'}
+    return position < 0 ? {backgroundColor: 'red', textAlign: 'right'} : {backgroundColor: 'green'}
   }
 
   return (
