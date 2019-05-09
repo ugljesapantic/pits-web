@@ -15,7 +15,7 @@ import { userLoggedIn, logout } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
 import { main } from './styles/layout';
 import ShoppingListPage from './components/shopping-list/ShoppingListPage';
-import { DairyPage } from './components/dairy/DairyPage';
+import DairyPage from './components/dairy/DairyPage';
 
 const AppWrapper = styled.div`
   min-height: 100vh;

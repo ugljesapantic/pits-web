@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef} from 'react'
 import styled, {css} from 'styled-components';
 import { handleKeyPress } from '../../utils/keyboard-handler';
 
@@ -19,13 +19,16 @@ const Wrapper = styled.div`
     display: ${props => props.inline ? 'inline-block' : 'block'};
 `
 
-const InputWrapper = styled.input`
+const InputWrapper = styled.textarea`
     ${inputStyle};
+    resize: none;
+    display: block;
     box-shadow: none;
     outline: 0;
     border: none;
     color: #505b67;
     background: #eff0f1;
+    ${(props) => props.height && `height: ${props.height}px`}
 
     &:disabled {
         opacity: 0.5;
@@ -46,8 +49,10 @@ const InputPlaceholder = styled.div`
 // TODO add possibility of automated input
 function AsyncInput(props) {
     const [value, setValue] = useState(props.value || '');
+    const [height, setHeight] = useState(null);
     const [active, setActive] = useState(!props.placeholder && !props.value);
     const [updating, setUpdating] = useState(false);
+    const inputEl = useRef(null);
 
     const save = () => {
         if ((props.value && (props.value !== value)) || (!props.value && value)) {
@@ -71,6 +76,11 @@ function AsyncInput(props) {
         close();
     }
 
+    const onChange = (e) => {
+        setHeight(inputEl.current.scrollHeight);
+        setValue(e.target.value)
+    }
+
   return (
     <Wrapper
     className={props.className}
@@ -78,13 +88,16 @@ function AsyncInput(props) {
     bordered={props.bordered}
     small={props.small}>
         {active ? <InputWrapper
+        height={height}
+        ref={inputEl}
         value={value}
         onBlur={props.blur && save}
         disabled={updating}
         autoFocus
         small={props.small}
         onKeyDown={e => handleKeyPress(e, save, cancel)}
-        onChange={e => setValue(e.target.value)}
+        onChange={onChange}
+        rows={1}
         /> : 
         <InputPlaceholder
         plain={props.plain}

@@ -13,7 +13,8 @@ export default {
         updateItem: (id, itemId, body) => http.patch(`/clipboards/${id}/items/${itemId}`, body).then(res => res.data),
         addItem: (id, title) => http.post(`/clipboards/${id}/items`, {title}).then(res => res.data),
         removeItem: (id, itemId) => http.delete(`/clipboards/${id}/items/${itemId}`).then(res => res.data),
-    }, shoppingList: {
+    },
+    shoppingList: {
         loadAll: () => http.get('/shopping-lists').then(res => res.data),
         update: (id, body) => http.patch(`/shopping-lists/${id}`, body).then(res => res.data),
         remove: (id) => http.delete(`/shopping-lists/${id}`).then(res => res.data),
@@ -21,5 +22,11 @@ export default {
         updateItem: (id, itemId, body) => http.patch(`/shopping-lists/${id}/items/${itemId}`, body).then(res => res.data),
         addItem: (id, title) => http.post(`/shopping-lists/${id}/items`, {title}).then(res => res.data),
         removeItem: (id, itemId) => http.delete(`/shopping-lists/${id}/items/${itemId}`).then(res => res.data),
+    },
+    dairy: {
+        loadAll: () => http.get('/dairies').then(res => res.data),
+        update: (id, body) => http.patch(`/dairies/${id}`, body).then(res => res.data),
+        remove: (id) => http.delete(`/dairies/${id}`).then(res => res.data),
+        create: (body) => http.post(`/dairies`, body).then(res => res.data),
     }
 }

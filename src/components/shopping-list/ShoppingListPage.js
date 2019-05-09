@@ -12,7 +12,7 @@ class ShoppingListPage extends Component {
     }
 
     render() {
-
+        
         return (
             <div>
                 {this.props.shoppingLists
