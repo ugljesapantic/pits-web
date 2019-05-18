@@ -116,7 +116,7 @@ export class DairyPage extends Component {
       <Wrapper>
         <Card>
           <Card.Head>
-            <DatePicker onClick={() => !this.state.recording ? this.startRecording() : this.stopRecording()}>
+            <DatePicker>
               <FaCaretLeft onClick={this.changeDate.bind(this, -1)} />
               {this.state.date}
               <FaCaretRight onClick={this.changeDate.bind(this, 1)}/>

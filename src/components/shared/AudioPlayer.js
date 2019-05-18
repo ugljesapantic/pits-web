@@ -9,6 +9,7 @@ const PlayerWrapper = styled.div`
 
     svg {
         margin-left: 0.5rem;
+        cursor: pointer;
     }
 `;
 
