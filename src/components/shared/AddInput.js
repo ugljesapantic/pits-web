@@ -4,18 +4,10 @@ import styled from 'styled-components';
 import AsyncInput from './AsyncInput';
 
 import { FaPlus } from 'react-icons/fa';
+import { bottomAction } from './../../styles/layout';
 
 const Wrapper = styled.div`
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;  
-  display: flex;
-  align-items: center;
-  height: 3rem;
-
-  i {
-      cursor: pointer;
-  }
+  ${bottomAction}
 `;
 
 const Toggler = styled(FaPlus)`

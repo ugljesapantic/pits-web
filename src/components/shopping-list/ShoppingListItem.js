@@ -4,21 +4,7 @@ import AsyncInput from '../shared/AsyncInput';
 import styled from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
 import Swipeable from './../shared/Swipeable';
-
-const HoverActions = styled.div`
-  visibility: hidden;
-  position: absolute;
-  right: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  top: 0;
-
-  & > * {
-    cursor: pointer;
-    margin: 0 0.5rem;
-  }
-`;
+import { HoverActions } from '../../styles/layout';
 
 const AsyncInputWrapper = styled(AsyncInput)`
   z-index: 3;

@@ -4,15 +4,30 @@ import AsyncInput from '../shared/AsyncInput';
 import styled from 'styled-components';
 import Card from './../shared/Card';
 import { loadAllDairies, removeDairy, createDairy, updateDairy } from './../../actions';
-import DairyItem from './DairyItem';
+import DairyTextItem from './DairyTextItem';
 import { toIsoStringDate } from './../../utils/date';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { FaCaretLeft, FaCaretRight, FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
 
 import * as moment from 'moment';
+import { bottomAction } from './../../styles/layout';
+import DairyAudioItem from './DairyAudioItem';
 
 const Wrapper = styled.div`
     
 `;
+
+const RecordAudioWrapper = styled.div`
+  ${bottomAction}
+`;
+
+const StartRecordingButton = styled(FaMicrophone)`
+  cursor: pointer;
+`
+
+const StopRecordingButton = styled(FaMicrophoneSlash)`
+  cursor: pointer;
+  color: red;
+`
 
 const ListAsyncInput = styled(AsyncInput)`
     margin: 0.3rem  0;
@@ -29,8 +44,11 @@ const DatePicker = styled.div`
 
 export class DairyPage extends Component {
   state = {
-    date : toIsoStringDate(new Date())
+    date : toIsoStringDate(new Date()),
+    recording: false
   }
+
+  recorder = null;
 
   componentDidMount() {
     this.props.loadAll(this.state.date)
@@ -42,12 +60,63 @@ export class DairyPage extends Component {
     }, () => this.props.loadAll(this.state.date))
   }
 
+  setupRecorder = () => new Promise(async resolve => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/webm'});
+    const audioChunks = [];
+
+    mediaRecorder.addEventListener("dataavailable", event => {
+      audioChunks.push(event.data);
+    });
+
+    const start = () => mediaRecorder.start();
+
+    const stop = () =>
+      new Promise(resolve => {
+        mediaRecorder.addEventListener("stop", () => {
+          const audioBlob = new Blob(audioChunks);
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audio = new Audio(audioUrl);
+          const play = () => audio.play();
+          resolve({ audioBlob, audioUrl, play });
+        });
+
+        mediaRecorder.stop();
+        stream.getTracks().forEach( track => track.stop() );
+      });
+
+    resolve({ start, stop });
+  });
+
+  sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+  startRecording = async () => {
+    this.recorder = await this.setupRecorder();
+    this.recorder.start();
+    this.setState({recording: true})
+  }
+
+  stopRecording = async () => {
+    const audio = await this.recorder.stop();
+    this.setState({recording: false})
+    const audioBase64 = await this.blobToBase64(audio.audioBlob);
+    this.props.create({content: audioBase64, date: this.state.date, type: 'audio'})
+  }
+
+  blobToBase64 = (blob) => {
+    return new Promise(resolve => {
+      var reader = new FileReader();
+      reader.readAsDataURL(blob); 
+      reader.onloadend = () => resolve(reader.result)
+    })
+  }
+
   render() {
     return (
       <Wrapper>
         <Card>
           <Card.Head>
-            <DatePicker>
+            <DatePicker onClick={() => !this.state.recording ? this.startRecording() : this.stopRecording()}>
               <FaCaretLeft onClick={this.changeDate.bind(this, -1)} />
               {this.state.date}
               <FaCaretRight onClick={this.changeDate.bind(this, 1)}/>
@@ -55,18 +124,27 @@ export class DairyPage extends Component {
           </Card.Head>
           <Card.Body>
             {this.props.dairies && this.props.dairies.map(item => 
-                  <DairyItem 
+                  item.type === 'text' ? <DairyTextItem 
                   remove={this.props.remove}
                   update={this.props.update}
+                  item={item}
+                  key={item._id}/> : <DairyAudioItem 
+                  remove={this.props.remove}
                   item={item}
                   key={item._id}/>
               )}
             <ListAsyncInput 
               placeholder={'Add'}
-              save={(content) => this.props.create({content, date: this.state.date})}
+              save={(content) => this.props.create({content, date: this.state.date, type: 'text'})}
             />
           </Card.Body>
         </Card>
+
+        <RecordAudioWrapper>
+          {this.state.recording ? 
+          <StopRecordingButton  onClick={() => this.stopRecording()} size="45"/> : 
+          <StartRecordingButton onClick={() => this.startRecording()} size="36"/>}
+        </RecordAudioWrapper>
       </Wrapper>
     )
   }
