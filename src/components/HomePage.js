@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
 import { fullScreen } from '../styles/layout';
+import Button from './shared/Button';
+
 
 const AppMain = styled.div`
   display: flex;
@@ -18,11 +19,12 @@ const AppTitle = styled.h1`
 `
 
 /* TODO remove hardcoded divs */
-const HomePage =  ({location}) =>
+const HomePage =  ({history}) =>
 
   <AppMain>
     <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
-    <Button primary size='huge'>SIGN UP</Button>
+    {console.log()}
+    <Button primary onClick={() => history.push('signup')}>SIGN UP</Button>
   </AppMain>
 
 export default HomePage;
