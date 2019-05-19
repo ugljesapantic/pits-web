@@ -18,6 +18,8 @@ const Wrapper = styled.div`
 
 const RecordAudioWrapper = styled.div`
   ${bottomAction}
+  width: 4rem;
+  justify-content: center;
 `;
 
 const StartRecordingButton = styled(FaMicrophone)`

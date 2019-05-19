@@ -9,9 +9,7 @@ import UserRoute from './components/routes/UserRoute';
 import DashboardPage from './components/DashboardPage';
 import LoginPage from './components/LoginPage';
 import { connect } from 'react-redux';
-import jwt from 'jwt-decode'
-import moment from 'moment';
-import { userLoggedIn, logout } from './actions';
+import { logout } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
 import { main } from './styles/layout';
 import ShoppingListPage from './components/shopping-list/ShoppingListPage';
@@ -37,17 +35,6 @@ class App extends Component {
   state = {
     ux: {
       isTouch: 'ontouchstart' in document.documentElement
-    }
-  }
-
-  constructor(props) {
-    super(props)
-    let token = localStorage.pitsJWT;
-    if(token) {
-      let expirationDate = moment(jwt(token).exp*1000);
-      if (moment().isBefore(expirationDate)) {     
-        this.props.login(token);
-      } 
     }
   }
 
@@ -87,9 +74,6 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: token => {
-      dispatch(userLoggedIn(token))
-    },
     logout: () => dispatch(logout())
   }
 }

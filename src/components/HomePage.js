@@ -23,7 +23,6 @@ const HomePage =  ({history}) =>
 
   <AppMain>
     <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
-    {console.log()}
     <Button primary onClick={() => history.push('signup')}>SIGN UP</Button>
   </AppMain>
 

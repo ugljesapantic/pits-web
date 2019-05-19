@@ -13,7 +13,7 @@ class DashboardPage extends Component {
     render() {
         
         return (
-            <Greeting>Welcome to the PITS</Greeting>
+            <Greeting>Welcome to the Personal Issue tracking System</Greeting>
         );
     }
 }

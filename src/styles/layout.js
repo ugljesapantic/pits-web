@@ -25,8 +25,6 @@ export const bottomAction = css`
     i {
       cursor: pointer;
     }
-    width: 4rem;
-    justify-content: center;
 `
 
 export const HoverActions = styled.div`
