@@ -43,7 +43,7 @@ class App extends Component {
     return (
       <UXContext.Provider value={this.state.ux}>
         <AppWrapper ref={this.handleContextRef}>
-          <TopNavigation history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
+          <TopNavigation location={this.props.location} history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
           <ContentWrapper>
             <GuestRoute location={location} path="/login" exact component={LoginPage} />
             <GuestRoute location={location} path="/signup" exact component={SignupPage} />

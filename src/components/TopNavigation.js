@@ -25,6 +25,7 @@ const MenuItem = styled.div`
     cursor: pointer;
     ${({right}) => right && 'margin-left: auto'}
     ${({isMobile}) => isMobile && 'line-height: 4em'}
+    ${({active}) => active &&  'background-color: gray; color: white'}
 `
 
 const Burger = styled(Icon)`
@@ -59,7 +60,7 @@ const SideMenuBackground = styled.div`
 `
 
 
-const TopNavigation = ({logout, isAuthenticated, history}) => {
+const TopNavigation = ({logout, isAuthenticated, history, location}) => {
     const [active, setActive] = useState(false);
     const windowWidth = useWindowWidth();
     const isMobile = windowWidth < 768;
@@ -69,26 +70,26 @@ const TopNavigation = ({logout, isAuthenticated, history}) => {
         setActive(false);
     }
 
-    const userPages = () => <React.Fragment>
-        <MenuItem isMobile onClick={() => goTo('dashboard')}>Dashboard</MenuItem>
-        <MenuItem isMobile onClick={() => goTo('clipboard')}>Clipboard</MenuItem>
-        <MenuItem isMobile onClick={() => goTo('shopping-list')}>Shopping List</MenuItem>
-        <MenuItem isMobile onClick={() => goTo('dairy')}>Dairy</MenuItem>
+    const userPages = (current) => <React.Fragment>
+        <MenuItem active={current === '/dashboard'} isMobile onClick={() => goTo('dashboard')}>Dashboard</MenuItem>
+        <MenuItem active={current === '/clipboard'} isMobile onClick={() => goTo('clipboard')}>Clipboard</MenuItem>
+        <MenuItem active={current === '/shopping-list'} isMobile onClick={() => goTo('shopping-list')}>Shopping List</MenuItem>
+        <MenuItem active={current === '/dairy'} isMobile onClick={() => goTo('dairy')}>Dairy</MenuItem>
     </React.Fragment>
 
-    const sideMenu = (active) => 
+    const sideMenu = (active, current) => 
     <React.Fragment>
         <SideMenuBackground active={active} onClick={() => setActive(false)}>
         </SideMenuBackground>
         <SideMenu active={active}>
-            {userPages()}
+            {userPages(current)}
         </SideMenu>
     </React.Fragment>
     
-    const userMenu = () => (<Menu responsive>
+    const userMenu = (current) => (<Menu responsive>
         {isMobile && <Burger onClick={() => setActive(!active)} name="bars" size="large"/>}
-        {!isMobile && userPages()}
-        {sideMenu(isMobile && active)}
+        {!isMobile && userPages(current)}
+        {sideMenu(isMobile && active, current)}
         <MenuItem  onClick={logout} right>Logout</MenuItem>
     </Menu>)
 
@@ -98,7 +99,7 @@ const TopNavigation = ({logout, isAuthenticated, history}) => {
         <MenuItem onClick={() => goTo('signup')}>Sign Up</MenuItem>
     </Menu>)
 
-    return isAuthenticated ? userMenu() : guestMenu();
+    return isAuthenticated ? userMenu(location.pathname) : guestMenu();
 }
 
 TopNavigation.propTypes = {
