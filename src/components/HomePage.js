@@ -22,7 +22,7 @@ const AppTitle = styled.h1`
 const HomePage =  ({history}) =>
 
   <AppMain>
-    <AppTitle>Welcome to the Personal Issue tracking System</AppTitle>
+    <AppTitle>Welcome to the Personal Management Tool</AppTitle>
     <Button primary onClick={() => history.push('signup')}>SIGN UP</Button>
   </AppMain>
 
