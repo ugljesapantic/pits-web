@@ -1,9 +1,8 @@
-
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 function getSize() {
   return {
-    mobile: window.innerWidth < 768,
+    mobile: window.innerWidth < 768
   };
 }
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import { FaCopy, FaTrash } from 'react-icons/fa';
@@ -12,31 +12,28 @@ const AudioWrapper = styled.audio`
   background-color: white;
 `;
 
-
 export default function DairyAudioItem(props) {
   const [updating, setUpdating] = useState(false);
 
   const remove = () => {
     setUpdating(true);
     props.remove(props.item._id);
-  }
-  
+  };
+
   const swipeOptions = () => {
     return {
-      actionText: {left: 'delete'},
-      actions: {left: remove},
+      actionText: { left: 'delete' },
+      actions: { left: remove },
       updating: updating
-    }
-  }
-
-
+    };
+  };
 
   return (
     <Swipeable {...swipeOptions()}>
-      <AudioPlayer src={props.item.content}/>
+      <AudioPlayer src={props.item.content} />
       <HoverActions className="hover-actions">
-        <FaTrash onClick={remove}/>
+        <FaTrash onClick={remove} />
       </HoverActions>
     </Swipeable>
-  )
+  );
 }

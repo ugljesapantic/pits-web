@@ -1,7 +1,7 @@
 export const handleKeyPress = (e, save, reset) => {
-  if(e.shiftKey) return;
-  
-  switch(e.keyCode) {
+  if (e.shiftKey) return;
+
+  switch (e.keyCode) {
     case 13:
       save();
       break;
@@ -10,5 +10,5 @@ export const handleKeyPress = (e, save, reset) => {
       break;
     default:
       break;
-  }  
-}
+  }
+};

@@ -1,33 +1,33 @@
 import {
-    DAIRY_LOADED_ALL,
-    DAIRY_UPDATED,
-    DAIRY_CREATED,
-    DAIRY_REMOVED,
-    DAIRY_LOAD
+  DAIRY_LOADED_ALL,
+  DAIRY_UPDATED,
+  DAIRY_CREATED,
+  DAIRY_REMOVED,
+  DAIRY_LOAD
 } from '../types';
-  
+
 export default (state = [], action) => {
-    switch (action.type) {
-  
+  switch (action.type) {
     case DAIRY_UPDATED:
-        return [...state.map(dairy => 
-            dairy._id === action.dairy._id ? {...action.dairy} : dairy
-        )]
-    
+      return [
+        ...state.map(dairy =>
+          dairy._id === action.dairy._id ? { ...action.dairy } : dairy
+        )
+      ];
+
     case DAIRY_REMOVED:
-    return [...state.filter(d => d._id !== action.id)]
-    
+      return [...state.filter(d => d._id !== action.id)];
+
     case DAIRY_CREATED:
-        return [...state, action.dairy]
+      return [...state, action.dairy];
 
     case DAIRY_LOAD:
-        return [];
+      return [];
 
     case DAIRY_LOADED_ALL:
-        return [...action.dairies];
-    
+      return [...action.dairies];
+
     default:
-        return state
-    }
-}
-  
+      return state;
+  }
+};

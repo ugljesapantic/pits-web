@@ -17,8 +17,8 @@ import DairyPage from './components/dairy/DairyPage';
 
 const AppWrapper = styled.div`
   min-height: 100vh;
-  background-color: #EBECED;
-`
+  background-color: #ebeced;
+`;
 
 const ContentWrapper = styled.div`
   ${main};
@@ -26,32 +26,71 @@ const ContentWrapper = styled.div`
   margin-left: 1em;
   margin-right: 1em;
   max-width: 200em;
-`
+`;
 
 export const UXContext = React.createContext({});
 
 class App extends Component {
-
   state = {
     ux: {
       isTouch: 'ontouchstart' in document.documentElement
     }
-  }
+  };
 
   render() {
     const location = this.props.location;
     return (
       <UXContext.Provider value={this.state.ux}>
         <AppWrapper ref={this.handleContextRef}>
-          <TopNavigation location={this.props.location} history={this.props.history} isAuthenticated={this.props.isAuthenticated} logout={this.props.logout}></TopNavigation>
+          <TopNavigation
+            location={this.props.location}
+            history={this.props.history}
+            isAuthenticated={this.props.isAuthenticated}
+            logout={this.props.logout}
+          />
           <ContentWrapper>
-            <GuestRoute location={location} path="/login" exact component={LoginPage} />
-            <GuestRoute location={location} path="/signup" exact component={SignupPage} />
-            <GuestRoute location={location} path="/" exact component={HomePage} />
-            <UserRoute location={location} path="/dashboard" exact component={DashboardPage} />
-            <UserRoute location={location} path="/clipboard" exact component={ClipboardPage} />
-            <UserRoute location={location} path="/shopping-list" exact component={ShoppingListPage} />
-            <UserRoute location={location} path="/dairy" exact component={DairyPage} />
+            <GuestRoute
+              location={location}
+              path="/login"
+              exact
+              component={LoginPage}
+            />
+            <GuestRoute
+              location={location}
+              path="/signup"
+              exact
+              component={SignupPage}
+            />
+            <GuestRoute
+              location={location}
+              path="/"
+              exact
+              component={HomePage}
+            />
+            <UserRoute
+              location={location}
+              path="/dashboard"
+              exact
+              component={DashboardPage}
+            />
+            <UserRoute
+              location={location}
+              path="/clipboard"
+              exact
+              component={ClipboardPage}
+            />
+            <UserRoute
+              location={location}
+              path="/shopping-list"
+              exact
+              component={ShoppingListPage}
+            />
+            <UserRoute
+              location={location}
+              path="/dairy"
+              exact
+              component={DairyPage}
+            />
           </ContentWrapper>
         </AppWrapper>
       </UXContext.Provider>
@@ -61,20 +100,23 @@ class App extends Component {
 
 App.propTypes = {
   location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
+    pathname: PropTypes.string.isRequired
   }).isRequired,
   isAuthenticated: PropTypes.bool.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
-      isAuthenticated : state.user.auth
-  }
+    isAuthenticated: state.user.auth
+  };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(logout())
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import AsyncInput from '../shared/AsyncInput';
 
 import styled from 'styled-components';
@@ -18,29 +18,28 @@ export default function DairyTextItem(props) {
   const remove = () => {
     setUpdating(true);
     props.remove(props.item._id);
-  }
-  
+  };
+
   const swipeOptions = () => {
     return {
-      actionText: {left: 'delete'},
-      actions: {left: remove},
+      actionText: { left: 'delete' },
+      actions: { left: remove },
       updating: updating
-    }
-  }
-
-
+    };
+  };
 
   return (
     <Swipeable {...swipeOptions()}>
-       <AsyncInputWrapper
+      <AsyncInputWrapper
         small
         plain
         blur
         value={props.item.content}
-        save={content => props.update(props.item._id, {content})}/>
+        save={content => props.update(props.item._id, { content })}
+      />
       <HoverActions className="hover-actions">
-        <FaTrash onClick={remove}/>
+        <FaTrash onClick={remove} />
       </HoverActions>
     </Swipeable>
-  )
+  );
 }

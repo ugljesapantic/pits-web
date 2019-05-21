@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import AsyncInput from './AsyncInput';
@@ -22,21 +22,29 @@ const Toggler = styled(FaPlus)`
 `;
 
 export default function AddInput(props) {
-    let [active, setActive] = useState(false);
+  let [active, setActive] = useState(false);
 
-    const toggle = () => {
-      setActive(!active);
-    }
- 
+  const toggle = () => {
+    setActive(!active);
+  };
+
   return (
     <Wrapper>
-        {active && <AsyncInput
-        save={props.submit}
-        closed={() => {
-          setActive(false)
-        }}
-        inline bordered/>}
-        <Toggler className={active ? 'active' : null} size="32" onClick={toggle} />
+      {active && (
+        <AsyncInput
+          save={props.submit}
+          closed={() => {
+            setActive(false);
+          }}
+          inline
+          bordered
+        />
+      )}
+      <Toggler
+        className={active ? 'active' : null}
+        size="32"
+        onClick={toggle}
+      />
     </Wrapper>
-  )
+  );
 }

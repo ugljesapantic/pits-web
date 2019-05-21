@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import AsyncInput from '../shared/AsyncInput';
 
 import styled from 'styled-components';
@@ -16,49 +16,50 @@ const AsyncInputWrapper = styled(AsyncInput)`
 export default function ClipboardItem(props) {
   const [updating, setUpdating] = useState(false);
 
-const copy = () => {
+  const copy = () => {
     if (navigator.clipboard) {
-        navigator.clipboard.writeText(props.item.title)
+      navigator.clipboard.writeText(props.item.title);
     } else {
-        const el = document.createElement('textarea');
-        el.value = props.item.title;
-        el.setAttribute('readonly', '');
-        el.style.position = 'absolute';
-        el.style.left = '-9999px';
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
+      const el = document.createElement('textarea');
+      el.value = props.item.title;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
     }
-}
+  };
 
   const remove = () => {
     setUpdating(true);
     props.remove(props.clipboardId, props.item._id);
-  }
-  
+  };
+
   const swipeOptions = () => {
     return {
-      actionText: {left: 'delete' , right: 'copy'},
-      actions: {left: remove, right: copy},
+      actionText: { left: 'delete', right: 'copy' },
+      actions: { left: remove, right: copy },
       updating: updating
-    }
-  }
-
-
+    };
+  };
 
   return (
     <Swipeable {...swipeOptions()}>
-       <AsyncInputWrapper
+      <AsyncInputWrapper
         small
         plain
         blur
         value={props.item.title}
-        save={title => props.update(props.clipboardId, props.item._id, {title})}/>
+        save={title =>
+          props.update(props.clipboardId, props.item._id, { title })
+        }
+      />
       <HoverActions className="hover-actions">
-        <FaCopy onClick={copy}/>
-        <FaTrash onClick={remove}/>
+        <FaCopy onClick={copy} />
+        <FaTrash onClick={remove} />
       </HoverActions>
     </Swipeable>
-  )
+  );
 }
