@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import AsyncInput from '../shared/AsyncInput';
 
 import styled from 'styled-components';
 import { FaCopy, FaTrash } from 'react-icons/fa';
-import Swipeable from './../shared/Swipeable';
+import AsyncInput from '../shared/AsyncInput';
+import Swipeable from '../shared/Swipeable';
 import { HoverActions } from '../../styles/layout';
 
 const AsyncInputWrapper = styled(AsyncInput)`
@@ -13,15 +13,15 @@ const AsyncInputWrapper = styled(AsyncInput)`
 `;
 
 //  props.updateItem(props.Clipboard._id, {title})
-export default function ClipboardItem(props) {
+export default function ClipboardItem({ item, remove, clipboardId, update }) {
   const [updating, setUpdating] = useState(false);
 
   const copy = () => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(props.item.title);
+      navigator.clipboard.writeText(item.title);
     } else {
       const el = document.createElement('textarea');
-      el.value = props.item.title;
+      el.value = item.title;
       el.setAttribute('readonly', '');
       el.style.position = 'absolute';
       el.style.left = '-9999px';
@@ -32,18 +32,16 @@ export default function ClipboardItem(props) {
     }
   };
 
-  const remove = () => {
+  const removeItem = () => {
     setUpdating(true);
-    props.remove(props.clipboardId, props.item._id);
+    remove(clipboardId, item._id);
   };
 
-  const swipeOptions = () => {
-    return {
-      actionText: { left: 'delete', right: 'copy' },
-      actions: { left: remove, right: copy },
-      updating: updating
-    };
-  };
+  const swipeOptions = () => ({
+    actionText: { left: 'delete', right: 'copy' },
+    actions: { left: removeItem, right: copy },
+    updating
+  });
 
   return (
     <Swipeable {...swipeOptions()}>
@@ -51,14 +49,12 @@ export default function ClipboardItem(props) {
         small
         plain
         blur
-        value={props.item.title}
-        save={title =>
-          props.update(props.clipboardId, props.item._id, { title })
-        }
+        init={item.title}
+        save={title => update(clipboardId, item._id, { title })}
       />
       <HoverActions className="hover-actions">
         <FaCopy onClick={copy} />
-        <FaTrash onClick={remove} />
+        <FaTrash onClick={removeItem} />
       </HoverActions>
     </Swipeable>
   );

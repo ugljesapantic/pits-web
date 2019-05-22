@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { FaPlus } from 'react-icons/fa';
 import AsyncInput from './AsyncInput';
 
-import { FaPlus } from 'react-icons/fa';
-import { bottomAction } from './../../styles/layout';
+import { bottomAction } from '../../styles/layout';
 
 const Wrapper = styled.div`
   ${bottomAction}
@@ -21,8 +21,8 @@ const Toggler = styled(FaPlus)`
   border-radius: 50%;
 `;
 
-export default function AddInput(props) {
-  let [active, setActive] = useState(false);
+export default function AddInput({ submit }) {
+  const [active, setActive] = useState(false);
 
   const toggle = () => {
     setActive(!active);
@@ -32,7 +32,7 @@ export default function AddInput(props) {
     <Wrapper>
       {active && (
         <AsyncInput
-          save={props.submit}
+          save={submit}
           closed={() => {
             setActive(false);
           }}

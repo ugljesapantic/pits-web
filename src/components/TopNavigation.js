@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import useWindowWidth from './../hooks/window-width';
 import { Icon } from 'semantic-ui-react';
+import useWindowWidth from '../hooks/window-width';
 
 const Menu = styled.div`
   position: fixed;
@@ -102,10 +101,13 @@ const TopNavigation = ({ logout, isAuthenticated, history, location }) => {
     </React.Fragment>
   );
 
-  const sideMenu = (active, current) => (
+  const sideMenu = (menuActive, current) => (
     <React.Fragment>
-      <SideMenuBackground active={active} onClick={() => setActive(false)} />
-      <SideMenu active={active}>{userPages(current)}</SideMenu>
+      <SideMenuBackground
+        active={menuActive}
+        onClick={() => setActive(false)}
+      />
+      <SideMenu active={menuActive}>{userPages(current)}</SideMenu>
     </React.Fragment>
   );
 
@@ -125,7 +127,7 @@ const TopNavigation = ({ logout, isAuthenticated, history, location }) => {
   const guestMenu = () => (
     <Menu>
       <MenuItem onClick={() => goTo('')}>Home</MenuItem>
-      <MenuItem onClick={() => goTo('login')} right={true}>
+      <MenuItem onClick={() => goTo('login')} right>
         Login
       </MenuItem>
       <MenuItem onClick={() => goTo('signup')}>Sign Up</MenuItem>
@@ -133,11 +135,6 @@ const TopNavigation = ({ logout, isAuthenticated, history, location }) => {
   );
 
   return isAuthenticated ? userMenu(location.pathname) : guestMenu();
-};
-
-TopNavigation.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired
 };
 
 export default TopNavigation;

@@ -21,19 +21,16 @@ const BodyWrapper = styled.div`
 `;
 
 export default class Card extends React.Component {
+  static Head = props => <HeadWrapper>{props.children}</HeadWrapper>;
+
+  static Body = props => <BodyWrapper>{props.children}</BodyWrapper>;
+
   render() {
-    return <Wrapper>{this.props.children}</Wrapper>;
+    const { children } = this.props;
+    return <Wrapper>{children}</Wrapper>;
   }
-
-  static Head = props => {
-    return <HeadWrapper>{props.children}</HeadWrapper>;
-  };
-
-  static Body = props => {
-    return <BodyWrapper>{props.children}</BodyWrapper>;
-  };
 }
 
-export function Body(props) {
-  return <BodyWrapper>{props.children}</BodyWrapper>;
+export function Body({ children }) {
+  return <BodyWrapper>{children}</BodyWrapper>;
 }

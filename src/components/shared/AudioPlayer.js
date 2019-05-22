@@ -23,7 +23,7 @@ const CompletionIndicator = styled.div`
   height: 100%;
 `;
 
-export default function AudioPlayer(props) {
+export default function AudioPlayer({ src }) {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(0);
@@ -51,7 +51,8 @@ export default function AudioPlayer(props) {
   return (
     <PlayerWrapper>
       <audio preload="auto" ref={audioRef}>
-        <source src={props.src} type="audio/webm" />
+        <source src={src} type="audio/webm" />
+        <track kind="captions" />
       </audio>
       {!playing ? (
         <FaPlayCircle onClick={play} size="18" />

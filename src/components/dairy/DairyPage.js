@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AsyncInput from '../shared/AsyncInput';
 import styled from 'styled-components';
-import Card from './../shared/Card';
-import {
-  loadAllDairies,
-  removeDairy,
-  createDairy,
-  updateDairy
-} from './../../actions';
-import DairyTextItem from './DairyTextItem';
-import { toIsoStringDate } from './../../utils/date';
 import {
   FaCaretLeft,
   FaCaretRight,
   FaMicrophone,
   FaMicrophoneSlash
 } from 'react-icons/fa';
-
 import * as moment from 'moment';
-import { bottomAction } from './../../styles/layout';
+import AsyncInput from '../shared/AsyncInput';
+import Card from '../shared/Card';
+import {
+  loadAllDairies,
+  removeDairy,
+  createDairy,
+  updateDairy
+} from '../../actions';
+import DairyTextItem from './DairyTextItem';
+import { toIsoStringDate } from '../../utils/date';
+
+import { bottomAction } from '../../styles/layout';
 import DairyAudioItem from './DairyAudioItem';
 
 const Wrapper = styled.div``;
@@ -52,7 +52,7 @@ const DatePicker = styled.div`
   margin: 0.75rem 0;
 `;
 
-export class DairyPage extends Component {
+class DairyPage extends Component {
   state = {
     date: toIsoStringDate(new Date()),
     recording: false
@@ -61,20 +61,9 @@ export class DairyPage extends Component {
   recorder = null;
 
   componentDidMount() {
-    this.props.loadAll(this.state.date);
-  }
-
-  changeDate(addition) {
-    this.setState(
-      {
-        date: toIsoStringDate(
-          moment(new Date(this.state.date))
-            .add(addition, 'days')
-            .toDate()
-        )
-      },
-      () => this.props.loadAll(this.state.date)
-    );
+    const { loadAll } = this.props;
+    const { date } = this.state;
+    loadAll(date);
   }
 
   setupRecorder = () =>
@@ -92,13 +81,13 @@ export class DairyPage extends Component {
       const start = () => mediaRecorder.start();
 
       const stop = () =>
-        new Promise(resolve => {
+        new Promise(resolveCallback => {
           mediaRecorder.addEventListener('stop', () => {
             const audioBlob = new Blob(audioChunks);
             const audioUrl = URL.createObjectURL(audioBlob);
             const audio = new Audio(audioUrl);
             const play = () => audio.play();
-            resolve({ audioBlob, audioUrl, play });
+            resolveCallback({ audioBlob, audioUrl, play });
           });
 
           mediaRecorder.stop();
@@ -120,56 +109,78 @@ export class DairyPage extends Component {
     const audio = await this.recorder.stop();
     this.setState({ recording: false });
     const audioBase64 = await this.blobToBase64(audio.audioBlob);
-    this.props.create({
+
+    const { create } = this.props;
+    const { date } = this.state;
+    create({
       content: audioBase64,
-      date: this.state.date,
+      date,
       type: 'audio'
     });
   };
 
-  blobToBase64 = blob => {
-    return new Promise(resolve => {
-      var reader = new FileReader();
+  blobToBase64 = blob =>
+    new Promise(resolve => {
+      const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onloadend = () => resolve(reader.result);
     });
-  };
+
+  changeDate(addition) {
+    const { loadAll } = this.props;
+    this.setState(
+      prevState => ({
+        date: toIsoStringDate(
+          moment(new Date(prevState.date))
+            .add(addition, 'days')
+            .toDate()
+        )
+      }),
+      newState => loadAll(newState.date)
+    );
+  }
+
+  showTomorrow() {
+    this.changeDate(1);
+  }
+
+  showYesteday() {
+    this.changeDate(-1);
+  }
 
   render() {
+    const { date, recording } = this.state;
+    const { remove, update, dairies, create } = this.props;
     return (
       <Wrapper>
         <Card>
           <Card.Head>
             <DatePicker>
-              <FaCaretLeft onClick={this.changeDate.bind(this, -1)} />
-              {this.state.date}
-              <FaCaretRight onClick={this.changeDate.bind(this, 1)} />
+              <FaCaretLeft onClick={this.showYesteday} />
+              {date}
+              <FaCaretRight onClick={this.showTomorrow} />
             </DatePicker>
           </Card.Head>
           <Card.Body>
-            {this.props.dairies &&
-              this.props.dairies.map(item =>
+            {dairies &&
+              dairies.map(item =>
                 item.type === 'text' ? (
                   <DairyTextItem
-                    remove={this.props.remove}
-                    update={this.props.update}
+                    remove={remove}
+                    update={update}
                     item={item}
                     key={item._id}
                   />
                 ) : (
-                  <DairyAudioItem
-                    remove={this.props.remove}
-                    item={item}
-                    key={item._id}
-                  />
+                  <DairyAudioItem remove={remove} item={item} key={item._id} />
                 )
               )}
             <ListAsyncInput
-              placeholder={'Add'}
+              placeholder="Add"
               save={content =>
-                this.props.create({
+                create({
                   content,
-                  date: this.state.date,
+                  date,
                   type: 'text'
                 })
               }
@@ -178,7 +189,7 @@ export class DairyPage extends Component {
         </Card>
 
         <RecordAudioWrapper>
-          {this.state.recording ? (
+          {recording ? (
             <StopRecordingButton
               onClick={() => this.stopRecording()}
               size="45"
@@ -202,14 +213,12 @@ function mapStateToProps(state) {
 }
 
 //   probably
-const mapDispatchToProps = dispatch => {
-  return {
-    loadAll: date => dispatch(loadAllDairies(date)),
-    update: (id, body) => dispatch(updateDairy(id, body)),
-    create: body => dispatch(createDairy(body)),
-    remove: id => dispatch(removeDairy(id))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  loadAll: date => dispatch(loadAllDairies(date)),
+  update: (id, body) => dispatch(updateDairy(id, body)),
+  create: body => dispatch(createDairy(body)),
+  remove: id => dispatch(removeDairy(id))
+});
 
 export default connect(
   mapStateToProps,

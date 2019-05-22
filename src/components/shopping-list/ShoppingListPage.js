@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import AddInput from './../shared/AddInput';
+import AddInput from '../shared/AddInput';
 import {
   shoppingListRemoveItem,
   shoppingListLoadAll,
@@ -14,25 +14,36 @@ import ShoppingList from './ShoppingList';
 
 class ShoppingListPage extends Component {
   componentDidMount() {
-    this.props.loadAll();
+    const { loadAll } = this.props;
+    loadAll();
   }
 
   render() {
+    const {
+      addItem,
+      updateItem,
+      removeItem,
+      shoppingLists,
+      update,
+      remove,
+      labels,
+      create
+    } = this.props;
     return (
       <div>
-        {this.props.shoppingLists.map(shoppingList => (
+        {shoppingLists.map(shoppingList => (
           <ShoppingList
             key={shoppingList._id}
             shoppingList={shoppingList}
-            addItem={this.props.addItem}
-            updateItem={this.props.updateItem}
-            removeItem={this.props.removeItem}
-            update={this.props.update}
-            remove={this.props.remove}
-            labels={this.props.labels}
+            addItem={addItem}
+            updateItem={updateItem}
+            removeItem={removeItem}
+            update={update}
+            remove={remove}
+            labels={labels}
           />
         ))}
-        <AddInput submit={title => this.props.create({ title })} />
+        <AddInput submit={title => create({ title })} />
       </div>
     );
   }
@@ -45,18 +56,16 @@ function mapStateToProps(state) {
 }
 
 //   probably
-const mapDispatchToProps = dispatch => {
-  return {
-    loadAll: () => dispatch(shoppingListLoadAll()),
-    addItem: (id, title) => dispatch(shoppingListAddItem(id, title)),
-    removeItem: (id, itemId) => dispatch(shoppingListRemoveItem(id, itemId)),
-    updateItem: (id, itemId, body) =>
-      dispatch(shoppingListUpdateItem(id, itemId, body)),
-    update: (id, body) => dispatch(shoppingListUpdate(id, body)),
-    create: body => dispatch(shoppingListCreate(body)),
-    remove: id => dispatch(shoppingListRemove(id))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  loadAll: () => dispatch(shoppingListLoadAll()),
+  addItem: (id, title) => dispatch(shoppingListAddItem(id, title)),
+  removeItem: (id, itemId) => dispatch(shoppingListRemoveItem(id, itemId)),
+  updateItem: (id, itemId, body) =>
+    dispatch(shoppingListUpdateItem(id, itemId, body)),
+  update: (id, body) => dispatch(shoppingListUpdate(id, body)),
+  create: body => dispatch(shoppingListCreate(body)),
+  remove: id => dispatch(shoppingListRemove(id))
+});
 export default connect(
   mapStateToProps,
   mapDispatchToProps

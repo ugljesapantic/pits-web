@@ -72,20 +72,20 @@ export const loadAllClipboards = () => dispatch =>
   });
 
 export const loadAllClipboardLabels = () => dispatch =>
-  api.clipboard.loadAllLabels().then(labels => {
-    dispatch(clipboardLabelsLoadedAll(labels));
-  });
+  api.clipboard
+    .loadAllLabels()
+    .then(labels => dispatch(clipboardLabelsLoadedAll(labels)));
 
 // maybe make them the same, updateItem method + updatedItem action
 export const updateClipboardItem = (id, itemId, body) => dispatch =>
-  api.clipboard.updateItem(id, itemId, body).then(item => {
-    dispatch(itemUpdated(item, id));
-  });
+  api.clipboard
+    .updateItem(id, itemId, body)
+    .then(item => dispatch(itemUpdated(item, id)));
 
 export const removeClipboardItem = (id, itemId) => dispatch =>
-  api.clipboard.removeItem(id, itemId).then(() => {
-    dispatch(itemRemoved(id, itemId));
-  });
+  api.clipboard
+    .removeItem(id, itemId)
+    .then(() => dispatch(itemRemoved(id, itemId)));
 
 export const addClipboardItem = (id, title) => dispatch =>
   api.clipboard.addItem(id, title).then(item => dispatch(itemAdded(item, id)));

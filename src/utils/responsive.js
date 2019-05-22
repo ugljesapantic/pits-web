@@ -7,7 +7,7 @@ function getSize() {
 }
 
 export default function useResponsive() {
-  let [windowSize, setWindowSize] = useState(getSize());
+  const [windowSize, setWindowSize] = useState(getSize());
 
   function handleResize() {
     setWindowSize(getSize());

@@ -49,15 +49,15 @@ export const itemAdded = (item, id) => ({
 });
 
 export const shoppingListLoadAll = () => dispatch =>
-  api.shoppingList.loadAll().then(shoppingLists => {
-    dispatch(loadedAll(shoppingLists));
-  });
+  api.shoppingList
+    .loadAll()
+    .then(shoppingLists => dispatch(loadedAll(shoppingLists)));
 
 // maybe make them the same, updateItem method + updatedItem action
 export const shoppingListUpdateItem = (id, itemId, body) => dispatch =>
-  api.shoppingList.updateItem(id, itemId, body).then(item => {
-    dispatch(itemUpdated(item, id));
-  });
+  api.shoppingList
+    .updateItem(id, itemId, body)
+    .then(item => dispatch(itemUpdated(item, id)));
 
 export const shoppingListRemoveItem = (id, itemId) => dispatch =>
   api.shoppingList

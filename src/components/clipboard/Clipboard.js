@@ -1,11 +1,10 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 import styled from 'styled-components';
+import { FaTrash } from 'react-icons/fa';
 import ClipboardItem from './ClipboardItem';
 
 import Card from '../shared/Card';
-import AsyncInput from './../shared/AsyncInput';
-import { FaTrash } from 'react-icons/fa';
+import AsyncInput from '../shared/AsyncInput';
 
 const Title = styled(AsyncInput)`
   font-weight: bold;
@@ -21,7 +20,14 @@ const ListAsyncInput = styled(AsyncInput)`
   margin: 0.3rem 0;
 `;
 
-function Clipboard(props) {
+function Clipboard({
+  clipboard,
+  remove,
+  update,
+  addItem,
+  removeItem,
+  updateItem
+}) {
   return (
     <Card>
       <Card.Head>
@@ -29,44 +35,29 @@ function Clipboard(props) {
           blur
           plain
           inline
-          value={props.clipboard.title}
-          save={title => props.update(props.clipboard._id, { title })}
+          init={clipboard.title}
+          save={title => update(clipboard._id, { title })}
         />
-        <DeleteIcon onClick={() => props.remove(props.clipboard._id)} />
+        <DeleteIcon onClick={() => remove(clipboard._id)} />
       </Card.Head>
       <Card.Body>
-        {props.clipboard.items.map(item => (
+        {clipboard.items.map(item => (
           <ClipboardItem
-            remove={props.removeItem}
-            update={props.updateItem}
+            remove={removeItem}
+            update={updateItem}
             item={item}
-            clipboardId={props.clipboard._id}
+            clipboardId={clipboard._id}
             key={item._id}
           />
         ))}
         <ListAsyncInput
           blur
-          placeholder={'Add item'}
-          save={title => props.addItem(props.clipboard._id, title)}
+          placeholder="Add item"
+          save={title => addItem(clipboard._id, title)}
         />
       </Card.Body>
     </Card>
   );
 }
-
-Clipboard.propTypes = {
-  clipboard: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-        value: PropTypes.string
-      })
-    )
-  }),
-  addItem: PropTypes.func.isRequired,
-  update: PropTypes.func.isRequired,
-  remove: PropTypes.func.isRequired
-};
 
 export default Clipboard;

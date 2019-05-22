@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import TopNavigation from './components/TopNavigation';
 import GuestRoute from './components/routes/GuestRoute';
 import HomePage from './components/HomePage';
-import { PropTypes } from 'prop-types';
 import SignupPage from './components/SignupPage';
 import UserRoute from './components/routes/UserRoute';
 import DashboardPage from './components/DashboardPage';
 import LoginPage from './components/LoginPage';
-import { connect } from 'react-redux';
-import { logout } from './actions';
+import { logout as logoutAction } from './actions';
 import ClipboardPage from './components/clipboard/ClipboardPage';
 import { main } from './styles/layout';
 import ShoppingListPage from './components/shopping-list/ShoppingListPage';
@@ -38,15 +37,16 @@ class App extends Component {
   };
 
   render() {
-    const location = this.props.location;
+    const { location, history, isAuthenticated, logout } = this.props;
+    const { ux } = this.state;
     return (
-      <UXContext.Provider value={this.state.ux}>
+      <UXContext.Provider value={ux}>
         <AppWrapper ref={this.handleContextRef}>
           <TopNavigation
-            location={this.props.location}
-            history={this.props.history}
-            isAuthenticated={this.props.isAuthenticated}
-            logout={this.props.logout}
+            location={location}
+            history={history}
+            isAuthenticated={isAuthenticated}
+            logout={logout}
           />
           <ContentWrapper>
             <GuestRoute
@@ -98,24 +98,15 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
-};
-
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.user.auth
   };
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: () => dispatch(logout())
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutAction())
+});
 export default connect(
   mapStateToProps,
   mapDispatchToProps

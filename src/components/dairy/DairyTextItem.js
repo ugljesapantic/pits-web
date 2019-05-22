@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AsyncInput from '../shared/AsyncInput';
 
 import styled from 'styled-components';
-import { FaCopy, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
+import AsyncInput from '../shared/AsyncInput';
 import Swipeable from '../shared/Swipeable';
 import { HoverActions } from '../../styles/layout';
 
@@ -12,21 +12,19 @@ const AsyncInputWrapper = styled(AsyncInput)`
   background-color: white;
 `;
 
-export default function DairyTextItem(props) {
+export default function DairyTextItem({ remove, item, update }) {
   const [updating, setUpdating] = useState(false);
 
-  const remove = () => {
+  const removeItem = () => {
     setUpdating(true);
-    props.remove(props.item._id);
+    remove(item._id);
   };
 
-  const swipeOptions = () => {
-    return {
-      actionText: { left: 'delete' },
-      actions: { left: remove },
-      updating: updating
-    };
-  };
+  const swipeOptions = () => ({
+    actionText: { left: 'delete' },
+    actions: { left: removeItem },
+    updating
+  });
 
   return (
     <Swipeable {...swipeOptions()}>
@@ -34,11 +32,11 @@ export default function DairyTextItem(props) {
         small
         plain
         blur
-        value={props.item.content}
-        save={content => props.update(props.item._id, { content })}
+        init={item.content}
+        save={content => update(item._id, { content })}
       />
       <HoverActions className="hover-actions">
-        <FaTrash onClick={remove} />
+        <FaTrash onClick={removeItem} />
       </HoverActions>
     </Swipeable>
   );

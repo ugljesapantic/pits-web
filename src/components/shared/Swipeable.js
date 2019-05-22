@@ -38,7 +38,7 @@ const Action = styled.div`
 `;
 
 //  props.updateItem(props.shoppingList._id, {title})
-export default function Swipeable(props) {
+export default function Swipeable({ actions, children, actionText, updating }) {
   const [position, setPosition] = useState();
   const [startPosition, setStartPosition] = useState();
   const [touching, setTouching] = useState(false);
@@ -56,28 +56,25 @@ export default function Swipeable(props) {
   const onTouchEnd = e => {
     setTouching(false);
     const swipeDiff = e.changedTouches[0].clientX - startPosition;
-    if (swipeDiff > 150) {
-      props.actions.right && props.actions.right();
-    } else if (swipeDiff < -150) {
-      props.actions.left && props.actions.left();
+    if (swipeDiff > 150 && actions.right) {
+      actions.right();
+    } else if (swipeDiff < -150 && actions.left) {
+      actions.left();
     }
   };
 
-  const getActionText = () => {
-    return props.actionText[position > 0 ? 'right' : 'left'];
-  };
+  const getActionText = () => actionText[position > 0 ? 'right' : 'left'];
 
-  const getACtionStyle = () => {
-    //   TODO modify colors
-    return position < 0
+  // TODO fix color
+  const getActionStyle = () =>
+    position < 0
       ? { backgroundColor: 'red', textAlign: 'right' }
       : { backgroundColor: 'green' };
-  };
 
   return (
     <Wrapper>
-      {touching && <Action style={getACtionStyle()}>{getActionText()}</Action>}
-      {!props.updating && (
+      {touching && <Action style={getActionStyle()}>{getActionText()}</Action>}
+      {!updating && (
         <ChildrenWrapper
           style={
             touching
@@ -93,7 +90,7 @@ export default function Swipeable(props) {
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
-          {props.children}
+          {children}
         </ChildrenWrapper>
       )}
     </Wrapper>

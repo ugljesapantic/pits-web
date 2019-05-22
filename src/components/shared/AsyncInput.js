@@ -49,32 +49,42 @@ const InputPlaceholder = styled.div`
 
 // TODO rename to async input
 // TODO add possibility of automated input
-function AsyncInput(props) {
-  const [value, setValue] = useState(props.value || '');
+function AsyncInput({
+  init,
+  placeholder,
+  className,
+  inline,
+  small,
+  blur,
+  plain,
+  bordered,
+  closed,
+  save
+}) {
+  const [value, setValue] = useState(init || '');
   const [height, setHeight] = useState(null);
-  const [active, setActive] = useState(!props.placeholder && !props.value);
+  const [active, setActive] = useState(!placeholder && !value);
   const [updating, setUpdating] = useState(false);
   const inputEl = useRef(null);
 
-  const save = () => {
-    if ((props.value && props.value !== value) || (!props.value && value)) {
+  const close = () => {
+    if (!value) setValue('');
+    setActive(false);
+    setUpdating(false);
+    // TODO darkness my old friend
+    if (closed) closed();
+  };
+
+  const handleSave = () => {
+    if ((value && value !== init) || (!value && value)) {
       setUpdating(true);
-      props.save(value).then(() => close());
+      save(value).then(() => close());
     } else {
       close();
     }
   };
-
-  const close = () => {
-    if (!props.value) setValue('');
-    setActive(false);
-    setUpdating(false);
-    // TODO darkness my old friend
-    if (props.closed) props.closed();
-  };
-
   const cancel = () => {
-    setValue(props.value || '');
+    setValue(value || '');
     close();
   };
 
@@ -85,32 +95,32 @@ function AsyncInput(props) {
 
   return (
     <Wrapper
-      className={props.className}
-      inline={props.inline}
-      bordered={props.bordered}
-      small={props.small}
+      className={className}
+      inline={inline}
+      bordered={bordered}
+      small={small}
     >
       {active ? (
         <InputWrapper
           height={height}
           ref={inputEl}
           value={value}
-          onBlur={props.blur && save}
+          onBlur={blur && save}
           disabled={updating}
           autoFocus
-          small={props.small}
-          onKeyDown={e => handleKeyPress(e, save, cancel)}
+          small={small}
+          onKeyDown={e => handleKeyPress(e, handleSave, cancel)}
           onChange={onChange}
           rows={1}
         />
       ) : (
         <InputPlaceholder
-          plain={props.plain}
-          small={props.small}
-          placeholder={props.placeholder}
+          plain={plain}
+          small={small}
+          placeholder={placeholder}
           onClick={() => setActive(true)}
         >
-          {props.value || props.placeholder}
+          {value || placeholder}
         </InputPlaceholder>
       )}
     </Wrapper>

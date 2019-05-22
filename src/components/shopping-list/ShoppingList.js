@@ -34,7 +34,14 @@ const DeleteIcon = styled(FaTrash)`
   margin-left: auto;
 `;
 
-function ShoppingList(props) {
+function ShoppingList({
+  shoppingList,
+  update,
+  remove,
+  updateItem,
+  addItem,
+  removeItem
+}) {
   return (
     <Card>
       <Card.Head>
@@ -42,50 +49,50 @@ function ShoppingList(props) {
           blur
           plain
           inline
-          value={props.shoppingList.title}
-          save={title => props.update(props.shoppingList._id, { title })}
+          init={shoppingList.title}
+          save={title => update(shoppingList._id, { title })}
         />
         <OnlineToggle
-          className={props.shoppingList.online && 'online'}
+          className={shoppingList.online && 'online'}
           onClick={() =>
-            props.update(props.shoppingList._id, {
-              online: !props.shoppingList.online
+            update(shoppingList._id, {
+              online: !shoppingList.online
             })
           }
         >
           online
         </OnlineToggle>
-        <DeleteIcon onClick={() => props.remove(props.shoppingList._id)} />
+        <DeleteIcon onClick={() => remove(shoppingList._id)} />
       </Card.Head>
       <Card.Body>
-        {props.shoppingList.items
+        {shoppingList.items
           .filter(item => item.ordered && !item.purchased)
           .map(item => (
             <ShoppingListItem
-              remove={props.removeItem}
-              update={props.updateItem}
+              remove={removeItem}
+              update={updateItem}
               item={item}
-              listId={props.shoppingList._id}
-              online={props.shoppingList.online}
+              listId={shoppingList._id}
+              online={shoppingList.online}
               key={item._id}
             />
           ))}
-        {props.shoppingList.items
+        {shoppingList.items
           .filter(item => !item.ordered && !item.purchased)
           .map(item => (
             <ShoppingListItem
-              remove={props.removeItem}
-              update={props.updateItem}
+              remove={removeItem}
+              update={updateItem}
               item={item}
-              listId={props.shoppingList._id}
-              online={props.shoppingList.online}
+              listId={shoppingList._id}
+              online={shoppingList.online}
               key={item._id}
             />
           ))}
         <ListAsyncInput
           blur
-          placeholder={'Add item'}
-          save={title => props.addItem(props.shoppingList._id, title)}
+          placeholder="Add item"
+          save={title => addItem(shoppingList._id, title)}
         />
       </Card.Body>
     </Card>

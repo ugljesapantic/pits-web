@@ -19,5 +19,6 @@ const ButtonWrapper = styled.button`
 `;
 
 export default function Button(props) {
-  return <ButtonWrapper {...props}>{props.children}</ButtonWrapper>;
+  const { children } = props;
+  return <ButtonWrapper {...props}>{children}</ButtonWrapper>;
 }

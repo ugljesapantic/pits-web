@@ -14,5 +14,6 @@ const Wrapper = styled.div`
 `;
 
 export default function Message(props) {
-  return <Wrapper {...props}>{props.children}</Wrapper>;
+  const { children } = props;
+  return <Wrapper {...props}>{children}</Wrapper>;
 }

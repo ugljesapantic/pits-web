@@ -11,7 +11,7 @@ export default {
     update: (id, body) =>
       http.patch(`/clipboards/${id}`, body).then(res => res.data),
     remove: id => http.delete(`/clipboards/${id}`).then(res => res.data),
-    create: body => http.post(`/clipboards`, body).then(res => res.data),
+    create: body => http.post('/clipboards', body).then(res => res.data),
     updateItem: (id, itemId, body) =>
       http
         .patch(`/clipboards/${id}/items/${itemId}`, body)
@@ -26,7 +26,7 @@ export default {
     update: (id, body) =>
       http.patch(`/shopping-lists/${id}`, body).then(res => res.data),
     remove: id => http.delete(`/shopping-lists/${id}`).then(res => res.data),
-    create: body => http.post(`/shopping-lists`, body).then(res => res.data),
+    create: body => http.post('/shopping-lists', body).then(res => res.data),
     updateItem: (id, itemId, body) =>
       http
         .patch(`/shopping-lists/${id}/items/${itemId}`, body)
@@ -41,6 +41,6 @@ export default {
     update: (id, body) =>
       http.patch(`/dairies/${id}`, body).then(res => res.data),
     remove: id => http.delete(`/dairies/${id}`).then(res => res.data),
-    create: body => http.post(`/dairies`, body).then(res => res.data)
+    create: body => http.post('/dairies', body).then(res => res.data)
   }
 };

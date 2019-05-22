@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Greeting = styled.div`
@@ -8,10 +8,8 @@ const Greeting = styled.div`
   transform: translateY(calc(50vh - 10rem));
 `;
 
-class DashboardPage extends Component {
-  render() {
-    return <Greeting>Welcome to the Personal Management Tool</Greeting>;
-  }
+function DashboardPage() {
+  return <Greeting>Welcome to the Personal Management Tool</Greeting>;
 }
 
 export default DashboardPage;

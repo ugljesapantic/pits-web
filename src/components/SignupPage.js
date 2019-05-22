@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { signup } from '../actions';
 import UsernamePasswordForm from './shared/UsernamePasswordForm';
 
-class LoginPage extends Component {
-  render() {
-    return (
-      <UsernamePasswordForm submit={this.props.submit} buttonTitle={'Signup'} />
-    );
-  }
+function LoginPage({ submit }) {
+  return <UsernamePasswordForm submit={submit} buttonTitle="Signup" />;
 }
 
 export default connect(

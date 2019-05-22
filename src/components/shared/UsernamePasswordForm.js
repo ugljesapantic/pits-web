@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Validator from 'validator';
+import styled from 'styled-components';
 import Message from './Message';
 import Button from './Button';
 import FormInput from './FormInput';
-import styled from 'styled-components';
 import { fullScreen } from '../../styles/layout';
 
 export const Form = styled.form`
@@ -47,19 +47,23 @@ class UsernamePasswordForm extends Component {
     errors: {}
   };
 
-  onChange = e =>
-    this.setState({
-      data: { ...this.state.data, [e.target.name]: e.target.value }
-    });
+  onChange = e => {
+    e.persist();
+    this.setState(prevState => ({
+      data: { ...prevState.data, [e.target.name]: e.target.value }
+    }));
+  };
 
   onSubmit = e => {
     e.preventDefault();
+    const { data } = this.state;
+    const { submit } = this.props;
 
-    const errors = this.validate(this.state.data);
+    const errors = this.validate(data);
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
-      this.props.submit(this.state.data).catch(res =>
+      submit(data).catch(res =>
         this.setState({
           errors: { global: res.response.data },
           loading: false
@@ -76,9 +80,11 @@ class UsernamePasswordForm extends Component {
   };
 
   render() {
-    const { email, password } = this.state.data;
-    const loading = this.state.loading;
-    const errors = this.state.errors;
+    const { data } = this.state;
+    const { email, password } = data;
+    const { loading } = this.state;
+    const { errors } = this.state;
+    const { buttonTitle } = this.props;
 
     return (
       <FormWrapper>
@@ -104,7 +110,7 @@ class UsernamePasswordForm extends Component {
             value={password}
             onChange={this.onChange}
           />
-          <Button primary>{this.props.buttonTitle}</Button>
+          <Button primary>{buttonTitle}</Button>
         </Form>
       </FormWrapper>
     );

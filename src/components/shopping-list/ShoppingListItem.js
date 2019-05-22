@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import AsyncInput from '../shared/AsyncInput';
 
 import styled from 'styled-components';
 import { FaShoppingCart, FaTrash, FaCheck, FaTimes } from 'react-icons/fa';
-import Swipeable from './../shared/Swipeable';
+import AsyncInput from '../shared/AsyncInput';
+import Swipeable from '../shared/Swipeable';
 import { HoverActions } from '../../styles/layout';
 
 const AsyncInputWrapper = styled(AsyncInput)`
@@ -13,55 +13,49 @@ const AsyncInputWrapper = styled(AsyncInput)`
 `;
 
 //  props.updateItem(props.shoppingList._id, {title})
-export default function ShoppingListItem(props) {
+export default function ShoppingListItem({ item, listId, update, online }) {
   const [updating, setUpdating] = useState(false);
-
-  const getSwipeActions = () => {
-    if (!props.online) {
-      return { right: purchase, left: remove };
-    } else {
-      if (!props.item.ordered) {
-        return { right: order.bind(null, true), left: remove };
-      } else {
-        return { right: purchase, left: order.bind(null, false) };
-      }
-    }
-  };
 
   const order = ordered => {
     setUpdating(true);
-    props.update(props.listId, props.item._id, { ordered });
+    update(listId, item._id, { ordered });
   };
 
   const purchase = () => {
     setUpdating(true);
-    props.update(props.listId, props.item._id, { purchased: true });
+    update(listId, item._id, { purchased: true });
   };
 
   const remove = () => {
     setUpdating(true);
-    props.remove(props.listId, props.item._id);
+    remove(listId, item._id);
   };
 
   const getActionText = () => {
-    if (!props.online) {
+    if (!online) {
       return { left: 'delete', right: 'purchase' };
-    } else {
-      if (!props.item.ordered) {
-        return { left: 'delete', right: 'order' };
-      } else {
-        return { left: 'not arrived', right: 'arrived' };
-      }
     }
+    if (!item.ordered) {
+      return { left: 'delete', right: 'order' };
+    }
+    return { left: 'not arrived', right: 'arrived' };
   };
 
-  const swipeOptions = () => {
-    return {
-      actionText: getActionText(),
-      actions: getSwipeActions(),
-      updating: updating
-    };
+  const getSwipeActions = () => {
+    if (!online) {
+      return { right: purchase, left: remove };
+    }
+    if (!item.ordered) {
+      return { right: order.bind(null, true), left: remove };
+    }
+    return { right: purchase, left: order.bind(null, false) };
   };
+
+  const swipeOptions = () => ({
+    actionText: getActionText(),
+    actions: getSwipeActions(),
+    updating
+  });
 
   return (
     <Swipeable {...swipeOptions()}>
@@ -69,17 +63,18 @@ export default function ShoppingListItem(props) {
         small
         plain
         blur
-        ordered={props.item.ordered}
-        value={props.item.title}
-        save={title => props.update(props.listId, props.item._id, { title })}
+        ordered={item.ordered}
+        init={item.title}
+        save={title => update(listId, item._id, { title })}
       />
       <HoverActions className="hover-actions">
-        {!props.online ? (
+        {!online && (
           <React.Fragment>
             <FaShoppingCart onClick={purchase} />
             <FaTrash onClick={remove} />
           </React.Fragment>
-        ) : !props.item.ordered ? (
+        )}
+        {online && !item.ordered ? (
           <React.Fragment>
             <FaShoppingCart onClick={() => order(true)} />
             <FaTrash onClick={remove} />
